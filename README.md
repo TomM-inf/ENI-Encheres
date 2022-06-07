@@ -8,4 +8,3 @@ Questions :
 + parametre de confidentialité lors de la visualisation d'un profil : qu'affiche-t-on ? ( profil privé, obligation d'etre connecter pour acceder aux infos,...) 
 + durée max/min d'une enchere ? - valeur par défaut ?
 + quelles actions a prevoir apres la suppression d'un compte ?
-+ 

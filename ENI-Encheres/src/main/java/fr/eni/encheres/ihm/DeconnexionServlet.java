@@ -8,13 +8,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet({"","/accueil"})
-public class accueilServlet extends HttpServlet{
+@WebServlet( "/deconnexion")
+public class DeconnexionServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		//TODO: mettre en place sendRedirect
-		//resp.sendRedirect("./WEB-INF/pages/accueil.jsp");
+		req.getSession().invalidate();
 		req.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(req, resp);
 	}
 }

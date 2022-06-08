@@ -29,6 +29,10 @@ public class Utilisateur {
 		this.credit = credit;
 		this.administrateur = administrateur;
 	}
+	
+	public Utilisateur() {
+		
+	}
 
 	public int getNoUtilisateur() {
 		return noUtilisateur;

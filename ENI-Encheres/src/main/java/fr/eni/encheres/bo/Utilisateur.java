@@ -1,5 +1,11 @@
 package fr.eni.encheres.bo;
 
+/**
+ * 
+ * @author dalguiriev2021
+ * Permet d'enregistrer et avoir les informations d'un utilisateur du site
+ */
+
 public class Utilisateur {
 
 	private int noUtilisateur;

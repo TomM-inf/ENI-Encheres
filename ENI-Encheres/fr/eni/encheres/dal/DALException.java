@@ -1,4 +1,4 @@
-package fr.eni.suiviRepas.dal;
+package fr.eni.encheres.dal;
 
 public class DALException extends Exception {
 

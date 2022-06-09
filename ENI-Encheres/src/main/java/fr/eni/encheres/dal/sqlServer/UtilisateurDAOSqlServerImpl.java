@@ -71,7 +71,12 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 						utilisateur.setAdministrateur(res.getBoolean("administrateur"));
 					}
 				}
-				return utilisateur;
+				if(utilisateur != null) {
+					return utilisateur;
+				}else {
+					return null;
+				}
+				
 			}
 		} catch (SQLException e) {
 

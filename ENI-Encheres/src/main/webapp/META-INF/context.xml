@@ -6,8 +6,8 @@
 		driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
 		type="javax.sql.DataSource"
 		
-		url="jdbc:sqlserver://localhost:1433;databasename=REPAS_DB"
-		username="sa"
+		url="jdbc:sqlserver://26SE22-16N6422:1433;databasename=Encheres"
+		username="eniuser"
 		password="Pa$$w0rd"
 		
 		maxTotal="100"

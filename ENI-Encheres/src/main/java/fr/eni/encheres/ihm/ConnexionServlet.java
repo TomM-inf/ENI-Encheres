@@ -51,6 +51,8 @@ public class ConnexionServlet extends HttpServlet {
 					resp.sendRedirect(req.getContextPath() + "/accueil");
 				}else {
 					req.setAttribute("erreur", "Connexion refus�e. L'identifiant ou le mot de passe est invalide.");
+					req.setAttribute("identifiant", login);
+					req.getRequestDispatcher("/WEB-INF/pages/connexion.jsp").forward(req, resp);
 				}
 			} catch (BLLException e) {
 				// TODO Auto-generated catch block

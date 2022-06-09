@@ -1,0 +1,38 @@
+@charset "ISO-8859-1";
+
+body {
+	border: dashed red;
+}
+
+h2 {
+	text-align: center;
+}
+
+#filtre {
+	float: left;
+}
+
+#rechercheArticle {
+	text-align: center;
+}
+
+#rechercher {
+	margin: 3em;
+	padding-left: 5em;
+	padding-right: 5em;
+	padding-top: 2em;
+	padding-bottom: 2em;
+}
+
+table {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.cacher-profil {
+	display: none;
+}
+
+.afficher-profil {
+	display: block;
+}

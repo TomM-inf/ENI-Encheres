@@ -42,7 +42,7 @@ table {
 </head>
 <body>
 	<!-- Connecter le lien inscription -->
-	<div><span id="titre">ENI-Encheres</span> <a id="insc" href="">S'inscrire - Se connecter</a></div>
+	<div><span id="titre">ENI-Encheres</span> <a id="insc" href="${pageContext.request.contextPath}/connexion">S'inscrire - Se connecter</a></div>
 	<h2>Listes des encheres</h2>
 	<form action="">
 	<table>

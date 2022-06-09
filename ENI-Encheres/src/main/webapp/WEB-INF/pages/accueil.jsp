@@ -61,7 +61,7 @@ table {
 </table>
 </form>
 	
-	
 	<!-- Insérer ici 2004 - liste des encheres en mode déconnecté -->
+	<jsp:include page="./listeEncheresDeconnecte.jsp"></jsp:include>
 </body>
 </html>

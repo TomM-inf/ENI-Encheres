@@ -12,6 +12,7 @@ import fr.eni.encheres.dal.UtilisateurDAO;
 public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 
 	private static final String CONNEXION = "SELECT * FROM UTILISATEURS WHERE ?=? AND mot_de_passe=?";
+	private static final String GETBYID = "SELECT * FROM UTILISATEURS WHERE no_utilisateur = ?";
 
 	@Override
 	public Utilisateur verifierConnexion(String login, String pw) throws SQLException {
@@ -94,6 +95,51 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 				}
 			}
 		}
+	}
+
+	@Override
+	public Utilisateur getUtilisateurParId(int idUtil) throws SQLException {
+		Connection conn = null;
+		Utilisateur utilisateur = null;
+		try {
+			conn = ConnectionProvider.getConnection();
+			conn.setAutoCommit(false);
+
+			PreparedStatement stmt = conn.prepareStatement(GETBYID);
+			stmt.setInt(1, idUtil);
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()) {
+				utilisateur = new Utilisateur();
+				utilisateur.setPseudo(rs.getString("pseudo"));
+				utilisateur.setNom(rs.getString("nom"));
+				utilisateur.setPrenom(rs.getString("prenom"));
+				utilisateur.setEmail(rs.getString("email"));
+				utilisateur.setTelephone(rs.getString("telephone"));
+				utilisateur.setRue(rs.getString("rue"));
+				utilisateur.setCodePostal(rs.getString("code_postal"));
+				utilisateur.setVille(rs.getString("ville"));
+				utilisateur.setMotDePasse(rs.getString("mot_de_passe"));
+				utilisateur.setCredit(rs.getInt("credit"));
+				utilisateur.setAdministrateur(rs.getBoolean("administrateur"));
+			}
+		} catch (SQLException e) {
+
+			conn.rollback();
+			e.printStackTrace();
+			throw e;
+
+		} finally {
+			// Fermer la connexion
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return utilisateur;
 	}
 
 }

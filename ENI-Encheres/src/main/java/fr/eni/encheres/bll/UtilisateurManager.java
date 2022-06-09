@@ -22,4 +22,14 @@ public class UtilisateurManager {
 		}
 		return utilisateur;
 	}
+	
+	public Utilisateur getUtilisateurParId(int idUtil) throws BLLException {
+		Utilisateur utilisateur = null;
+		try {
+			utilisateur = utilisateurDAO.getUtilisateurParId(idUtil);
+		} catch (SQLException e) {
+			throw new BLLException(e);
+		}
+		return utilisateur;
+	}
 }

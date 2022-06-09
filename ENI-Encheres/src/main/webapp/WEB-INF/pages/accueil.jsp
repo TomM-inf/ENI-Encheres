@@ -12,14 +12,6 @@ body{
 h2{
 	text-align: center;
 }
-#titre{
-	font-size: xx-large;
-	font-weight: bold;
-	font-family: sans-serif;
-}
-#insc{
-	float: right;
-}
 #filtre{
 	float: left;
 }
@@ -37,14 +29,12 @@ table {
     margin-left:auto; 
     margin-right:auto;
   }
-
 </style>
 </head>
 <body>
-	<!-- Connecter le lien inscription -->
-	<div><span id="titre">ENI-Encheres</span> <a id="insc" href="">S'inscrire - Se connecter</a></div>
+	<jsp:include page="./headerDeconnecte.jsp"></jsp:include>
 	<h2>Listes des encheres</h2>
-	<form action="">
+	<form action="" method="post">
 	<table>
     <thead>
         <tr>
@@ -52,7 +42,6 @@ table {
         </tr>
     </thead>
     <tbody>
-    
         <tr>
             <td colspan="2"><input type="text" id="rechercheArticle" name="rechercheArticle" placeholder="Le nom de l'article contient"/></td>
             <td rowspan="2"><input type="submit" value="Rechercher" id="rechercher"></td>
@@ -68,7 +57,6 @@ table {
 						<option value="Sport&Loisirs">Sport&Loisirs</option>
 				</datalist></td>
         </tr>
-    
     </tbody>
 </table>
 </form>

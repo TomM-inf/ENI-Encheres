@@ -32,6 +32,8 @@ table {
 </style>
 </head>
 <body>
+	<!-- Connecter le lien inscription -->
+	<div><span id="titre">ENI-Encheres</span> <a id="insc" href="${pageContext.request.contextPath}/connexion">S'inscrire - Se connecter</a></div>
 	<jsp:include page="./headerDeconnecte.jsp"></jsp:include>
 	<h2>Listes des encheres</h2>
 	<form action="" method="post">
@@ -47,7 +49,7 @@ table {
             <td rowspan="2"><input type="submit" value="Rechercher" id="rechercher"></td>
         </tr>
         <tr>
-        	<td><label>Catégorie :	</label></td>
+        	<td><label>CatÃ©gorie :	</label></td>
         	<td><input type="text" list="listCate" name="categorie" placeholder="Toutes"/>
 					<datalist id="listCate">
 						<option value="Toutes">Toutes</option>
@@ -62,6 +64,6 @@ table {
 </form>
 	
 	
-	<!-- Insérer ici 2004 - liste des encheres en mode déconnecté -->
+	<!-- InsÃ©rer ici 2004 - liste des encheres en mode dÃ©connectÃ© -->
 </body>
 </html>

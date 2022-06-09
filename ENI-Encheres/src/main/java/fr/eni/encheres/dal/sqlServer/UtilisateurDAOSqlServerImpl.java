@@ -44,7 +44,8 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 					utilisateur.setAdministrateur(rs.getBoolean("administrateur"));
 				}
 			}
-			if (utilisateur.getMotDePasse() != null || !utilisateur.getMotDePasse().isEmpty()) {
+			if (utilisateur != null) {
+			
 				return utilisateur;
 			} else {
 				PreparedStatement statement = conn.prepareStatement(CONNEXION);
@@ -70,7 +71,11 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 						utilisateur.setAdministrateur(res.getBoolean("administrateur"));
 					}
 				}
-				return utilisateur;
+				if(utilisateur != null) {
+					return utilisateur;
+				}else {
+					return null;
+				}
 			}
 		} catch (SQLException e) {
 

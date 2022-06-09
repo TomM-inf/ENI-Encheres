@@ -16,10 +16,9 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 	@Override
 	public Utilisateur verifierConnexion(String login, String pw) throws SQLException {
 		Connection conn = null;
-		conn = ConnectionProvider.getConnection();
 		Utilisateur utilisateur = null;
 		try {
-			
+			conn = ConnectionProvider.getConnection();
 			conn.setAutoCommit(false);
 
 			PreparedStatement stmt = conn.prepareStatement(CONNEXION);
@@ -46,6 +45,7 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 				}
 			}
 			if (utilisateur != null) {
+			
 				return utilisateur;
 			} else {
 				PreparedStatement statement = conn.prepareStatement(CONNEXION);
@@ -76,7 +76,6 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 				}else {
 					return null;
 				}
-				
 			}
 		} catch (SQLException e) {
 

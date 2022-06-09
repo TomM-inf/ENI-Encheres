@@ -10,7 +10,6 @@ import fr.eni.encheres.bll.BLLException;
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Utilisateur;
 
-
 /**
  * Servlet implementation class ConnexionServlet
  */
@@ -51,9 +50,8 @@ public class ConnexionServlet extends HttpServlet {
 					req.getSession(true).setAttribute("utilisateur", utilisateur);
 					resp.sendRedirect(req.getContextPath() + "/accueil");
 				}else {
-					req.setAttribute("erreur", "Connexion refusée. L'identifiant ou le mot de passe est invalide.");
+					req.setAttribute("erreur", "Connexion refusï¿½e. L'identifiant ou le mot de passe est invalide.");
 				}
-				
 			} catch (BLLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

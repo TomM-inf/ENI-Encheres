@@ -1,6 +1,4 @@
 /build/
-/apache-tomcat-9.0.62/
-/apache-tomcat-9.0.62-src/
 .settings/
 .classpath
-.settings/org.eclipse.wst.common.project.facet.core.xml
+/bin

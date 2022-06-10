@@ -25,10 +25,6 @@ h2 {
 	float: left;
 }
 
-#rechercheArticle {
-	text-align: center;
-}
-
 #rechercher {
 	margin: 3em;
 	padding-left: 5em;
@@ -59,21 +55,29 @@ table {
 			</thead>
 			<tbody>
 				<tr>
-					<td colspan="2"><input type="text" id="rechercheArticle"
-						name="rechercheArticle" placeholder="Le nom de l'article contient" /></td>
+					<td colspan="2">
+						<div class="input-group has-validation">
+							<span class="input-group-text" id="inputGroupPrepend">?</span> <input
+								type="text" class="form-control" id="validationCustomUsername"
+								aria-describedby="inputGroupPrepend"
+								placeholder="Le nom de l'article contient"
+								name="rechercheArticle">
+						</div>
+					</td>
 					<td rowspan="2"><input type="submit" value="Rechercher"
 						id="rechercher" class="btn btn-primary"></td>
 				</tr>
 				<tr>
 					<td><label>Catégorie : </label></td>
-					<td><input type="text" list="listCate" name="categorie"
-						placeholder="Toutes" /> <datalist id="listCate">
-							<option value="Toutes">Toutes</option>
+					<td><select name="categorie"
+						class="form-select form-select-sm"
+						aria-label=".form-select-sm example">
+							<option value="Toutes" selected>Toutes</option>
 							<option value="Informatique">Informatique</option>
 							<option value="Ameublement">Ameublement</option>
 							<option value="Vetement">Vetement</option>
 							<option value="Sport&Loisirs">Sport&Loisirs</option>
-						</datalist></td>
+					</select></td>
 				</tr>
 			</tbody>
 		</table>

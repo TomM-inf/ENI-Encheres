@@ -25,7 +25,7 @@ table, th, td {
 						<td><c:out value="${value.nomArticle}" /></td>
 					</tr>
 					<tr>
-						<td>Prix : <c:out value="${value.prixInitial}" /></td>
+						<td>Prix : <c:out value="${value.prixInitial}" /> points</td>
 					</tr>
 					<tr>
 					<td>Fin de l'enchere : <c:out value="${value.dateFin}" /></td>

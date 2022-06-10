@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheres.bll.ArticlesVendusManager;
+import fr.eni.encheres.bll.CategorieManager;
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Articles_vendus;
 
@@ -18,16 +19,16 @@ import fr.eni.encheres.bo.Articles_vendus;
 public class accueilServlet extends HttpServlet{
 	private ArticlesVendusManager articlesVendusMng;
 	private UtilisateurManager utilisateurManager;
+	private CategorieManager categorieManager;
 	
 	public accueilServlet() {
 		articlesVendusMng = new ArticlesVendusManager();
 		utilisateurManager = new UtilisateurManager();
+		categorieManager = new CategorieManager();
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		
 		try {
 			req.setAttribute("listArticles", articlesVendusMng.getAllArticle());
 			List<String> listPseudo = new ArrayList<String>();
@@ -35,6 +36,7 @@ public class accueilServlet extends HttpServlet{
 				listPseudo.add(utilisateurManager.getUtilisateurParId(art.getNoUtilisateur()).getPseudo());
 			}
 			req.setAttribute("listPseudo", listPseudo);
+			req.setAttribute("listCategorie", categorieManager.getAllCategorie());
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

@@ -73,17 +73,15 @@ table {
 						class="form-select form-select-sm"
 						aria-label=".form-select-sm example">
 							<option value="Toutes" selected>Toutes</option>
-							<option value="Informatique">Informatique</option>
-							<option value="Ameublement">Ameublement</option>
-							<option value="Vetement">Vetement</option>
-							<option value="Sport&Loisirs">Sport&Loisirs</option>
+							<c:forEach items="${listCategorie}" var="value">
+								<option value="${value.libelle}"><c:out value="${value.libelle}" /></option>
+							</c:forEach>
 					</select></td>
 				</tr>
 			</tbody>
 		</table>
 	</form>
 
-	<!-- Insérer ici 2004 - liste des encheres en mode déconnecté -->
 	<jsp:include page="./listeEncheresDeconnecte.jsp">
 		<jsp:param name="listArticles" value="${listArticles}" />
 		<jsp:param name="listPseudo" value="${listPseudo}" />

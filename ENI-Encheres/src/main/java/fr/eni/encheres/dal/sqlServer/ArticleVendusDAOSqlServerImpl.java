@@ -13,7 +13,8 @@ import fr.eni.encheres.dal.ConnectionProvider;
 
 public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 
-	private static final String GETALL = "SELECT * FROM ARTICLES_VENDUS";
+	private static final String GETALL = "SELECT * FROM ARTICLES_VENDUS ORDER BY date_debut_encheres";
+	private static final String GETMOTCLE = "SELECT * FROM ARTICLES_VENDUS WHERE nom_article LIKE %?%";
 	@Override
 	public List<Articles_vendus> getArticlesVendus() throws SQLException {
 		Connection conn = null;
@@ -25,20 +26,7 @@ public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 
 			PreparedStatement stmt = conn.prepareStatement(GETALL);
 			ResultSet rs = stmt.executeQuery();
-			while(rs.next()) {
-				Articles_vendus article = new Articles_vendus();
-				article.setNoArticle(rs.getInt("no_article"));
-				article.setNomArticle(rs.getString("nom_article"));
-				article.setDescription(rs.getString("description"));
-				article.setDateDebut(rs.getDate("date_debut_encheres"));
-				article.setDateFin(rs.getDate("date_fin_encheres"));
-				article.setPrixInitial(rs.getInt("prix_initial"));
-				article.setPrixVente(rs.getInt("prix_vente"));
-				article.setEtatVente(rs.getString("etat_vente"));
-				article.setNoUtilisateur(rs.getInt("no_utilisateur"));
-				article.setNoCategorie(rs.getInt("no_categorie"));
-				listArticles.add(article);
-			}
+			listArticles = this.createListArticle(rs);
 		} catch (SQLException e) {
 
 			conn.rollback();
@@ -57,8 +45,42 @@ public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 			}
 		}
 		
-		
 		return listArticles;
+	}
+	@Override
+	public List<Articles_vendus> getArticlesVendusParMotCle(String motCle) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<Articles_vendus> getArticlesVendusParCategorie() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<Articles_vendus> getArticlesVendusParMotCleEtCategorie() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	private List<Articles_vendus> createListArticle(ResultSet rs) throws SQLException{
+		List<Articles_vendus> listArticles = new ArrayList<Articles_vendus>();
+		while(rs.next()) {
+			Articles_vendus article = new Articles_vendus();
+			article.setNoArticle(rs.getInt("no_article"));
+			article.setNomArticle(rs.getString("nom_article"));
+			article.setDescription(rs.getString("description"));
+			article.setDateDebut(rs.getDate("date_debut_encheres"));
+			article.setDateFin(rs.getDate("date_fin_encheres"));
+			article.setPrixInitial(rs.getInt("prix_initial"));
+			article.setPrixVente(rs.getInt("prix_vente"));
+			article.setEtatVente(rs.getString("etat_vente"));
+			article.setNoUtilisateur(rs.getInt("no_utilisateur"));
+			article.setNoCategorie(rs.getInt("no_categorie"));
+			listArticles.add(article);
+		}
+		return listArticles;
+		
 	}
 
 }

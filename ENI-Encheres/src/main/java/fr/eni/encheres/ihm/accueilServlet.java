@@ -43,4 +43,9 @@ public class accueilServlet extends HttpServlet{
 		//TODO: mettre en place sendRedirect
 		req.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(req, resp);
 	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(req, resp);
+	}
 }

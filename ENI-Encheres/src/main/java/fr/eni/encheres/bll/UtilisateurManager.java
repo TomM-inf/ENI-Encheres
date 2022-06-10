@@ -22,4 +22,14 @@ public class UtilisateurManager {
 		}
 		return utilisateur;
 	}
+	
+	public Utilisateur getUtilisateurByPseudo(String pseudo) throws BLLException {
+		Utilisateur utilisateur = null;
+		try {
+			utilisateur = utilisateurDAO.getUtilisateurByPseudo(pseudo);
+		} catch (SQLException e) {
+			throw new BLLException(e);
+		}
+		return utilisateur;
+	}
 }

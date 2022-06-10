@@ -1,6 +1,4 @@
 /build/
-/apache-tomcat-9.0.62/
-/apache-tomcat-9.0.62-src/
 .settings/
 .classpath
-
+/bin

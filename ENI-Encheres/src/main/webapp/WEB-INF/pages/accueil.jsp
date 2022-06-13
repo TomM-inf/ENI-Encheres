@@ -61,10 +61,6 @@ table {
 	}
 	%>
 
-	<!-- Connecter le lien inscription -->
-	<div><span id="titre">ENI-Encheres</span> <a id="insc" href="${pageContext.request.contextPath}/connexion">S'inscrire - Se connecter</a></div>
-	<jsp:include page="./headerDeconnecte.jsp"></jsp:include>
-
 	<h2>Listes des encheres</h2>
 	<form action="" method="post">
 		<table>

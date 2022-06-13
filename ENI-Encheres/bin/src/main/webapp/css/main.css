@@ -1,7 +1,6 @@
 @charset "ISO-8859-1";
 
 body {
-	
 }
 
 h2 {
@@ -34,25 +33,13 @@ table {
 }
 
 .afficher-profil {
-	display: flex;
-	flex-direction: column;
-	height: 80vh;
-	justify-content: center;
-	align-items: center;
-	align-content: stretch;
-}
-
-.lignes-profil {
-	display: flex;
-	width: 280px;
-	justify-content: space-between;
-	margin-bottom: 10px;
+	display: block;
 }
 
 .connexion {
 	display: flex;
 	flex-direction: column;
-	height: 80vh;
+	height: 100vh;
 	justify-content: center;
 	align-items: center;
 	align-content: stretch;
@@ -62,7 +49,7 @@ table {
 	padding: 20px;
 	display: flex;
 	flex-direction: row;
-	margin-bottom: 10px;
+	margin-bottom:10px;
 }
 
 .connexion-gauche {

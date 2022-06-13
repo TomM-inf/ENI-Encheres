@@ -9,6 +9,7 @@
 </head>
 <body>
 <!-- pseudo ville cp -->
+<<<<<<< HEAD
 <div class="${simple ? 'afficher-profil' : 'cacher-profil'}">
 <div class="lignes-profil"><label>Pseudo :</label><input type="text" value="${utilisateur.pseudo}" disabled="disabled"></div>
 <div class="lignes-profil"><label>Ville :</label><input type="text" value="${utilisateur.ville} "disabled="disabled"></div>
@@ -36,6 +37,35 @@
 <div class="lignes-profil"><label>Rue :</label><input type="text" value="${utilisateur.rue}" disabled="disabled"></div>
 <div class="lignes-profil"><label>Ville :</label><input type="text" value="${utilisateur.ville}" disabled="disabled"></div>
 <div class="lignes-profil"><label>Code Postal :</label><input type="text" value="${utilisateur.codePostal}" disabled="disabled"></div>
+=======
+<div class="${simple ? 'cacher-profil' : 'afficher-profile'}">
+<label>Pseudo :</label><input type="text" value={$utilisateur.pseudo}>
+<label>Ville :</label><input type="text" value={$utilisateur.ville}>
+<label>Code Postal :</label><input type="text" value={$utilisateur.cp}>
+</div>
+<!-- tout -->
+<div class="${enchereRemporte ? 'cacher-profil' : 'afficher-profile'}">
+<label>Pseudo :</label><input type="text" value={$utilisateur.pseudo}>
+<label>Nom :</label><input type="text" value={$utilisateur.nom}>
+<label>Prénom :</label><input type="text" value={$utilisateur.prenom}>
+<label>Email :</label><input type="text" value={$utilisateur.email}>
+<label>Téléphone :</label><input type="text" value={$utilisateur.telephone}>
+<label>Rue :</label><input type="text" value={$utilisateur.rue}>
+<label>Ville :</label><input type="text" value={$utilisateur.ville}>
+<label>Code Postal :</label><input type="text" value={$utilisateur.cp}>
+</div>
+<!-- tout avec bouton modifier -->
+<div class="${monProfil ? 'cacher-profil' : 'afficher-profile'}">
+<form action="${pageContext.request.contextPath}/afficherProfil" method="post" class="form-example">
+<label>Pseudo :</label><input type="text" value={$utilisateur.pseudo}>
+<label>Nom :</label><input type="text" value={$utilisateur.nom}>
+<label>Prénom :</label><input type="text" value={$utilisateur.prenom}>
+<label>Email :</label><input type="text" value={$utilisateur.email}>
+<label>Téléphone :</label><input type="text" value={$utilisateur.telephone}>
+<label>Rue :</label><input type="text" value={$utilisateur.rue}>
+<label>Ville :</label><input type="text" value={$utilisateur.ville}>
+<label>Code Postal :</label><input type="text" value={$utilisateur.cp}>
+>>>>>>> master
 <input type="submit" value="Modifier">
 </form>
 </div>

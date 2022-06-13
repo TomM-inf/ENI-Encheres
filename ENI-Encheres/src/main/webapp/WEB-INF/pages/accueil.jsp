@@ -44,7 +44,12 @@ table {
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
 		crossorigin="anonymous"></script>
-	<jsp:include page="./headerDeconnecte.jsp"></jsp:include>
+	<c:if test="${empty sessionScope.utilisateur}">
+		<jsp:include page="./headerDeconnecte.jsp"></jsp:include>
+	</c:if>
+	<c:if test="${not empty sessionScope.utilisateur}">
+		<jsp:include page="./headerConnecte.jsp"></jsp:include>
+	</c:if>
 	<h2>Listes des encheres</h2>
 	<form action="" method="post">
 		<table>

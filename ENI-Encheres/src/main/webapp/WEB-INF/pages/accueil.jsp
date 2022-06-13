@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,8 +31,18 @@ table {
     margin-right:auto;
   }
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="./js/functions.js" type="text/javascript"></script>
 </head>
 <body>
+
+	<input type="hidden" id="infoMsg" value="${infoMsg}">
+	<%
+	if (request.getSession().getAttribute("infoMsg") != null) {
+		request.getSession().removeAttribute("infoMsg");
+	}
+	%>
+
 	<!-- Connecter le lien inscription -->
 	<div><span id="titre">ENI-Encheres</span> <a id="insc" href="${pageContext.request.contextPath}/connexion">S'inscrire - Se connecter</a></div>
 	<jsp:include page="./headerDeconnecte.jsp"></jsp:include>

@@ -49,7 +49,7 @@ table {
             <td rowspan="2"><input type="submit" value="Rechercher" id="rechercher"></td>
         </tr>
         <tr>
-        	<td><label>CatÃ©gorie :	</label></td>
+        	<td><label>Catégorie :	</label></td>
         	<td><input type="text" list="listCate" name="categorie" placeholder="Toutes"/>
 					<datalist id="listCate">
 						<option value="Toutes">Toutes</option>

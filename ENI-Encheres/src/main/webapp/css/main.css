@@ -1,0 +1,64 @@
+@charset "ISO-8859-1";
+
+body {
+}
+
+h2 {
+	text-align: center;
+}
+
+#filtre {
+	float: left;
+}
+
+#rechercheArticle {
+	text-align: center;
+}
+
+#rechercher {
+	margin: 3em;
+	padding-left: 5em;
+	padding-right: 5em;
+	padding-top: 2em;
+	padding-bottom: 2em;
+}
+
+table {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.cacher-profil {
+	display: none;
+}
+
+.afficher-profil {
+	display: block;
+}
+
+.connexion {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	justify-content: center;
+	align-items: center;
+	align-content: stretch;
+}
+
+.form-connexion {
+	padding: 20px;
+	display: flex;
+	flex-direction: row;
+	margin-bottom:10px;
+}
+
+.connexion-gauche {
+	float: left;
+	display: flex;
+	flex-direction: column;
+	margin: 5px;
+}
+
+.connexion-droite {
+	float: right;
+}

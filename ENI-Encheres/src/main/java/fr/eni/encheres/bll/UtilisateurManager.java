@@ -33,7 +33,7 @@ public class UtilisateurManager {
 		}
 		return utilisateur;
 	}
-	
+
 	public Utilisateur getUtilisateurParId(int id) throws BLLException {
 		Utilisateur utilisateur = null;
 		try {

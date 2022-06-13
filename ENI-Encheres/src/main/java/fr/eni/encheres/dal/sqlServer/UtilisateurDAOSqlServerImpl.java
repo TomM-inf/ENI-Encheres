@@ -23,6 +23,7 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 			+ "pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur)"
 			+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+
 	@Override
 	public Utilisateur verifierConnexion(String login, String pw) throws SQLException {
 		Connection conn = null;
@@ -95,7 +96,6 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 
 	@Override
 	public Utilisateur getUtilisateurByPseudo(String pseudo) throws SQLException {
-
 		Connection conn = null;
 		Utilisateur utilisateur = null;
 		try {
@@ -226,7 +226,6 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 		}
 		return utilisateur;
 	}
-
 	@Override
 	public boolean inscription(Utilisateur user) throws SQLException {
 		
@@ -316,5 +315,4 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
         sr.nextBytes(salt);
         return salt.toString();
     }
-
 }

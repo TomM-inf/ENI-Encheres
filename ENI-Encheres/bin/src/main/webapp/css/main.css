@@ -1,6 +1,10 @@
 @charset "ISO-8859-1";
 
 body {
+<<<<<<< HEAD
+	
+=======
+>>>>>>> master
 }
 
 h2 {
@@ -33,6 +37,7 @@ table {
 }
 
 .afficher-profil {
+<<<<<<< HEAD
 	display: flex;
 	flex-direction: column;
 	height: 80vh;
@@ -46,12 +51,19 @@ table {
 	width: 280px;
 	justify-content: space-between;
 	margin-bottom: 10px;
+=======
+	display: block;
+>>>>>>> master
 }
 
 .connexion {
 	display: flex;
 	flex-direction: column;
+<<<<<<< HEAD
 	height: 80vh;
+=======
+	height: 100vh;
+>>>>>>> master
 	justify-content: center;
 	align-items: center;
 	align-content: stretch;
@@ -61,7 +73,11 @@ table {
 	padding: 20px;
 	display: flex;
 	flex-direction: row;
+<<<<<<< HEAD
+	margin-bottom: 10px;
+=======
 	margin-bottom:10px;
+>>>>>>> master
 }
 
 .connexion-gauche {

@@ -14,7 +14,10 @@ import fr.eni.encheres.dal.ConnectionProvider;
 public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 
 	private static final String GETALL = "SELECT * FROM ARTICLES_VENDUS ORDER BY date_debut_encheres";
-	private static final String GETMOTCLE = "SELECT * FROM ARTICLES_VENDUS WHERE nom_article LIKE %?%";
+	private static final String GETMOTCLE = "SELECT * FROM ARTICLES_VENDUS WHERE nom_article LIKE ? ORDER BY date_debut_encheres";
+	private static final String GETCATE = "SELECT * FROM ARTICLES_VENDUS a, CATEGORIES c WHERE a.no_categorie = c.no_categorie AND c.libelle = ? ORDER BY date_debut_encheres"; 
+	private static final String GETMOTCLECATE = "SELECT * FROM ARTICLES_VENDUS a, CATEGORIES c WHERE a.no_categorie = c.no_categorie AND c.libelle = ? AND nom_article LIKE ? ORDER BY date_debut_encheres";
+	
 	@Override
 	public List<Articles_vendus> getArticlesVendus() throws SQLException {
 		Connection conn = null;
@@ -49,20 +52,110 @@ public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 	}
 	@Override
 	public List<Articles_vendus> getArticlesVendusParMotCle(String motCle) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = null;
+		List<Articles_vendus> listArticles = null;
+		try {
+			conn = ConnectionProvider.getConnection();
+			conn.setAutoCommit(false);
+			listArticles = new ArrayList<Articles_vendus>();
+
+			PreparedStatement stmt = conn.prepareStatement(GETMOTCLE);
+			stmt.setString(1, "%"+motCle+"%");
+			ResultSet rs = stmt.executeQuery();
+			listArticles = this.createListArticle(rs);
+		} catch (SQLException e) {
+
+			conn.rollback();
+			e.printStackTrace();
+			throw e;
+
+		} finally {
+			// Fermer la connexion
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return listArticles;
 	}
 	@Override
-	public List<Articles_vendus> getArticlesVendusParCategorie() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Articles_vendus> getArticlesVendusParCategorie(String categorie) throws SQLException {
+		Connection conn = null;
+		List<Articles_vendus> listArticles = null;
+		try {
+			conn = ConnectionProvider.getConnection();
+			conn.setAutoCommit(false);
+			listArticles = new ArrayList<Articles_vendus>();
+
+			PreparedStatement stmt = conn.prepareStatement(GETCATE);
+			stmt.setString(1, categorie);
+			ResultSet rs = stmt.executeQuery();
+			listArticles = this.createListArticle(rs);
+		} catch (SQLException e) {
+
+			conn.rollback();
+			e.printStackTrace();
+			throw e;
+
+		} finally {
+			// Fermer la connexion
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return listArticles;
 	}
 	@Override
-	public List<Articles_vendus> getArticlesVendusParMotCleEtCategorie() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Articles_vendus> getArticlesVendusParMotCleEtCategorie(String motCle, String categorie) throws SQLException {
+		Connection conn = null;
+		List<Articles_vendus> listArticles = null;
+		try {
+			conn = ConnectionProvider.getConnection();
+			conn.setAutoCommit(false);
+			listArticles = new ArrayList<Articles_vendus>();
+
+			PreparedStatement stmt = conn.prepareStatement(GETMOTCLECATE);
+			stmt.setString(1, categorie);
+			stmt.setString(2, "%"+motCle+"%");
+			ResultSet rs = stmt.executeQuery();
+			listArticles = this.createListArticle(rs);
+		} catch (SQLException e) {
+
+			conn.rollback();
+			e.printStackTrace();
+			throw e;
+
+		} finally {
+			// Fermer la connexion
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return listArticles;
 	}
 	
+	
+	/*
+	 * Method création d'une liste d'article
+	 * @Params: ResultSet retour
+	 */
 	private List<Articles_vendus> createListArticle(ResultSet rs) throws SQLException{
 		List<Articles_vendus> listArticles = new ArrayList<Articles_vendus>();
 		while(rs.next()) {

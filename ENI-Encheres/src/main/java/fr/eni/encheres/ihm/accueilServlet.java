@@ -30,9 +30,10 @@ public class accueilServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			req.setAttribute("listArticles", articlesVendusMng.getAllArticle());
+			List<Articles_vendus> listArticles = articlesVendusMng.getAllArticle();
+			req.setAttribute("listArticles", listArticles);
 			List<String> listPseudo = new ArrayList<String>();
-			for (Articles_vendus art : articlesVendusMng.getAllArticle()) {
+			for (Articles_vendus art : listArticles) {
 				listPseudo.add(utilisateurManager.getUtilisateurParId(art.getNoUtilisateur()).getPseudo());
 			}
 			req.setAttribute("listPseudo", listPseudo);
@@ -46,6 +47,27 @@ public class accueilServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		try {
+			List<Articles_vendus> listArticles = new ArrayList<Articles_vendus>();
+			if (req.getParameter("rechercheArticle").length() > 0 && req.getParameter("categorie").equals("Toutes")) {
+				listArticles = articlesVendusMng.getArticleMotCle(req.getParameter("rechercheArticle"));
+			}
+			if (req.getParameter("rechercheArticle").length() == 0 && !req.getParameter("categorie").equals("Toutes")) {
+				listArticles = articlesVendusMng.getArticleCate(req.getParameter("categorie"));
+			}
+			if (req.getParameter("rechercheArticle").length() > 0 && !req.getParameter("categorie").equals("Toutes")) {
+				listArticles = articlesVendusMng.getArticleMotCleCate(req.getParameter("rechercheArticle"), req.getParameter("categorie"));
+			}
+			req.setAttribute("listArticles", listArticles);
+			List<String> listPseudo = new ArrayList<String>();
+			for (Articles_vendus art : listArticles) {
+				listPseudo.add(utilisateurManager.getUtilisateurParId(art.getNoUtilisateur()).getPseudo());
+			}
+			req.setAttribute("listPseudo", listPseudo);
+			req.setAttribute("listCategorie", categorieManager.getAllCategorie());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		req.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(req, resp);
 	}
 }

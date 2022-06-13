@@ -1,0 +1,92 @@
+@charset "ISO-8859-1";
+
+body {
+<<<<<<< HEAD
+	
+=======
+>>>>>>> master
+}
+
+h2 {
+	text-align: center;
+}
+
+#filtre {
+	float: left;
+}
+
+#rechercheArticle {
+	text-align: center;
+}
+
+#rechercher {
+	margin: 3em;
+	padding-left: 5em;
+	padding-right: 5em;
+	padding-top: 2em;
+	padding-bottom: 2em;
+}
+
+table {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.cacher-profil {
+	display: none;
+}
+
+.afficher-profil {
+<<<<<<< HEAD
+	display: flex;
+	flex-direction: column;
+	height: 80vh;
+	justify-content: center;
+	align-items: center;
+	align-content: stretch;
+}
+
+.lignes-profil {
+	display: flex;
+	width: 280px;
+	justify-content: space-between;
+	margin-bottom: 10px;
+=======
+	display: block;
+>>>>>>> master
+}
+
+.connexion {
+	display: flex;
+	flex-direction: column;
+<<<<<<< HEAD
+	height: 80vh;
+=======
+	height: 100vh;
+>>>>>>> master
+	justify-content: center;
+	align-items: center;
+	align-content: stretch;
+}
+
+.form-connexion {
+	padding: 20px;
+	display: flex;
+	flex-direction: row;
+<<<<<<< HEAD
+	margin-bottom: 10px;
+=======
+	margin-bottom:10px;
+>>>>>>> master
+}
+
+.connexion-gauche {
+	float: left;
+	display: flex;
+	flex-direction: column;
+	margin: 5px;
+}
+
+.connexion-droite {
+	float: right;
+}

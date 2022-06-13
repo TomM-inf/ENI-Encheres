@@ -9,10 +9,11 @@ import fr.eni.encheres.dal.UtilisateurDAO;
 public class UtilisateurManager {
 
 	private UtilisateurDAO utilisateurDAO;
-	
+
 	public UtilisateurManager() {
 		utilisateurDAO = DAOFactory.getDAOUtilisateur();
 	}
+
 	public Utilisateur verifierConnexion(String login, String pw) throws BLLException {
 		Utilisateur utilisateur = null;
 		try {
@@ -22,7 +23,7 @@ public class UtilisateurManager {
 		}
 		return utilisateur;
 	}
-	
+
 	public Utilisateur getUtilisateurByPseudo(String pseudo) throws BLLException {
 		Utilisateur utilisateur = null;
 		try {
@@ -42,4 +43,28 @@ public class UtilisateurManager {
 		}
 		return utilisateur;
 	}
+
+	public Utilisateur getUtilisateurByEmail(String email) throws BLLException {
+		Utilisateur utilisateur = null;
+		try {
+			utilisateur = utilisateurDAO.getUtilisateurByEmail(email);
+		} catch (SQLException e) {
+			throw new BLLException(e);
+		}
+		return utilisateur;
+	}
+
+	public boolean inscription(Utilisateur user) throws BLLException {
+
+		boolean vretour = false;
+
+		try {
+			vretour = utilisateurDAO.inscription(user);
+		} catch (SQLException e) {
+			throw new BLLException(e);
+		}
+		
+		return vretour;
+	}
+
 }

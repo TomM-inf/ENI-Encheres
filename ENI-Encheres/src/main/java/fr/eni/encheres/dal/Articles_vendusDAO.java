@@ -14,4 +14,6 @@ public interface Articles_vendusDAO {
 	public List<Articles_vendus> getArticlesVendusParCategorie(String categorie) throws SQLException;
 	
 	public List<Articles_vendus> getArticlesVendusParMotCleEtCategorie(String motCle, String categorie) throws SQLException;
+	
+	public boolean addArticleVendu() throws SQLException;
 }

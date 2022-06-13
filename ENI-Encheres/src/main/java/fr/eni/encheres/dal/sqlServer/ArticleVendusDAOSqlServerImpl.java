@@ -17,6 +17,7 @@ public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 	private static final String GETMOTCLE = "SELECT * FROM ARTICLES_VENDUS WHERE nom_article LIKE ? ORDER BY date_debut_encheres";
 	private static final String GETCATE = "SELECT * FROM ARTICLES_VENDUS a, CATEGORIES c WHERE a.no_categorie = c.no_categorie AND c.libelle = ? ORDER BY date_debut_encheres"; 
 	private static final String GETMOTCLECATE = "SELECT * FROM ARTICLES_VENDUS a, CATEGORIES c WHERE a.no_categorie = c.no_categorie AND c.libelle = ? AND nom_article LIKE ? ORDER BY date_debut_encheres";
+	private static final String ADD_ARTICLE = "INSERT INTO ARTICLES_VENDUS VALUES (?, 'pour courir vite', convert(datetime,'05-06-22 10:34:09 AM',5), convert(datetime,'11-06-22 10:34:09 PM',5), 12, null, 'En cours', 3, 1);";
 	
 	@Override
 	public List<Articles_vendus> getArticlesVendus() throws SQLException {
@@ -174,6 +175,35 @@ public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 		}
 		return listArticles;
 		
+	}
+	@Override
+	public boolean addArticleVendu() throws SQLException {
+		Connection conn = null;
+		try {
+			conn = ConnectionProvider.getConnection();
+			conn.setAutoCommit(false);
+
+			PreparedStatement stmt = conn.prepareStatement(ADD_ARTICLE);
+			//stmt.setString(1, categorie);
+			//stmt.setString(2, "%"+motCle+"%");
+			int rs = stmt.executeUpdate();
+		} catch (SQLException e) {
+			conn.rollback();
+			e.printStackTrace();
+			throw e;
+
+		} finally {
+			// Fermer la connexion
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return false;
 	}
 
 }

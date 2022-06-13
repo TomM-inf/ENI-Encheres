@@ -18,6 +18,6 @@
 </head>
 <body>
 	<!-- Connecter le lien inscription -->
-	<div><span id="titre">ENI-Encheres</span> <span id="rightF"><a href="">Encheres</a>  <a href="">Vendre un article</a>  <a href="">Mon profil</a>  <a href="./deconnexion">DÃ©connexion</a></span></div>
+	<div><span id="titre">ENI-Encheres</span> <span id="rightF"><a href="">Encheres</a>  <a href="./vendreArticle">Vendre un article</a>  <a href="">Mon profil</a>  <a href="./deconnexion">Déconnexion</a></span></div>
 </body>
 </html>

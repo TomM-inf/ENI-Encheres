@@ -23,6 +23,10 @@ h2 {
 	padding-bottom: 2em;
 }
 
+div.formNouvelArticle{
+	flex-direction: row;
+}
+
 table {
 	margin-left: auto;
 	margin-right: auto;

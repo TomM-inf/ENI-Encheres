@@ -2,7 +2,6 @@ package fr.eni.encheres.dal.sqlServer;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,13 +26,21 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 	@Override
 	public Utilisateur verifierConnexion(String login, String pw) throws SQLException {
 		Connection conn = null;
-		Utilisateur utilisateur = null;
+		Utilisateur utilisateur = null;        
+		
+		// START--ENCRYPT PW
+		String passwordToHash = pw;
+		String securePassword = null;
+		
+        securePassword = getMD5EncryptedValue(passwordToHash);
+		// END--ENCRYPT PW
+        
 		try {
 			conn = ConnectionProvider.getConnection();
 			conn.setAutoCommit(false);
 			PreparedStatement stmt = conn.prepareStatement(CONNEXION_PSEUDO);
 			stmt.setString(1, login);
-			stmt.setString(2, pw);
+			stmt.setString(2, securePassword);
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				utilisateur = new Utilisateur();
@@ -45,18 +52,19 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 				utilisateur.setRue(rs.getString("rue"));
 				utilisateur.setCodePostal(rs.getString("code_postal"));
 				utilisateur.setVille(rs.getString("ville"));
-				utilisateur.setMotDePasse(rs.getString("mot_de_passe"));
+				utilisateur.setMotDePasse(securePassword);
 				utilisateur.setCredit(rs.getInt("credit"));
 				utilisateur.setAdministrateur(rs.getBoolean("administrateur"));
 			} else {
 				utilisateur = null;
 			}
+			
 			if (utilisateur != null) {
 				return utilisateur;
 			} else {
 				PreparedStatement statement = conn.prepareStatement(CONNEXION_EMAIL);
 				statement.setString(1, login);
-				statement.setString(2, pw);
+				statement.setString(2, securePassword);
 				ResultSet res = statement.executeQuery();
 				if (res.next()) {
 					utilisateur = new Utilisateur();
@@ -68,7 +76,7 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 					utilisateur.setRue(res.getString("rue"));
 					utilisateur.setCodePostal(res.getString("code_postal"));
 					utilisateur.setVille(res.getString("ville"));
-					utilisateur.setMotDePasse(res.getString("mot_de_passe"));
+					utilisateur.setMotDePasse(securePassword);
 					utilisateur.setCredit(res.getInt("credit"));
 					utilisateur.setAdministrateur(res.getBoolean("administrateur"));
 				} else {
@@ -235,7 +243,7 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 		String securePassword = null;
 		
 		// START--ENCRYPT PW		
-        securePassword = get_SHA_512_SecurePassword(passwordToHash);
+        securePassword = getMD5EncryptedValue(passwordToHash);
 		// END--ENCRYPT PW
 		
 		Connection conn = null;
@@ -281,38 +289,26 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 	}
 
 	
-    private static String get_SHA_512_SecurePassword(String passwordToHash) {
-        String generatedPassword = null;
-        String salt = null;
-        
-		try {
-			salt = getSalt();
-		} catch (NoSuchAlgorithmException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-        
+    public static String getMD5EncryptedValue(String password) {
+        final byte[] defaultBytes = password.getBytes();
         try {
-            MessageDigest md = MessageDigest.getInstance("SHA-512");
-            md.update(salt.getBytes());
-            byte[] bytes = md.digest(passwordToHash.getBytes());
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < bytes.length; i++) {
-                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16)
-                        .substring(1));
+            final MessageDigest md5MsgDigest = MessageDigest.getInstance("MD5");
+            md5MsgDigest.reset();
+            md5MsgDigest.update(defaultBytes);
+            final byte messageDigest[] = md5MsgDigest.digest();
+
+            final StringBuffer hexString = new StringBuffer();
+            for (final byte element : messageDigest) {
+                final String hex = Integer.toHexString(0xFF & element);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
             }
-            generatedPassword = sb.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            password = hexString + "";
+        } catch (final NoSuchAlgorithmException nsae) {
+            nsae.printStackTrace();
         }
-        return generatedPassword;
-    }
-	
-    // Add salt
-    private static String getSalt() throws NoSuchAlgorithmException {
-        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
-        byte[] salt = new byte[16];
-        sr.nextBytes(salt);
-        return salt.toString();
+        return password;
     }
 }

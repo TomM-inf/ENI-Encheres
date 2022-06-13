@@ -33,7 +33,10 @@
 		</form>
 
 	</div>
-	<input type="button" name="btnCreerCompte" value="Créer un compte">
+	<br />
+	<a href="${pageContext.request.contextPath}/inscription">
+		<input type="button" name="btnCreerCompte" value="Créer un compte">
+	</a>
 	</div>
 </body>
 </html>

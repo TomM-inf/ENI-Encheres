@@ -34,7 +34,9 @@
 
 	</div>
 	<br />
-	<input type="button" name="btnCreerCompte" value="Créer un compte">
+	<a href="${pageContext.request.contextPath}/inscription">
+		<input type="button" name="btnCreerCompte" value="Créer un compte">
+	</a>
 	</div>
 </body>
 </html>

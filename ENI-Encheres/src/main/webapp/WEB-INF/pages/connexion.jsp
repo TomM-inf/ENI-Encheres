@@ -23,7 +23,7 @@
 			</div>
 			<div class="connexion-droite">
 				<input type="text" name="identifiant"
-					value="${not empty identifiant ? identifiant : " "}" /><br /> <input
+					value="${not empty identifiant ? identifiant : ""}" /><br /> <input
 					type="password" name="motDePasse" id="" /><br /> <input
 					type="checkbox" name="chkBox"> <label>Se souvenir
 					de moi</label><br />

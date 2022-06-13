@@ -87,6 +87,7 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 
 	@Override
 	public Utilisateur getUtilisateurByPseudo(String pseudo) throws SQLException {
+
 		Connection conn = null;
 		Utilisateur utilisateur = null;
 		try {

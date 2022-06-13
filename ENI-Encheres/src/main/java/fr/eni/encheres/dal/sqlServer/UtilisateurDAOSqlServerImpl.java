@@ -166,6 +166,22 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 				utilisateur = null;
 			}
 		} catch (SQLException e) {
+			conn.rollback();
+			e.printStackTrace();
+			throw e;
+
+		} finally {
+			// Fermer la connexion
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return utilisateur;
+	}
 
 	@Override
 	public Utilisateur getUtilisateurParId(int id) throws SQLException {
@@ -300,5 +316,5 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
         sr.nextBytes(salt);
         return salt.toString();
     }
->>>>>>> feature/1003_inscription
+
 }

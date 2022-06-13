@@ -1,7 +1,4 @@
 /build/
-/apache-tomcat-9.0.62/
-/apache-tomcat-9.0.62-src/
 .settings/
 .classpath
-ENI-Encheres/.classpath
-ENI-Encheres/.settings/org.eclipse.wst.common.project.facet.core.xml
+/bin

@@ -1,7 +1,6 @@
 @charset "ISO-8859-1";
 
 body {
-	border: dashed red;
 }
 
 h2 {
@@ -35,4 +34,31 @@ table {
 
 .afficher-profil {
 	display: block;
+}
+
+.connexion {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	justify-content: center;
+	align-items: center;
+	align-content: stretch;
+}
+
+.form-connexion {
+	padding: 20px;
+	display: flex;
+	flex-direction: row;
+	margin-bottom:10px;
+}
+
+.connexion-gauche {
+	float: left;
+	display: flex;
+	flex-direction: column;
+	margin: 5px;
+}
+
+.connexion-droite {
+	float: right;
 }

@@ -1,7 +1,6 @@
 @charset "ISO-8859-1";
 
 body {
-	
 }
 
 h2 {
@@ -62,7 +61,7 @@ table {
 	padding: 20px;
 	display: flex;
 	flex-direction: row;
-	margin-bottom: 10px;
+	margin-bottom:10px;
 }
 
 .connexion-gauche {

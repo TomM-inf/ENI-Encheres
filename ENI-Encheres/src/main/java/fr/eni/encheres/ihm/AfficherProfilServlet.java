@@ -48,6 +48,7 @@ public class AfficherProfilServlet extends HttpServlet{
 		} catch (BLLException e) {
 			e.printStackTrace();
 		}
+		
 	}
 	
 	@Override

@@ -29,9 +29,14 @@ public class ConnexionServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/pages/connexion.jsp").forward(request, response);
+		if(request.getSession().getAttribute("connectAfterRegister") == "true") {
+			request.getSession().removeAttribute("connectAfterRegister");
+			doPost(request, response);
+		} else {
+			request.getRequestDispatcher("/WEB-INF/pages/connexion.jsp").forward(request, response);
+		}
 		
-//		response.sendRedirect("/WEB-INF/pages/connexion.jsp");
+		return;
 	}
 
 	/**
@@ -42,6 +47,11 @@ public class ConnexionServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String login = req.getParameter("identifiant");
 		String pwd = req.getParameter("motDePasse");
+		
+		if(login == null) {
+			login = String.valueOf(req.getSession().getAttribute("pseudo"));
+			pwd = String.valueOf(req.getSession().getAttribute("pw"));
+		}
 		
 			Utilisateur utilisateur = null;
 			try {

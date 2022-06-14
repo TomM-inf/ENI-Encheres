@@ -18,7 +18,6 @@ public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 	private static final String GETCATE = "SELECT * FROM ARTICLES_VENDUS a, CATEGORIES c WHERE a.no_categorie = c.no_categorie AND c.libelle = ? ORDER BY date_debut_encheres DESC"; 
 	private static final String GETMOTCLECATE = "SELECT * FROM ARTICLES_VENDUS a, CATEGORIES c WHERE a.no_categorie = c.no_categorie AND c.libelle = ? AND nom_article LIKE ? ORDER BY date_debut_encheres DESC";
 	private static final String ADD_ARTICLE = "INSERT INTO ARTICLES_VENDUS VALUES (?, ?, convert(datetime, ?,103), convert(datetime, ?,103), ?, null, ?, ?, ?)";
-	//private static final String ADD_ARTICLE = "INSERT INTO ARTICLES_VENDUS VALUES (Test, test, convert(datetime, 13-06-2022,103), convert(datetime, 17-06-2022,103), 11, null, Créée, 1013, 3)";
 	
 	@Override
 	public List<Articles_vendus> getArticlesVendus() throws SQLException {

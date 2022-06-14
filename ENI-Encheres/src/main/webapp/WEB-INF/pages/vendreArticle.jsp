@@ -83,6 +83,7 @@
 				</div>
 			</div>
 		</div>
+		<input type="hidden" name="utilisateur" value="${sessionScope.utilisateur.noUtilisateur}"/>
 	</form>
 </body>
 </html>

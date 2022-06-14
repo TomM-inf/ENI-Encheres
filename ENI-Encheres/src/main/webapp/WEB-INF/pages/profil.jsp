@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<jsp:include page="./headerConnecte.jsp"></jsp:include>
 <!-- pseudo ville cp -->
 <div class="${simple ? 'afficher-profil' : 'cacher-profil'}">
 <div class="lignes-profil"><label>Pseudo :</label><input type="text" value="${utilisateur.pseudo}" disabled="disabled"></div>

@@ -25,6 +25,7 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 			+ "SET pseudo = ?, nom = ?,prenom= ?,email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?"
 			+ " WHERE no_utilisateur = ?;";
 
+
 	@Override
 	public Utilisateur verifierConnexion(String login, String pw) throws SQLException {
 		Connection conn = null;
@@ -360,6 +361,31 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 		}
 		return password;
 	}
+
+  
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            md.update(salt.getBytes());
+            byte[] bytes = md.digest(passwordToHash.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < bytes.length; i++) {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16)
+                        .substring(1));
+            }
+            generatedPassword = sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return generatedPassword;
+    }
+	
+    // Add salt
+    private static String getSalt() throws NoSuchAlgorithmException {
+        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
+        byte[] salt = new byte[16];
+        sr.nextBytes(salt);
+        return salt.toString();
+    }
 
 	@Override
 	public boolean isAlphaNumeric(String s) {

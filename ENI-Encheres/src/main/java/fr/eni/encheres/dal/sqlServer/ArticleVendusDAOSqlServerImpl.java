@@ -180,6 +180,8 @@ public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 	@Override
 	public boolean addArticleVendu(String nomArticle, String description, Date dateDebut, Date dateFin, int prixInitial, String etatVente, int noUtilisateur, int noCategorie) throws SQLException {
 		Connection conn = null;
+		boolean retour = false;
+		int rs;
 		try {
 			conn = ConnectionProvider.getConnection();
 			conn.setAutoCommit(false);
@@ -193,7 +195,7 @@ public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 			stmt.setString(6, etatVente);
 			stmt.setInt(7, noUtilisateur);
 			stmt.setInt(8, noCategorie);
-			int rs = stmt.executeUpdate();
+			rs = stmt.executeUpdate();
 		} catch (SQLException e) {
 			conn.rollback();
 			e.printStackTrace();
@@ -210,7 +212,10 @@ public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 				}
 			}
 		}
-		return false;
+		if (rs != 0) {
+			retour = true;
+		}
+		return retour;
 	}
 
 }

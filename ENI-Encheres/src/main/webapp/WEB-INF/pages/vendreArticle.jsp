@@ -24,20 +24,20 @@
 	<h2>Nouvelle vente</h2>
 
 	<form class="row g-3 needs-validation" method="post">
-		<div name="formNouvelArticle">
+		<div class="formNouvelArticle">
 			<div class="col-md-4">
 				<label for="validationCustom01" class="form-label">Article :</label>
 				<input type="text" class="form-control" id="validationCustom01"
-					required>
+					name="nomArticle" required>
 			</div>
 			<div class="col-md-4">
 				<label for="validationCustom02" class="form-label">Description
 					:</label>
-				<textarea class="form-control" id="validationCustom02" required></textarea>
+				<textarea class="form-control" id="validationCustom02" name="description" required></textarea>
 			</div>
 			<div class="col-md-3">
 				<label for="validationCustom04" class="form-label">Categorie
-					:</label> <select class="form-select" id="validationCustom04" required>
+					:</label> <select class="form-select" id="validationCustom04" name="categorie" required>
 					<option value="Toutes" selected>Toutes</option>
 					<c:forEach items="${listCategorie}" var="value">
 						<option value="${value.libelle}"><c:out
@@ -52,31 +52,35 @@
 			<div class="col-md-4">
 				<label for="validationCustom01" class="form-label">Mise à
 					prix :</label> <input type="number" class="form-control"
-					id="validationCustom01" required>
+					id="validationCustom01" name="prixInitial" required>
 			</div>
 			<div class="col-md-4">
 				<label for="startDate">Début de l'enchère : </label> <input
-					id="startDate" class="form-control" type="date" />
+					id="startDate" class="form-control" type="date" name="dateDebut" />
 			</div>
 			<div class="col-md-4">
-				<label for="endDate">Fin de l'enchère : </label> <input
-					id="endDate" class="form-control" type="date" />
+				<label for="endDate">Fin de l'enchère : </label> <input id="endDate"
+					class="form-control" type="date" name="dateFin"/>
 			</div>
-			<div class="col-md-4">
-				<label for="validationCustom01" class="form-label">Rue :</label> <input
-					type="text" class="form-control" id="validationCustom01" required>
-			</div>
-			<div class="col-md-4">
-				<label for="validationCustom01" class="form-label">Code
-					postal :</label> <input type="text" class="form-control"
-					id="validationCustom01" required>
-			</div>
-			<div class="col-md-4">
-				<label for="validationCustom01" class="form-label">Ville :</label> <input
-					type="text" class="form-control" id="validationCustom01" required>
-			</div>
-			<div class="col-12">
-				<button class="btn btn-primary" type="submit">Enregistrer</button>
+			<div class="venteArticleRetrait">
+				Retrait
+				<div class="col-md-4">
+					<label for="validationCustom01" class="form-label">Rue :</label> <input
+						type="text" class="form-control" id="validationCustom01" required>
+				</div>
+				<div class="col-md-4">
+					<label for="validationCustom01" class="form-label">Code
+						postal :</label> <input type="text" class="form-control"
+						id="validationCustom01" required>
+				</div>
+				<div class="col-md-4">
+					<label for="validationCustom01" class="form-label">Ville :</label>
+					<input type="text" class="form-control" id="validationCustom01"
+						required>
+				</div>
+				<div class="col-12">
+					<button class="btn btn-primary" type="submit">Enregistrer</button>
+				</div>
 			</div>
 		</div>
 	</form>

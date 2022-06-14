@@ -1,5 +1,6 @@
 package fr.eni.encheres.bll;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,5 +55,15 @@ public class ArticlesVendusManager {
 			throw new BLLException();
 		}
 		return maListe;
+	}
+	
+	public boolean addArticleVendu(String nomArticle, String description, Date dateDebut, Date dateFin, int prixInitial, String etatVente, int noUtilisateur, int noCategorie) throws BLLException {
+		boolean retour = false;
+		try {
+			retour = articleVendusDAO.addArticleVendu(nomArticle, description, dateDebut, dateFin, prixInitial, etatVente, noUtilisateur, noCategorie);
+		} catch (SQLException e) {
+			throw new BLLException();
+		}
+		return retour;
 	}
 }

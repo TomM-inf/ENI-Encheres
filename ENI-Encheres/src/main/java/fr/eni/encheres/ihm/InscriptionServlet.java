@@ -52,7 +52,7 @@ public class InscriptionServlet extends HttpServlet {
 		req.getSession().setAttribute("prenom", prenom);
 		req.getSession().setAttribute("tel", tel);
 		req.getSession().setAttribute("cp", cp);
-//		req.getSession().setAttribute("pw", pw);
+		req.getSession().setAttribute("pw", pw);
 		
 		req.getSession().setAttribute("nom", nom);
 		req.getSession().setAttribute("email", email);
@@ -116,7 +116,7 @@ public class InscriptionServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		req.getSession().setAttribute("pseudo", null);
+//		req.getSession().setAttribute("pseudo", null);
 		req.getSession().setAttribute("prenom", null);
 		req.getSession().setAttribute("tel", null);
 		req.getSession().setAttribute("cp", null);
@@ -130,7 +130,10 @@ public class InscriptionServlet extends HttpServlet {
 
 		if(registerStatus == true) {
 			req.getSession().setAttribute("infoMsg", "Enregistré avec succès.");
-			res.sendRedirect(req.getContextPath() + "/");
+			req.getSession().setAttribute("connectAfterRegister", "true");
+			
+			res.sendRedirect(req.getContextPath() + "/connexion");
+
 		} else {
 			req.getSession().setAttribute("infoMsg", "Échec lors de l'enregistrement.");
 			res.sendRedirect(req.getContextPath() + "/inscription");

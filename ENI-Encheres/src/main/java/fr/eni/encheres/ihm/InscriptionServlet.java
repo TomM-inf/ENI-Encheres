@@ -75,13 +75,13 @@ public class InscriptionServlet extends HttpServlet {
 		
 		try {
 			if(UtilisateurMger.getUtilisateurByEmail(email) instanceof Utilisateur) {
-				req.getSession().setAttribute("infoMsg", "Un utilisateur est déjà enregistré avec cet email.");
+				req.getSession().setAttribute("infoMsg", "Un utilisateur est dï¿½jï¿½ enregistrï¿½ avec cet email.");
 				res.sendRedirect(req.getContextPath() + "/inscription");
 				return;
 			}
 			
 			if(UtilisateurMger.getUtilisateurByPseudo(pseudo) instanceof Utilisateur) {
-				req.getSession().setAttribute("infoMsg", "Un utilisateur est déjà enregistré avec ce pseudo.");
+				req.getSession().setAttribute("infoMsg", "Un utilisateur est dï¿½jï¿½ enregistrï¿½ avec ce pseudo.");
 				res.sendRedirect(req.getContextPath() + "/inscription");
 				return;
 			}
@@ -97,7 +97,7 @@ public class InscriptionServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		req.getSession().setAttribute("infoMsg", "Enregistré avec succès.");
+		req.getSession().setAttribute("infoMsg", "EnregistrÃ© avec succÃ¨s.");
 		res.sendRedirect(req.getContextPath() + "/");
 		return;
 		

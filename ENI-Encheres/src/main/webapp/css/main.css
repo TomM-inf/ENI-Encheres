@@ -87,3 +87,17 @@ table {
 .connexion-droite {
 	float: right;
 }
+
+.all-groups {
+	display: block;
+}
+
+.label-input-group {
+	display: flex;
+	flex-direction: row;
+}
+
+.left-and-right {
+	display: flex;
+	flex-direction: row;
+}

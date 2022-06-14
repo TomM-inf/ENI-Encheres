@@ -9,7 +9,7 @@ import fr.eni.encheres.dal.UtilisateurDAO;
 public class UtilisateurManager {
 
 	private UtilisateurDAO utilisateurDAO;
-
+	
 	public UtilisateurManager() {
 		utilisateurDAO = DAOFactory.getDAOUtilisateur();
 	}

@@ -9,7 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import fr.eni.encheres.bll.ArticlesVendusManager;
 import fr.eni.encheres.bll.CategorieManager;
 import fr.eni.encheres.bll.UtilisateurManager;
@@ -41,6 +40,7 @@ public class DeconnexionServlet extends HttpServlet {
 			req.setAttribute("listCategorie", categorieManager.getAllCategorie());
 		} catch (Exception e) {
 		}
-		req.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(req, resp);
+		resp.sendRedirect(req.getContextPath() + "/");
+
 	}
 }

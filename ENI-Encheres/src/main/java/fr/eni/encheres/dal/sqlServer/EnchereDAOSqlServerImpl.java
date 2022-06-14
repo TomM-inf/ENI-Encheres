@@ -10,7 +10,7 @@ import fr.eni.encheres.dal.EnchereDAO;
 
 public class EnchereDAOSqlServerImpl implements EnchereDAO {
 
-	private static final String RECUPERER_DERNIER_ENCHERISSEUR = "SELECT TOP 1 no_utilisateur ,MAX(date_enchere) as max_date from ENCHERES WHERE no_article = ? group by no_utilisateur;";
+	private static final String RECUPERER_DERNIER_ENCHERISSEUR = "SELECT top 1 no_utilisateur from ENCHERES WHERE no_article = ? group by date_enchere,no_utilisateur order BY CAST(date_enchere AS DATE) desc;";
 
 	@Override
 	public int getDernierEncherisseurByIDArticleVendu(int idArticleVendu) throws SQLException {

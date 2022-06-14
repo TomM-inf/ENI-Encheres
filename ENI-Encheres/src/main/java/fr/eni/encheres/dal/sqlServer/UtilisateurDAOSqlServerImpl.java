@@ -54,6 +54,7 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 				utilisateur.setVille(rs.getString("ville"));
 				utilisateur.setMotDePasse(securePassword);
 				utilisateur.setCredit(rs.getInt("credit"));
+				utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
 				utilisateur.setAdministrateur(rs.getBoolean("administrateur"));
 			} else {
 				utilisateur = null;

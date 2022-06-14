@@ -10,5 +10,6 @@ public interface UtilisateurDAO {
 	public Utilisateur getUtilisateurByPseudo(String pseudo) throws SQLException;
 	public Utilisateur getUtilisateurByEmail(String email) throws SQLException;
 	public boolean inscription(Utilisateur user) throws SQLException;
+	public boolean isAlphaNumeric(String s);
 
 }

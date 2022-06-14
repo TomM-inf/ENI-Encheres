@@ -56,5 +56,13 @@ public class UtilisateurManager {
 		
 		return vretour;
 	}
+	
+	public boolean isAlphaNumeric(String s) {
+		boolean vretour = false;
+		
+		vretour = utilisateurDAO.isAlphaNumeric(s);
+		
+		return vretour;
+	}
 
 }

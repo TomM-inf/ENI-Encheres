@@ -213,7 +213,9 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 			stmt.setBoolean(11, user.isAdministrateur());
 			
 			int row = stmt.executeUpdate();
-			System.out.println(user.toString());
+			if(row > 0) {
+				vretour = true;
+			}
 			
 		} catch (SQLException e) {
 
@@ -270,4 +272,10 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
         sr.nextBytes(salt);
         return salt.toString();
     }
+
+	@Override
+	public boolean isAlphaNumeric(String s) {
+        return s != null && s.matches("^[a-zA-Z0-9]*$");
+	}
+    
 }

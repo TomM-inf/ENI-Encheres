@@ -96,7 +96,6 @@
 				</div>
 			</div>
 		</div>
-
 		<input type="submit" value="Créer">
 	</form>
 

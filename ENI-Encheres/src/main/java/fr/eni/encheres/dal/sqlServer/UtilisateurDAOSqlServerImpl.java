@@ -253,7 +253,6 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 			conn = ConnectionProvider.getConnection();
 			PreparedStatement stmt = conn.prepareStatement(INSCRIPTION);
 			
-			stmt.setInt(1, user.getNoUtilisateur());
 			stmt.setString(1, user.getPseudo());
 			stmt.setString(2, user.getNom());
 			stmt.setString(3, user.getPrenom());

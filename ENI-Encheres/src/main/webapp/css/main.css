@@ -87,8 +87,7 @@ table {
 .connexion-droite {
 	float: right;
 }
-<<<<<<< HEAD
-=======
+
 
 .all-groups {
 	display: block;
@@ -103,4 +102,3 @@ table {
 	display: flex;
 	flex-direction: row;
 }
->>>>>>> refs/heads/master

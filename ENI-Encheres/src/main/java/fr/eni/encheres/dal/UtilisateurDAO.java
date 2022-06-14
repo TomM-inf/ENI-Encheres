@@ -13,5 +13,6 @@ public interface UtilisateurDAO {
 	public boolean inscription(Utilisateur user) throws SQLException;
 	public String getMD5EncryptedValue(String password);
 	public boolean modificationUtilisateur(Utilisateur utilisateur) throws SQLException;
+	public boolean isAlphaNumeric(String s);
 
 }

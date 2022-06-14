@@ -20,6 +20,7 @@
 	%>
 	<h1>Mon profil</h1>
 	<form action="${pageContext.request.contextPath }/modifierProfil"
+	<h1>Mon profil</h1>
 		method="post">
 		<div class="left-and-right">
 			<div class="left all-groups">
@@ -41,6 +42,7 @@
 				<div class="label-input-group">
 					<!--  CP -->
 					<label for="cp">Code postal :</label> <input type="text" name="cp"
+
 						value="${utilisateur.codePostal}">
 				</div>
 				<div class="label-input-group">
@@ -54,8 +56,8 @@
 						name="new-pw" value="">
 				</div>
 				<div class="label-input-group">
-					<!--  Crédits -->
-					<label for="credits">Crédits:</label> <input type="text"
+					<!--  CrÃ©dits -->
+					<label for="credits">CrÃ©dits:</label> <input type="text"
 						name="credits" value="${utilisateur.credit}" disabled="disabled">
 				</div>
 			</div>

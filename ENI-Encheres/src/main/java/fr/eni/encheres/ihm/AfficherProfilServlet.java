@@ -35,7 +35,6 @@ public class AfficherProfilServlet extends HttpServlet {
 		try {
 			// TODO Gérer quel affichage en fonction des boolean (simple,
 			// enchereRemporte,monProfil)
-//			pseudo = "tdb";
 			utilisateur = utilisateurMger.getUtilisateurByPseudo(pseudo);
 			Utilisateur utilisateurSession = (Utilisateur) req.getSession().getAttribute("utilisateur");
 			req.setAttribute("utilisateur", utilisateur);

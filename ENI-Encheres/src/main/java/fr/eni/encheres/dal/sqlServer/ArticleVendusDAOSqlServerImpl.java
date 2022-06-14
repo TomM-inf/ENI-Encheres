@@ -13,10 +13,11 @@ import fr.eni.encheres.dal.ConnectionProvider;
 
 public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 
-	private static final String GETALL = "SELECT * FROM ARTICLES_VENDUS ORDER BY date_debut_encheres";
-	private static final String GETMOTCLE = "SELECT * FROM ARTICLES_VENDUS WHERE nom_article LIKE ? ORDER BY date_debut_encheres";
-	private static final String GETCATE = "SELECT * FROM ARTICLES_VENDUS a, CATEGORIES c WHERE a.no_categorie = c.no_categorie AND c.libelle = ? ORDER BY date_debut_encheres"; 
-	private static final String GETMOTCLECATE = "SELECT * FROM ARTICLES_VENDUS a, CATEGORIES c WHERE a.no_categorie = c.no_categorie AND c.libelle = ? AND nom_article LIKE ? ORDER BY date_debut_encheres";
+	private static final String GETALL = "SELECT * FROM ARTICLES_VENDUS ORDER BY date_debut_encheres DESC";
+	private static final String GETMOTCLE = "SELECT * FROM ARTICLES_VENDUS WHERE nom_article LIKE ? ORDER BY date_debut_encheres DESC";
+	private static final String GETCATE = "SELECT * FROM ARTICLES_VENDUS a, CATEGORIES c WHERE a.no_categorie = c.no_categorie AND c.libelle = ? ORDER BY date_debut_encheres DESC"; 
+	private static final String GETMOTCLECATE = "SELECT * FROM ARTICLES_VENDUS a, CATEGORIES c WHERE a.no_categorie = c.no_categorie AND c.libelle = ? AND nom_article LIKE ? ORDER BY date_debut_encheres DESC";
+	private static final String ADD_ARTICLE = "INSERT INTO ARTICLES_VENDUS VALUES (?, ?, ?, ?, ?, null, ?, ?, ?);";
 	
 	@Override
 	public List<Articles_vendus> getArticlesVendus() throws SQLException {

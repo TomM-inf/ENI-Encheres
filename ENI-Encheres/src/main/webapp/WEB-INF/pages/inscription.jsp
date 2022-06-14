@@ -64,7 +64,7 @@
 
 				<div class="label-input-group">
 					<!--  PW -->
-					<label for="pw">Mot de passe :</label> <input type="text" name="pw" value="${pw}">
+					<label for="pw">Mot de passe :</label> <input type="text" name="pw" value="">
 				</div>
 			</div>
 
@@ -92,7 +92,7 @@
 				<div class="label-input-group">
 					<!--  PW Confirmation -->
 					<label for="confirm-pw">Confirmation Mot de passe :</label> <input
-						type="text" name="confirm-pw" value="${confirmPW}">
+						type="text" name="confirm-pw" value="">
 				</div>
 			</div>
 		</div>

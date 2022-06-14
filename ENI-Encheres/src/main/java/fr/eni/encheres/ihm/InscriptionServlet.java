@@ -52,13 +52,13 @@ public class InscriptionServlet extends HttpServlet {
 		req.getSession().setAttribute("prenom", prenom);
 		req.getSession().setAttribute("tel", tel);
 		req.getSession().setAttribute("cp", cp);
-		req.getSession().setAttribute("pw", pw);
+//		req.getSession().setAttribute("pw", pw);
 		
 		req.getSession().setAttribute("nom", nom);
 		req.getSession().setAttribute("email", email);
 		req.getSession().setAttribute("rue", rue);
 		req.getSession().setAttribute("ville", ville);
-		req.getSession().setAttribute("confirmPW", confirmPW);
+//		req.getSession().setAttribute("confirmPW", confirmPW);
 
 		if (!pw.equals(confirmPW)) {
 			req.getSession().setAttribute("infoMsg", "Veuillez saisir un mot de passe identique dans les deux champs.");

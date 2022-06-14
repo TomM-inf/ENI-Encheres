@@ -49,14 +49,17 @@ public class accueilServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			List<Articles_vendus> listArticles = new ArrayList<Articles_vendus>();
-			if (req.getParameter("rechercheArticle").length() > 0 && req.getParameter("categorie").equals("Toutes")) {
+			if (req.getParameter("rechercheArticle").trim().length() > 0 && req.getParameter("categorie").trim().equalsIgnoreCase("Toutes")) {
 				listArticles = articlesVendusMng.getArticleMotCle(req.getParameter("rechercheArticle"));
 			}
-			if (req.getParameter("rechercheArticle").length() == 0 && !req.getParameter("categorie").equals("Toutes")) {
+			if (req.getParameter("rechercheArticle").isBlank() && !req.getParameter("categorie").trim().equalsIgnoreCase("Toutes")) {
 				listArticles = articlesVendusMng.getArticleCate(req.getParameter("categorie"));
 			}
-			if (req.getParameter("rechercheArticle").length() > 0 && !req.getParameter("categorie").equals("Toutes")) {
+			if (req.getParameter("rechercheArticle").trim().length() > 0 && !req.getParameter("categorie").trim().equalsIgnoreCase("Toutes")) {
 				listArticles = articlesVendusMng.getArticleMotCleCate(req.getParameter("rechercheArticle"), req.getParameter("categorie"));
+			}
+			if (req.getParameter("rechercheArticle").isBlank() && req.getParameter("categorie").trim().equalsIgnoreCase("Toutes")) {
+				listArticles = articlesVendusMng.getAllArticle();
 			}
 			req.setAttribute("listArticles", listArticles);
 			List<String> listPseudo = new ArrayList<String>();

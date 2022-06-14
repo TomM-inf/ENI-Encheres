@@ -6,6 +6,8 @@
 <link rel="stylesheet" href="./css/main.css">
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="./js/functions.js" type="text/javascript"></script>
 </head>
 <body>
 <jsp:include page="./headerConnecte.jsp"></jsp:include>

@@ -1,7 +1,6 @@
 package fr.eni.encheres.dal.sqlServer;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +17,8 @@ public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 	private static final String GETMOTCLE = "SELECT * FROM ARTICLES_VENDUS WHERE nom_article LIKE ? ORDER BY date_debut_encheres DESC";
 	private static final String GETCATE = "SELECT * FROM ARTICLES_VENDUS a, CATEGORIES c WHERE a.no_categorie = c.no_categorie AND c.libelle = ? ORDER BY date_debut_encheres DESC"; 
 	private static final String GETMOTCLECATE = "SELECT * FROM ARTICLES_VENDUS a, CATEGORIES c WHERE a.no_categorie = c.no_categorie AND c.libelle = ? AND nom_article LIKE ? ORDER BY date_debut_encheres DESC";
-	private static final String ADD_ARTICLE = "INSERT INTO ARTICLES_VENDUS VALUES (?, ?, ?, ?, ?, null, ?, ?, ?);";
+	private static final String ADD_ARTICLE = "INSERT INTO ARTICLES_VENDUS VALUES (?, ?, convert(datetime, ?,103), convert(datetime, ?,103), ?, null, ?, ?, ?)";
+	//private static final String ADD_ARTICLE = "INSERT INTO ARTICLES_VENDUS VALUES (Test, test, convert(datetime, 13-06-2022,103), convert(datetime, 17-06-2022,103), 11, null, Créée, 1013, 3)";
 	
 	@Override
 	public List<Articles_vendus> getArticlesVendus() throws SQLException {
@@ -178,19 +178,18 @@ public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 		
 	}
 	@Override
-	public boolean addArticleVendu(String nomArticle, String description, Date dateDebut, Date dateFin, int prixInitial, String etatVente, int noUtilisateur, int noCategorie) throws SQLException {
+	public boolean addArticleVendu(String nomArticle, String description, String dateDebut, String dateFin, int prixInitial, String etatVente, int noUtilisateur, int noCategorie) throws SQLException {
 		Connection conn = null;
 		boolean retour = false;
 		int rs;
 		try {
 			conn = ConnectionProvider.getConnection();
-			conn.setAutoCommit(false);
 
 			PreparedStatement stmt = conn.prepareStatement(ADD_ARTICLE);
 			stmt.setString(1, nomArticle);
 			stmt.setString(2, description);
-			stmt.setDate(3, dateDebut);
-			stmt.setDate(4, dateFin);
+			stmt.setString(3, dateDebut);
+			stmt.setString(4, dateFin);
 			stmt.setInt(5, prixInitial);
 			stmt.setString(6, etatVente);
 			stmt.setInt(7, noUtilisateur);

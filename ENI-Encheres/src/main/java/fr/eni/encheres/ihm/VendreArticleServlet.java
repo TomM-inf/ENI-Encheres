@@ -40,12 +40,13 @@ public class VendreArticleServlet extends HttpServlet {
 			String description = req.getParameter("description");
 			String dateDebut = req.getParameter("dateDebut");
 			String dateFin = req.getParameter("dateFin");
-			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			java.sql.Date sqlDateDebut = new java.sql.Date(df.parse(dateDebut).getTime());
-			java.sql.Date sqlDateFin = new java.sql.Date(df.parse(dateFin).getTime());
+			String sqlDateDebut = dateDebut.substring(8, 10).concat("-").concat(dateDebut.substring(5, 7)).concat("-").concat(dateDebut.substring(0, 4));
+			String sqlDateFin = dateFin.substring(8, 10).concat("-").concat(dateFin.substring(5, 7)).concat("-").concat(dateFin.substring(0, 4));
 			Integer prixInital = Integer.parseInt(req.getParameter("prixInitial"));
-			System.out.println(req.getParameter("utilisateur"));
-			//articleVendusManager.addArticleVendu(nomArticle, description, sqlDateDebut, sqlDateFin, prixInital, "Créée", 0, 0);
+			Integer noUtilisateur = Integer.parseInt(req.getParameter("utilisateur"));
+			String nomCategorie = req.getParameter("categorie");
+			Integer noCategorie = categorieManager.getCategorieParNom(nomCategorie).getNumCategorie();
+			articleVendusManager.addArticleVendu(nomArticle, description, sqlDateDebut, sqlDateFin, prixInital, "Créée", noUtilisateur, noCategorie);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

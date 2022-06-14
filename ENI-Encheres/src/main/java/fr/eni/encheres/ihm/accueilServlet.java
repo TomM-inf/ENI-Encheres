@@ -58,6 +58,9 @@ public class accueilServlet extends HttpServlet{
 			if (req.getParameter("rechercheArticle").trim().length() > 0 && !req.getParameter("categorie").trim().equalsIgnoreCase("Toutes")) {
 				listArticles = articlesVendusMng.getArticleMotCleCate(req.getParameter("rechercheArticle"), req.getParameter("categorie"));
 			}
+			if (req.getParameter("rechercheArticle").isBlank() && req.getParameter("categorie").trim().equalsIgnoreCase("Toutes")) {
+				listArticles = articlesVendusMng.getAllArticle();
+			}
 			req.setAttribute("listArticles", listArticles);
 			List<String> listPseudo = new ArrayList<String>();
 			for (Articles_vendus art : listArticles) {

@@ -82,4 +82,12 @@ public class UtilisateurManager {
 		return res;
 	}
 
+	public boolean isAlphaNumeric(String s) {
+		boolean vretour = false;
+		
+		vretour = utilisateurDAO.isAlphaNumeric(s);
+		
+		return vretour;
+	}
+
 }

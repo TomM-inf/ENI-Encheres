@@ -1,5 +1,6 @@
 package fr.eni.encheres.dal;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -15,5 +16,5 @@ public interface Articles_vendusDAO {
 	
 	public List<Articles_vendus> getArticlesVendusParMotCleEtCategorie(String motCle, String categorie) throws SQLException;
 	
-	public boolean addArticleVendu() throws SQLException;
+	public boolean addArticleVendu(String nomArticle, String description, Date dateDebut, Date dateFin, int prixInitial, String etatVente, int noUtilisateur, int noCategorie) throws SQLException;
 }

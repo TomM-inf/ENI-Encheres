@@ -1,6 +1,7 @@
 package fr.eni.encheres.dal.sqlServer;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,7 +18,7 @@ public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 	private static final String GETMOTCLE = "SELECT * FROM ARTICLES_VENDUS WHERE nom_article LIKE ? ORDER BY date_debut_encheres";
 	private static final String GETCATE = "SELECT * FROM ARTICLES_VENDUS a, CATEGORIES c WHERE a.no_categorie = c.no_categorie AND c.libelle = ? ORDER BY date_debut_encheres"; 
 	private static final String GETMOTCLECATE = "SELECT * FROM ARTICLES_VENDUS a, CATEGORIES c WHERE a.no_categorie = c.no_categorie AND c.libelle = ? AND nom_article LIKE ? ORDER BY date_debut_encheres";
-	private static final String ADD_ARTICLE = "INSERT INTO ARTICLES_VENDUS VALUES (?, 'pour courir vite', convert(datetime,'05-06-22 10:34:09 AM',5), convert(datetime,'11-06-22 10:34:09 PM',5), 12, null, 'En cours', 3, 1);";
+	private static final String ADD_ARTICLE = "INSERT INTO ARTICLES_VENDUS VALUES (?, ?, ?, ?, ?, null, ?, ?, ?);";
 	
 	@Override
 	public List<Articles_vendus> getArticlesVendus() throws SQLException {
@@ -177,15 +178,21 @@ public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 		
 	}
 	@Override
-	public boolean addArticleVendu() throws SQLException {
+	public boolean addArticleVendu(String nomArticle, String description, Date dateDebut, Date dateFin, int prixInitial, String etatVente, int noUtilisateur, int noCategorie) throws SQLException {
 		Connection conn = null;
 		try {
 			conn = ConnectionProvider.getConnection();
 			conn.setAutoCommit(false);
 
 			PreparedStatement stmt = conn.prepareStatement(ADD_ARTICLE);
-			//stmt.setString(1, categorie);
-			//stmt.setString(2, "%"+motCle+"%");
+			stmt.setString(1, nomArticle);
+			stmt.setString(2, description);
+			stmt.setDate(3, dateDebut);
+			stmt.setDate(4, dateFin);
+			stmt.setInt(5, prixInitial);
+			stmt.setString(6, etatVente);
+			stmt.setInt(7, noUtilisateur);
+			stmt.setInt(8, noCategorie);
 			int rs = stmt.executeUpdate();
 		} catch (SQLException e) {
 			conn.rollback();

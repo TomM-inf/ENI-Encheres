@@ -88,7 +88,9 @@ public class ModifierProfilServlet extends HttpServlet {
 		Utilisateur utilisateurNouvellesInfos = utilisateurSession;
 		utilisateurNouvellesInfos.setCodePostal(cp);
 		utilisateurNouvellesInfos.setEmail(email);
-		utilisateurNouvellesInfos.setMotDePasse(confirmPW);
+		if(!newPW.isEmpty() && !confirmPW.isEmpty()) {
+			utilisateurNouvellesInfos.setMotDePasse(confirmPW);
+		}
 		utilisateurNouvellesInfos.setNom(nom);
 		utilisateurNouvellesInfos.setPrenom(prenom);
 		utilisateurNouvellesInfos.setPseudo(pseudo);
@@ -102,7 +104,7 @@ public class ModifierProfilServlet extends HttpServlet {
 		}
 		if (enregistre) {
 			req.getSession().setAttribute("infoMsg", "Informations enregistrées avec succès.");
-			res.sendRedirect(req.getContextPath() + "/afficherProfil");
+			res.sendRedirect(req.getContextPath() + "/afficherProfil?monProfil=true");
 		} else {
 			req.getSession().setAttribute("infoMsg", "Erreur, les informations n'ont pas pu être sauvegardées.");
 			res.sendRedirect(req.getContextPath() + "/modifierProfil");

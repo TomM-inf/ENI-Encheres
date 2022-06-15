@@ -97,6 +97,7 @@
 				</div>
 			</div>
 		</div>
+		<input type="submit" value="Créer">
 		
 		<input id="js-register" type="submit" value="Créer">
 	</form>

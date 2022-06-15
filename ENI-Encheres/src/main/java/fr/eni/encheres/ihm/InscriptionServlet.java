@@ -52,7 +52,7 @@ public class InscriptionServlet extends HttpServlet {
 		req.getSession().setAttribute("prenom", prenom);
 		req.getSession().setAttribute("tel", tel);
 		req.getSession().setAttribute("cp", cp);
-//		req.getSession().setAttribute("pw", pw);
+		req.getSession().setAttribute("pw", pw);
 		
 		req.getSession().setAttribute("nom", nom);
 		req.getSession().setAttribute("email", email);
@@ -61,13 +61,13 @@ public class InscriptionServlet extends HttpServlet {
 //		req.getSession().setAttribute("confirmPW", confirmPW);
 		
 		if(req.getSession().getAttribute("pwError") != null) {
-			req.getSession().setAttribute("infoMsg", "Le mot de passe doit faire minimum 12 charactères et contenir au minium : 1 minuscule, 1 majuscule, 1 chiffre et 1 caractère spécial.");
+			req.getSession().setAttribute("infoMsg", "Le mot de passe doit faire minimum 12 charactï¿½res et contenir au minium : 1 minuscule, 1 majuscule, 1 chiffre et 1 caractï¿½re spï¿½cial.");
 			res.sendRedirect(req.getContextPath() + "/inscription");
 			return;
 		}
 
 		if(!UtilisateurMger.isAlphaNumeric(pseudo)) {
-			req.getSession().setAttribute("infoMsg", "Veuillez entrer un pseudonyme de type alphanumérique.");
+			req.getSession().setAttribute("infoMsg", "Veuillez entrer un pseudonyme de type alphanumï¿½rique.");
 			res.sendRedirect(req.getContextPath() + "/inscription");
 			return;
 		}
@@ -87,7 +87,7 @@ public class InscriptionServlet extends HttpServlet {
 		
 		if(pseudo.length() > 30 || prenom.length() > 30 || cp.length() > 10 || pw.length() > 256
 				|| nom.length() > 30 || email.length() > 50 || rue.length() > 30 || ville.length() > 50 || confirmPW.length() > 256) {
-			req.getSession().setAttribute("infoMsg", "Tu peux pas test mon gars arrête ça");
+			req.getSession().setAttribute("infoMsg", "Tu peux pas test mon gars arrï¿½te ï¿½a");
 			res.sendRedirect(req.getContextPath() + "/inscription");
 			return;
 		}
@@ -116,6 +116,8 @@ public class InscriptionServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
+		req.getSession().setAttribute("infoMsg", "EnregistrÃ© avec succÃ¨s.");
+		res.sendRedirect(req.getContextPath() + "/");
 		req.getSession().setAttribute("pseudo", null);
 		req.getSession().setAttribute("prenom", null);
 		req.getSession().setAttribute("tel", null);
@@ -129,10 +131,13 @@ public class InscriptionServlet extends HttpServlet {
 //		req.getSession().setAttribute("confirmPW", null);
 
 		if(registerStatus == true) {
-			req.getSession().setAttribute("infoMsg", "Enregistré avec succès.");
-			res.sendRedirect(req.getContextPath() + "/");
+			req.getSession().setAttribute("infoMsg", "Enregistrï¿½ avec succï¿½s.");
+			req.getSession().setAttribute("connectAfterRegister", "true");
+			
+			res.sendRedirect(req.getContextPath() + "/connexion");
+
 		} else {
-			req.getSession().setAttribute("infoMsg", "Échec lors de l'enregistrement.");
+			req.getSession().setAttribute("infoMsg", "ï¿½chec lors de l'enregistrement.");
 			res.sendRedirect(req.getContextPath() + "/inscription");
 		}
 		return;

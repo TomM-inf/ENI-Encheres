@@ -55,4 +55,14 @@ public class ArticlesVendusManager {
 		}
 		return maListe;
 	}
+	
+	public Integer addArticleVendu(String nomArticle, String description, String dateDebut, String dateFin, int prixInitial, String etatVente, int noUtilisateur, int noCategorie) throws BLLException {
+		Integer retour = null;
+		try {
+			retour = articleVendusDAO.addArticleVendu(nomArticle, description, dateDebut, dateFin, prixInitial, etatVente, noUtilisateur, noCategorie);
+		} catch (SQLException e) {
+			throw new BLLException();
+		}
+		return retour;
+	}
 }

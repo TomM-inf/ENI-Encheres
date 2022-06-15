@@ -136,6 +136,5 @@ public class ModifierProfilServlet extends HttpServlet {
 			// verifier si le mec avant lui a encore les fonds necessaires
 			// Suppression du compte
 		}
-
 	}
 }

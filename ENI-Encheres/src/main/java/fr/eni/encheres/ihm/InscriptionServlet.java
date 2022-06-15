@@ -116,9 +116,7 @@ public class InscriptionServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		req.getSession().setAttribute("infoMsg", "Enregistré avec succès.");
-		res.sendRedirect(req.getContextPath() + "/");
-		req.getSession().setAttribute("pseudo", null);
+//		req.getSession().setAttribute("pseudo", null);
 		req.getSession().setAttribute("prenom", null);
 		req.getSession().setAttribute("tel", null);
 		req.getSession().setAttribute("cp", null);

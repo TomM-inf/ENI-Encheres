@@ -6,6 +6,11 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<style type="text/css">
+table, th, td {
+	border: 1px solid;
+}
+</style>
 </head>
 <body>
 	<c:if test="${not empty listArticles}">

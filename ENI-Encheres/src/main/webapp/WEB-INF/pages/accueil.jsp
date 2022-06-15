@@ -7,6 +7,9 @@
 <meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>A web page</title>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/main.css" />
+<script src="${pageContext.request.contextPath}/js/accueil.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -80,7 +83,7 @@ table {
 								name="rechercheArticle">
 						</div>
 					</td>
-					<td rowspan="2"><input type="submit" value="Rechercher"
+					<td rowspan="3"><input type="submit" value="Rechercher"
 						id="rechercher" class="btn btn-primary"></td>
 				</tr>
 				<tr>
@@ -95,6 +98,56 @@ table {
 							</c:forEach>
 					</select></td>
 				</tr>
+				<c:if test="${not empty sessionScope.utilisateur}">
+					<tr>
+						<td><div class="form-check">
+								<input class="form-check-input achats" type="radio"
+									name="flexRadioDefault" id="radioAchat" checked> <label
+									class="form-check-label" for="flexRadioDefault1">
+									Achats</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" value="enchereOuvertes" name="enchereOuvertes"
+									id="flexCheckDefault"> <label class="form-check-label"
+									for="flexCheckDefault"> Enchères ouvertes </label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" value="mesEncheres" name="mesEncheres"
+									id="flexCheckChecked"> <label
+									class="form-check-label" for="flexCheckChecked">
+									Mes enchères </label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" value="encheresRemportes" name="encheresRemportes"
+									id="flexCheckChecked"> <label
+									class="form-check-label" for="flexCheckChecked">
+									Mes enchères remportées </label>
+							</div></td>
+						<td><div class="form-check">
+								<input class="form-check-input ventes" type="radio"
+									name="flexRadioDefault" id="flexRadioDefault2">
+								<label class="form-check-label" for="flexRadioDefault2">
+									Mes ventes</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" value="encheresOuvertes" name="encheresOuvertes"
+									id="flexCheckDefault"> <label class="form-check-label"
+									for="flexCheckDefault"> Enchères ouvertes </label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" value="mesEncheresVentes" name="mesEncheresVentes"
+									id="flexCheckChecked"> <label
+									class="form-check-label" for="flexCheckChecked">
+									Mes enchères </label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" value="venteTerminees" name="venteTerminees"
+									id="flexCheckChecked"> <label
+									class="form-check-label" for="flexCheckChecked">
+									Ventes terminées </label>
+							</div></td>
+					</tr>
+				</c:if>
 			</tbody>
 		</table>
 	</form>

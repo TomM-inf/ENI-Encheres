@@ -48,6 +48,7 @@ public class accueilServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
+			System.out.println(req.getParameter("enchereOuvertes"));
 			List<Articles_vendus> listArticles = new ArrayList<Articles_vendus>();
 			if (req.getParameter("rechercheArticle").trim().length() > 0 && req.getParameter("categorie").trim().equalsIgnoreCase("Toutes")) {
 				listArticles = articlesVendusMng.getArticleMotCle(req.getParameter("rechercheArticle"));

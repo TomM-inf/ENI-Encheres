@@ -41,6 +41,10 @@ table {
 	margin-right: auto;
 }
 
+table, th, td {
+	border: 1px solid;
+}
+
 .cacher-profil {
 	display: none;
 }

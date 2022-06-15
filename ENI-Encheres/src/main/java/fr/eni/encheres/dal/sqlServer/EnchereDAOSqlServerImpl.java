@@ -12,6 +12,7 @@ public class EnchereDAOSqlServerImpl implements EnchereDAO {
 
 	private static final String RECUPERER_DERNIER_ENCHERISSEUR = "SELECT top 1 no_utilisateur from ENCHERES WHERE no_article = ? group by date_enchere,no_utilisateur order BY CAST(date_enchere AS DATE) desc;";
 
+
 	@Override
 	public int getDernierEncherisseurByIDArticleVendu(int idArticleVendu) throws SQLException {
 		Connection conn = null;

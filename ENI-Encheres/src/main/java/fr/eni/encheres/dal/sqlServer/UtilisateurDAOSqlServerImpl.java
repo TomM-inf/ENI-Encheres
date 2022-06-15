@@ -270,7 +270,10 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 			stmt.setBoolean(11, user.isAdministrateur());
 
 			int row = stmt.executeUpdate();
-			System.out.println(user.toString());
+
+			if (row > 0) {
+				vretour = true;
+			}
 
 		} catch (SQLException e) {
 
@@ -298,11 +301,11 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 
 		String passwordToHash = utilisateur.getMotDePasse();
 		String securePassword = null;
-		
+
 		securePassword = getMD5EncryptedValue(passwordToHash);
 		Connection conn = null;
 		try {
-			
+
 			conn = ConnectionProvider.getConnection();
 			PreparedStatement stmt = conn.prepareStatement(MAJ_UTILISATEUR);
 			stmt.setString(1, utilisateur.getPseudo());
@@ -358,4 +361,8 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 		return password;
 	}
 
+	@Override
+	public boolean isAlphaNumeric(String s) {
+		return s != null && s.matches("^[a-zA-Z0-9]*$");
+	}
 }

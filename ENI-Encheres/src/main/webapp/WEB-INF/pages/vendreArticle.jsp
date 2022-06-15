@@ -66,17 +66,17 @@
 				Retrait
 				<div class="col-md-4">
 					<label for="validationCustom01" class="form-label">Rue :</label> <input
-						type="text" class="form-control" id="validationCustom01" required>
+						type="text" class="form-control" id="validationCustom01" value="${sessionScope.utilisateur.rue}" required>
 				</div>
 				<div class="col-md-4">
 					<label for="validationCustom01" class="form-label">Code
 						postal :</label> <input type="text" class="form-control"
-						id="validationCustom01" required>
+						id="validationCustom01" value="${sessionScope.utilisateur.codePostal}" required>
 				</div>
 				<div class="col-md-4">
 					<label for="validationCustom01" class="form-label">Ville :</label>
 					<input type="text" class="form-control" id="validationCustom01"
-						required>
+						value="${sessionScope.utilisateur.ville}" required>
 				</div>
 				<div class="col-12">
 					<button class="btn btn-primary" type="submit">Enregistrer</button>

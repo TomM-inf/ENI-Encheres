@@ -110,30 +110,41 @@ public class ModifierProfilServlet extends HttpServlet {
 				req.getSession().setAttribute("infoMsg", "Erreur, les informations n'ont pas pu être sauvegardées.");
 				res.sendRedirect(req.getContextPath() + "/modifierProfil");
 			}
-		}else if(req.getParameter("submit").equals("Supprimer")) {
-			// encheres pas commencées qui ont le no_utilisateur du mec - > delete 
-			// ======> DELETE * FROM ARTICLES_VENDUS WHERE no_utilisateur = ? AND etat_vente = ?(pas commencée)
+		} else if (req.getParameter("submit").equals("Supprimer")) {
+			// encheres pas commencées qui ont le no_utilisateur du mec - > delete
+			// ======> DELETE * FROM ARTICLES_VENDUS WHERE no_utilisateur = ? AND etat_vente
+			// = ?(pas commencée)
 			// encheres en cours passées en terminée > on recredite l'encherisseur
-			// = on select la liste des encheres du mec, 
-			// ======> select * from articles_vendus where no_utilisateur = ? and etat_vente = ?(en cours)
+			// = on select la liste des encheres du mec,
+			// ======> select * from articles_vendus where no_utilisateur = ? and etat_vente
+			// = ?(en cours)
 			// on stocke ça dans une liste d'articles vendus
 			// ---- debut liste articles-----
-			// on parcours cette liste et pour chaque on select le montant de l'enchere actuel et l'utilisateur qui a enchéri puis on lui crédite ça
-			// ======> select top 1 montant_enchere from encheres where no_article = ?(celui qu'on recupere avant et stocké dans une liste d'articles vendus) group by montant_enchere order by montant_enchere desc;
+			// on parcours cette liste et pour chaque on select le montant de l'enchere
+			// actuel et l'utilisateur qui a enchéri puis on lui crédite ça
+			// ======> select top 1 montant_enchere from encheres where no_article = ?(celui
+			// qu'on recupere avant et stocké dans une liste d'articles vendus) group by
+			// montant_enchere order by montant_enchere desc;
 			// on recupere le montant et le no_utilisateur on stocke ça dans objet enchere
-			// select credits from utilisateurs where no_utilisateur = ?(celui stocké dans objet enchere)
-			// les credits récupérés + le montant actuel de l'enchere sont ajoutés à l'utilisateur
-			// ======> update utilisateurs set credits = ?(la somme) where no_utilisateur = ?(toujours celui stocké dans l'objet)
+			// select credits from utilisateurs where no_utilisateur = ?(celui stocké dans
+			// objet enchere)
+			// les credits récupérés + le montant actuel de l'enchere sont ajoutés à
+			// l'utilisateur
+			// ======> update utilisateurs set credits = ?(la somme) where no_utilisateur =
+			// ?(toujours celui stocké dans l'objet)
 			// on historise l'article vendu ( l'enchere )
-			// ======> update articles_vendus set etat = historisé/terminé where no_article = ?(celui stocké dans l'objet que l'on parcoure dans la liste)
+			// ======> update articles_vendus set etat = historisé/terminé where no_article
+			// = ?(celui stocké dans l'objet que l'on parcoure dans la liste)
 			// ---- fin liste articles-----
-			// if bid en cours de sa part, on remet celle juste avant lui 
-			// ======> select * from encheres where no_utilisateur = ?(numéro du compte a suppr)
+			// if bid en cours de sa part, on remet celle juste avant lui
+			// ======> select * from encheres where no_utilisateur = ?(numéro du compte a
+			// suppr)
 			// on stocke les resultats dans une liste d'objets encheres
 			// ---- debut liste encheres ----
-			// 
+			//
 			// ---- fin liste encheres ----
 			// verifier si le mec avant lui a encore les fonds necessaires
 			// Suppression du compte
+		}
 	}
 }

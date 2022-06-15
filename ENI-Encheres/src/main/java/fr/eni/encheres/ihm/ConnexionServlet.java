@@ -29,9 +29,14 @@ public class ConnexionServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/pages/connexion.jsp").forward(request, response);
+		if(request.getSession().getAttribute("connectAfterRegister") == "true") {
+			request.getSession().removeAttribute("connectAfterRegister");
+			doPost(request, response);
+		} else {
+			request.getRequestDispatcher("/WEB-INF/pages/connexion.jsp").forward(request, response);
+		}
 		
-//		response.sendRedirect("/WEB-INF/pages/connexion.jsp");
+		return;
 	}
 
 	/**
@@ -43,11 +48,18 @@ public class ConnexionServlet extends HttpServlet {
 		String login = req.getParameter("identifiant");
 		String pwd = req.getParameter("motDePasse");
 		
+		if(login == null) {
+			login = String.valueOf(req.getSession().getAttribute("pseudo"));
+			pwd = String.valueOf(req.getSession().getAttribute("pw"));
+		}
+		
 			Utilisateur utilisateur = null;
 			try {
 				utilisateur = UtilisateurMger.verifierConnexion(login, pwd);
 				if(utilisateur != null) {
 					req.getSession(true).setAttribute("utilisateur", utilisateur);
+					System.out.println(utilisateur.getPseudo());
+					System.out.println(utilisateur.getNoUtilisateur());
 					resp.sendRedirect(req.getContextPath() + "/accueil");
 				}else {
 					req.setAttribute("erreur", "Connexion refusée. L'identifiant ou le mot de passe est invalide.");
@@ -58,14 +70,6 @@ public class ConnexionServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if(utilisateur == null) {
-				//TODO gerer mdp invalide
-			}
-			
-//			req.setAttribute("identifiant", login);
-//			req.setAttribute("motDePasse", pwd);
-//			req.setAttribute("erreur", "Connexion refusée. L'identifiant ou le mot de passe est invalide.");
-//			req.getRequestDispatcher("/WEB-INF/pages/connexion.jsp").forward(req, resp);
 	}
 
 }

@@ -11,5 +11,8 @@ public interface UtilisateurDAO {
 	public Utilisateur getUtilisateurParId(int id) throws SQLException;
 	public Utilisateur getUtilisateurByEmail(String email) throws SQLException;
 	public boolean inscription(Utilisateur user) throws SQLException;
+	public String getMD5EncryptedValue(String password);
+	public boolean modificationUtilisateur(Utilisateur utilisateur) throws SQLException;
+	public boolean isAlphaNumeric(String s);
 
 }

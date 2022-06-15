@@ -66,5 +66,28 @@ public class UtilisateurManager {
 		
 		return vretour;
 	}
+	
+	public boolean modificationUtilisateur(Utilisateur utilisateur) throws BLLException{
+		boolean res = false;
+		try {
+			res = utilisateurDAO.modificationUtilisateur(utilisateur);
+		} catch (SQLException e) {
+			throw new BLLException(e);
+		}
+		return res;
+	}
+	
+	public String getMD5EncryptedValue(String password) {
+		String res = utilisateurDAO.getMD5EncryptedValue(password);
+		return res;
+	}
+
+	public boolean isAlphaNumeric(String s) {
+		boolean vretour = false;
+		
+		vretour = utilisateurDAO.isAlphaNumeric(s);
+		
+		return vretour;
+	}
 
 }

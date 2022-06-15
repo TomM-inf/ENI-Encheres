@@ -21,20 +21,22 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 	private static final String INSCRIPTION = "INSERT INTO UTILISATEURS ("
 			+ "pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur)"
 			+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
+	private static final String MAJ_UTILISATEUR = "UPDATE UTILISATEURS "
+			+ "SET pseudo = ?, nom = ?,prenom= ?,email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?"
+			+ " WHERE no_utilisateur = ?;";
 
 	@Override
 	public Utilisateur verifierConnexion(String login, String pw) throws SQLException {
 		Connection conn = null;
-		Utilisateur utilisateur = null;        
-		
+		Utilisateur utilisateur = null;
+
 		// START--ENCRYPT PW
 		String passwordToHash = pw;
 		String securePassword = null;
-		
-        securePassword = getMD5EncryptedValue(passwordToHash);
+
+		securePassword = getMD5EncryptedValue(passwordToHash);
 		// END--ENCRYPT PW
-        
+
 		try {
 			conn = ConnectionProvider.getConnection();
 			conn.setAutoCommit(false);
@@ -55,11 +57,13 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 				utilisateur.setVille(rs.getString("ville"));
 				utilisateur.setMotDePasse(securePassword);
 				utilisateur.setCredit(rs.getInt("credit"));
+				utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
 				utilisateur.setAdministrateur(rs.getBoolean("administrateur"));
+				utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
 			} else {
 				utilisateur = null;
 			}
-			
+
 			if (utilisateur != null) {
 				return utilisateur;
 			} else {
@@ -149,7 +153,7 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 		}
 		return utilisateur;
 	}
-	
+
 	@Override
 	public Utilisateur getUtilisateurByEmail(String email) throws SQLException {
 		Connection conn = null;
@@ -239,24 +243,25 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 		}
 		return utilisateur;
 	}
+
 	@Override
 	public boolean inscription(Utilisateur user) throws SQLException {
-		
+
 		boolean vretour = false;
-		
+
 		String passwordToHash = user.getMotDePasse();
 		String securePassword = null;
-		
-		// START--ENCRYPT PW		
-        securePassword = getMD5EncryptedValue(passwordToHash);
+
+		// START--ENCRYPT PW
+		securePassword = getMD5EncryptedValue(passwordToHash);
 		// END--ENCRYPT PW
-		
+
 		Connection conn = null;
 		Utilisateur utilisateur = null;
 		try {
 			conn = ConnectionProvider.getConnection();
 			PreparedStatement stmt = conn.prepareStatement(INSCRIPTION);
-			
+			stmt.setInt(1, user.getNoUtilisateur());
 			stmt.setString(1, user.getPseudo());
 			stmt.setString(2, user.getNom());
 			stmt.setString(3, user.getPrenom());
@@ -268,10 +273,13 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 			stmt.setString(9, securePassword);
 			stmt.setInt(10, user.getCredit());
 			stmt.setBoolean(11, user.isAdministrateur());
-			
+
 			int row = stmt.executeUpdate();
-			System.out.println(user.toString());
-			
+
+			if (row > 0) {
+				vretour = true;
+			}
+
 		} catch (SQLException e) {
 
 //			conn.rollback();
@@ -288,31 +296,78 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 				}
 			}
 		}
-		
+
 		return vretour;
 	}
 
-	
-    public static String getMD5EncryptedValue(String password) {
-        final byte[] defaultBytes = password.getBytes();
-        try {
-            final MessageDigest md5MsgDigest = MessageDigest.getInstance("MD5");
-            md5MsgDigest.reset();
-            md5MsgDigest.update(defaultBytes);
-            final byte messageDigest[] = md5MsgDigest.digest();
+	@Override
+	public boolean modificationUtilisateur(Utilisateur utilisateur) throws SQLException {
+		boolean res = false;
 
-            final StringBuffer hexString = new StringBuffer();
-            for (final byte element : messageDigest) {
-                final String hex = Integer.toHexString(0xFF & element);
-                if (hex.length() == 1) {
-                    hexString.append('0');
-                }
-                hexString.append(hex);
-            }
-            password = hexString + "";
-        } catch (final NoSuchAlgorithmException nsae) {
-            nsae.printStackTrace();
-        }
-        return password;
-    }
+		String passwordToHash = utilisateur.getMotDePasse();
+		String securePassword = null;
+
+		securePassword = getMD5EncryptedValue(passwordToHash);
+		Connection conn = null;
+		try {
+
+			conn = ConnectionProvider.getConnection();
+			PreparedStatement stmt = conn.prepareStatement(MAJ_UTILISATEUR);
+			stmt.setString(1, utilisateur.getPseudo());
+			stmt.setString(2, utilisateur.getNom());
+			stmt.setString(3, utilisateur.getPrenom());
+			stmt.setString(4, utilisateur.getEmail());
+			stmt.setString(5, utilisateur.getTelephone());
+			stmt.setString(6, utilisateur.getRue());
+			stmt.setString(7, utilisateur.getCodePostal());
+			stmt.setString(8, utilisateur.getVille());
+			stmt.setString(9, securePassword);
+			stmt.setInt(10, utilisateur.getNoUtilisateur());
+			int row = stmt.executeUpdate();
+			res = true;
+		} catch (SQLException e) {
+//			conn.rollback();
+			e.printStackTrace();
+			throw e;
+
+		} finally {
+			// Fermer la connexion
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return res;
+	}
+
+	public String getMD5EncryptedValue(String password) {
+		final byte[] defaultBytes = password.getBytes();
+		try {
+			final MessageDigest md5MsgDigest = MessageDigest.getInstance("MD5");
+			md5MsgDigest.reset();
+			md5MsgDigest.update(defaultBytes);
+			final byte messageDigest[] = md5MsgDigest.digest();
+
+			final StringBuffer hexString = new StringBuffer();
+			for (final byte element : messageDigest) {
+				final String hex = Integer.toHexString(0xFF & element);
+				if (hex.length() == 1) {
+					hexString.append('0');
+				}
+				hexString.append(hex);
+			}
+			password = hexString + "";
+		} catch (final NoSuchAlgorithmException nsae) {
+			nsae.printStackTrace();
+		}
+		return password;
+	}
+
+	@Override
+	public boolean isAlphaNumeric(String s) {
+		return s != null && s.matches("^[a-zA-Z0-9]*$");
+	}
 }

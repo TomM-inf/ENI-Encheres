@@ -29,14 +29,16 @@ public class AfficherProfilServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if(req.getParameter("monProfil").equals("84751547")) {
+		if(req.getParameter("monProfil") != null) {
 			Utilisateur utilisateurSession = (Utilisateur) req.getSession().getAttribute("utilisateur");
 			req.setAttribute("utilisateur", utilisateurSession);
 			req.setAttribute("simple", false);
 			req.setAttribute("enchereRemporte", false);
 			req.setAttribute("monProfil", true);
 			req.getRequestDispatcher("/WEB-INF/pages/profil.jsp").forward(req, resp);
-		}else {
+		}
+//		if(req.getParameter("monProfil").equals("84751547")) {}
+		else {
 			String pseudo = req.getParameter("pseudo");
 			String etat = req.getParameter("etat");
 			String id = req.getParameter("id");
@@ -63,8 +65,6 @@ public class AfficherProfilServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		
-
 	}
 
 	@Override

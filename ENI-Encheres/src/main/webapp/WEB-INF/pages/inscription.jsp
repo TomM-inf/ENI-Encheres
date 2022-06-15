@@ -97,8 +97,7 @@
 				</div>
 			</div>
 		</div>
-				
-		<input id="js-register" type="submit" value="Créer">
+		<input id="js-register" type="submit" value="CrÃ©er">
 	</form>
 
 	<a href="${pageContext.request.contextPath }/">

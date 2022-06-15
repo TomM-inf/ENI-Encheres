@@ -87,7 +87,8 @@
 				</div>
 			</div>
 		</div>
-		<input type="submit" value="Enregistrer"  >
+		<input type="submit" name="submit" value="Enregistrer"  >
+		<input type="submit" name="submit" value="Supprimer"  onclick="return confirm('Voulez vous vraiment supprimer votre compte ?')">
 	</form>
 	<a href="${pageContext.request.contextPath }/">
 		<button>Annuler</button>

@@ -36,7 +36,9 @@ public class AfficherProfilServlet extends HttpServlet {
 			req.setAttribute("enchereRemporte", false);
 			req.setAttribute("monProfil", true);
 			req.getRequestDispatcher("/WEB-INF/pages/profil.jsp").forward(req, resp);
-		}else {
+		}
+//		if(req.getParameter("monProfil").equals("84751547")) {}
+		else {
 			String pseudo = req.getParameter("pseudo");
 			String etat = req.getParameter("etat");
 			String id = req.getParameter("id");
@@ -63,8 +65,6 @@ public class AfficherProfilServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		
-
 	}
 
 	@Override

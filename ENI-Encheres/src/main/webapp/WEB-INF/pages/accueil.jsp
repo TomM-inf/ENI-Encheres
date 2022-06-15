@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
@@ -39,7 +38,8 @@ table {
 	margin-right: auto;
 }
 </style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="./js/functions.js" type="text/javascript"></script>
 </head>
 <body>
@@ -90,7 +90,8 @@ table {
 						aria-label=".form-select-sm example">
 							<option value="Toutes" selected>Toutes</option>
 							<c:forEach items="${listCategorie}" var="value">
-								<option value="${value.libelle}"><c:out value="${value.libelle}" /></option>
+								<option value="${value.libelle}"><c:out
+										value="${value.libelle}" /></option>
 							</c:forEach>
 					</select></td>
 				</tr>
@@ -98,9 +99,18 @@ table {
 		</table>
 	</form>
 
-	<jsp:include page="./listeEncheresDeconnecte.jsp">
-		<jsp:param name="listArticles" value="${listArticles}" />
-		<jsp:param name="listPseudo" value="${listPseudo}" />
-	</jsp:include>
+	<c:if test="${empty sessionScope.utilisateur}">
+		<jsp:include page="./listeEncheresDeconnecte.jsp">
+			<jsp:param name="listArticles" value="${listArticles}" />
+			<jsp:param name="listPseudo" value="${listPseudo}" />
+		</jsp:include>
+	</c:if>
+	<c:if test="${not empty sessionScope.utilisateur}">
+		<jsp:include page="./listeEncheresConnecte.jsp">
+			<jsp:param name="listArticles" value="${listArticles}" />
+			<jsp:param name="listPseudo" value="${listPseudo}" />
+		</jsp:include>
+	</c:if>
+
 </body>
 </html>

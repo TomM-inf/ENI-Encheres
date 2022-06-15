@@ -3,6 +3,7 @@ package fr.eni.encheres.dal;
 import fr.eni.encheres.dal.sqlServer.ArticleVendusDAOSqlServerImpl;
 import fr.eni.encheres.dal.sqlServer.CategorieDAOSqlServerImpl;
 import fr.eni.encheres.dal.sqlServer.EnchereDAOSqlServerImpl;
+import fr.eni.encheres.dal.sqlServer.RetraitDAOSqlServerImpl;
 import fr.eni.encheres.dal.sqlServer.UtilisateurDAOSqlServerImpl;
 
 public class DAOFactory {
@@ -21,5 +22,9 @@ public class DAOFactory {
 	
 	public static EnchereDAO getDAOEnchere() {
 		return new EnchereDAOSqlServerImpl();
+	}
+	
+	public static RetraitDAO getDAORetrait() {
+		return new RetraitDAOSqlServerImpl();
 	}
 }

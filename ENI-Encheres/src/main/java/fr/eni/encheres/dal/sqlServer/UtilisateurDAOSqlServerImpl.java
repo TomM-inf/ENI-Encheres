@@ -46,6 +46,7 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				utilisateur = new Utilisateur();
+				utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
 				utilisateur.setPseudo(rs.getString("pseudo"));
 				utilisateur.setNom(rs.getString("nom"));
 				utilisateur.setPrenom(rs.getString("prenom"));
@@ -72,6 +73,7 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 				ResultSet res = statement.executeQuery();
 				if (res.next()) {
 					utilisateur = new Utilisateur();
+					utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
 					utilisateur.setPseudo(res.getString("pseudo"));
 					utilisateur.setNom(res.getString("nom"));
 					utilisateur.setPrenom(res.getString("prenom"));
@@ -118,6 +120,7 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				utilisateur = new Utilisateur();
+				utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
 				utilisateur.setPseudo(rs.getString("pseudo"));
 				utilisateur.setNom(rs.getString("nom"));
 				utilisateur.setPrenom(rs.getString("prenom"));
@@ -163,6 +166,7 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				utilisateur = new Utilisateur();
+				utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
 				utilisateur.setPseudo(rs.getString("pseudo"));
 				utilisateur.setNom(rs.getString("nom"));
 				utilisateur.setPrenom(rs.getString("prenom"));
@@ -207,6 +211,7 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				utilisateur = new Utilisateur();
+				utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
 				utilisateur.setPseudo(rs.getString("pseudo"));
 				utilisateur.setNom(rs.getString("nom"));
 				utilisateur.setPrenom(rs.getString("prenom"));

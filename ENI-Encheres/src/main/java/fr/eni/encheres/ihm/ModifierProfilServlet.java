@@ -135,6 +135,33 @@ public class ModifierProfilServlet extends HttpServlet {
 			// ---- fin liste encheres ----
 			// verifier si le mec avant lui a encore les fonds necessaires
 			// Suppression du compte
+		} catch (BLLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Utilisateur utilisateurNouvellesInfos = utilisateurSession;
+		utilisateurNouvellesInfos.setCodePostal(cp);
+		utilisateurNouvellesInfos.setEmail(email);
+		if(!newPW.isEmpty() && !confirmPW.isEmpty()) {
+			utilisateurNouvellesInfos.setMotDePasse(confirmPW);
+		}
+		utilisateurNouvellesInfos.setNom(nom);
+		utilisateurNouvellesInfos.setPrenom(prenom);
+		utilisateurNouvellesInfos.setPseudo(pseudo);
+		utilisateurNouvellesInfos.setRue(rue);
+		utilisateurNouvellesInfos.setTelephone(tel);
+		utilisateurNouvellesInfos.setVille(ville);
+		try {
+			enregistre = UtilisateurMger.modificationUtilisateur(utilisateurNouvellesInfos);
+		} catch (BLLException e) {
+			e.printStackTrace();
+		}
+		if (enregistre) {
+			req.getSession().setAttribute("infoMsg", "Informations enregistrées avec succès.");
+			res.sendRedirect(req.getContextPath() + "/afficherProfil?monProfil=true");
+		} else {
+			req.getSession().setAttribute("infoMsg", "Erreur, les informations n'ont pas pu être sauvegardées.");
+			res.sendRedirect(req.getContextPath() + "/modifierProfil");
 		}
 	}
 }

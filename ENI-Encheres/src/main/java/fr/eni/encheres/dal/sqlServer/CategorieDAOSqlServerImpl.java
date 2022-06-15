@@ -7,13 +7,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.encheres.bo.Articles_vendus;
 import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.dal.CategorieDAO;
 import fr.eni.encheres.dal.ConnectionProvider;
 
 public class CategorieDAOSqlServerImpl implements CategorieDAO {
 	private static final String GETALL = "SELECT * FROM CATEGORIES";
+	private static final String GET_PAR_NOM = "SELECT * FROM CATEGORIES WHERE libelle LIKE ?";
 	
 	@Override
 	public List<Categorie> getAllCategorie() throws SQLException {
@@ -52,6 +52,44 @@ public class CategorieDAOSqlServerImpl implements CategorieDAO {
 		
 		
 		return listCategorie;
+	}
+
+	@Override
+	public Categorie getCategorieParNom(String libelle) throws SQLException {
+		Connection conn = null;
+		Categorie categorie = null;
+		try {
+			conn = ConnectionProvider.getConnection();
+			conn.setAutoCommit(false);
+
+			PreparedStatement stmt = conn.prepareStatement(GET_PAR_NOM);
+			stmt.setString(1, libelle);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				categorie = new Categorie();
+				categorie.setNumCategorie(rs.getInt("no_categorie"));
+				categorie.setLibelle(rs.getString("libelle"));
+			}
+		} catch (SQLException e) {
+
+			conn.rollback();
+			e.printStackTrace();
+			throw e;
+
+		} finally {
+			// Fermer la connexion
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
+		return categorie;
 	}
 
 }

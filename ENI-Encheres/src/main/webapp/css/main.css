@@ -23,6 +23,14 @@ h2 {
 	padding-bottom: 2em;
 }
 
+div.formNouvelArticle{
+	flex-direction: row;
+}
+#venteArticleRetrait{
+	margin: 2em;
+	border: 1px solid black;
+	align-content: center;
+}
 #titre{
 	font-size: xx-large;
 	font-weight: bold;

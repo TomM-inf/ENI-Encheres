@@ -29,7 +29,7 @@ public class AfficherProfilServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if(req.getParameter("monProfil") != null) {
+		if(req.getParameter("monProfil").equals("true")) {
 			Utilisateur utilisateurSession = (Utilisateur) req.getSession().getAttribute("utilisateur");
 			req.setAttribute("utilisateur", utilisateurSession);
 			req.setAttribute("simple", false);

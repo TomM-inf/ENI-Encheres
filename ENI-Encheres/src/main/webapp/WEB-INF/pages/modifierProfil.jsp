@@ -19,9 +19,7 @@
 	}
 	%>
 	<h1>Mon profil</h1>
-	<form action="${pageContext.request.contextPath }/modifierProfil"
-	<h1>Mon profil</h1>
-		method="post">
+	<form method="post" action="${pageContext.request.contextPath }/modifierProfil">
 		<div class="left-and-right">
 			<div class="left all-groups">
 				<div class="label-input-group">
@@ -89,7 +87,7 @@
 				</div>
 			</div>
 		</div>
-		<input type="submit" value="Enregistrer">
+		<input type="submit" value="Enregistrer"  >
 	</form>
 	<a href="${pageContext.request.contextPath }/">
 		<button>Annuler</button>

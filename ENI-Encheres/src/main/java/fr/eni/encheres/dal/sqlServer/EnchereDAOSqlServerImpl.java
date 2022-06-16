@@ -10,7 +10,8 @@ import fr.eni.encheres.dal.EnchereDAO;
 
 public class EnchereDAOSqlServerImpl implements EnchereDAO {
 
-	private static final String RECUPERER_DERNIER_ENCHERISSEUR = "SELECT top 1 no_utilisateur from ENCHERES WHERE no_article = ? group by date_enchere,no_utilisateur order BY CAST(date_enchere AS DATE) desc;";
+	private static final String RECUPERER_DERNIER_ENCHERISSEUR = "SELECT top 1 no_utilisateur from ENCHERES WHERE no_article = ? group by date_enchere,no_utilisateur order BY CAST(date_enchere AS DATE) desc";
+	private static final String GET_ENCHERE_UTILISATEUR = "SELECT * FROM ENCHERES e WHERE no_article = ? AND no_utilisateur = ?";
 
 
 	@Override
@@ -45,6 +46,42 @@ public class EnchereDAOSqlServerImpl implements EnchereDAO {
 			}
 		}
 		return res;
+	}
+
+
+	@Override
+	public boolean getEnchereUtilisateurConnecte(int noArticle, int noUtilisateur) throws SQLException {
+		Connection conn = null;
+		boolean retour = false;
+		try {
+			conn = ConnectionProvider.getConnection();
+			conn.setAutoCommit(false);
+
+			PreparedStatement stmt = conn.prepareStatement(GET_ENCHERE_UTILISATEUR);
+			stmt.setInt(1, noArticle);
+			stmt.setInt(2, noUtilisateur);
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()) {
+				retour = true;
+			}
+		} catch (SQLException e) {
+
+			conn.rollback();
+			e.printStackTrace();
+			throw e;
+
+		} finally {
+			// Fermer la connexion
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return retour;
 	}
 
 }

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheres.bll.ArticlesVendusManager;
 import fr.eni.encheres.bll.CategorieManager;
+import fr.eni.encheres.bll.EnchereManager;
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Articles_vendus;
 import fr.eni.encheres.bo.Utilisateur;
@@ -21,11 +22,13 @@ public class accueilServlet extends HttpServlet{
 	private ArticlesVendusManager articlesVendusMng;
 	private UtilisateurManager utilisateurManager;
 	private CategorieManager categorieManager;
+	private EnchereManager enchereManager;
 	
 	public accueilServlet() {
 		articlesVendusMng = new ArticlesVendusManager();
 		utilisateurManager = new UtilisateurManager();
 		categorieManager = new CategorieManager();
+		enchereManager = new EnchereManager();
 	}
 
 	@Override
@@ -91,15 +94,27 @@ public class accueilServlet extends HttpServlet{
 					}
 				}
 			}
-			/*
-			if(req.getParameter("mesEncheres").equals("mesEncheres")) {
-				for (Articles_vendus articles_vendus : listArticles) {
-					if(articles_vendus.getNoUtilisateur() == ((Utilisateur) req.getSession().getAttribute("utilisateur")).getNoUtilisateur()) {
-						listArticles.remove(articles_vendus);
+			//TODO: pour les deux prochaine gérer requete SQL avec la table enchere 
+			if (req.getParameter("mesEncheres") != null) {
+				if(req.getParameter("mesEncheres").equals("mesEncheres")) {
+					suppr = true;
+					for (Articles_vendus articles_vendus : listArticles) {
+						if(enchereManager.getEnchereUtilisateurConnecte(articles_vendus.getNoArticle(), ((Utilisateur) req.getSession().getAttribute("utilisateur")).getNoUtilisateur())) {
+							listSuppr.add(articles_vendus);
+						}
 					}
 				}
 			}
-			*/
+			if (req.getParameter("encheresRemportes") != null) {
+				if(req.getParameter("encheresRemportes").equals("encheresRemportes")) {
+					suppr = true;
+					for (Articles_vendus articles_vendus : listArticles) {
+						if(articles_vendus.getNoUtilisateur() == ((Utilisateur) req.getSession().getAttribute("utilisateur")).getNoUtilisateur()) {
+							listSuppr.add(articles_vendus);
+						}
+					}
+				}
+			}
 			//Liste de mes ventes - no_utilisateur est le mien et status = 'En cours'
 			if (req.getParameter("encheresOuvertesVentes") != null) {
 				if (req.getParameter("encheresOuvertesVentes").equals("encheresOuvertesVentes")) {

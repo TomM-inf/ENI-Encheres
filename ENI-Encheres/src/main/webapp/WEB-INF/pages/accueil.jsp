@@ -130,7 +130,7 @@ table {
 									Mes ventes</label>
 							</div>
 							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value="encheresOuvertes" name="encheresOuvertes"
+								<input class="form-check-input" type="checkbox" value="encheresOuvertesVentes" name="encheresOuvertesVentes"
 									id="flexCheckDefault"> <label class="form-check-label"
 									for="flexCheckDefault"> Enchères ouvertes </label>
 							</div>

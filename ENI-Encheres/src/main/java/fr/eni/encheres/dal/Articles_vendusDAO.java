@@ -18,4 +18,8 @@ public interface Articles_vendusDAO {
 	public Integer addArticleVendu(String nomArticle, String description, String dateDebut, String dateFin, int prixInitial, String etatVente, int noUtilisateur, int noCategorie) throws SQLException;
 
 	public Integer getNoVendeur(int idArticle) throws SQLException;
+
+	public Articles_vendus getArticleVenduByID(int ID) throws SQLException;
+	
+	public boolean setRetraitEffectue(int idArticle) throws SQLException;
 }

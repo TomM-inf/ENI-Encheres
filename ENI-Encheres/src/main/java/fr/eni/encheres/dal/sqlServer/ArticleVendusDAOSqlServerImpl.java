@@ -14,6 +14,7 @@ import fr.eni.encheres.dal.ConnectionProvider;
 
 public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 
+	private static final String GET_ARTICLE_BY_ID = "SELECT * FROM ARTICLES_VENDUS WHERE no_article=?";
 	private static final String GETALL = "SELECT * FROM ARTICLES_VENDUS ORDER BY date_debut_encheres DESC";
 	private static final String GETMOTCLE = "SELECT * FROM ARTICLES_VENDUS WHERE nom_article LIKE ? ORDER BY date_debut_encheres DESC";
 	private static final String GETCATE = "SELECT * FROM ARTICLES_VENDUS a, CATEGORIES c WHERE a.no_categorie = c.no_categorie AND c.libelle = ? ORDER BY date_debut_encheres DESC"; 
@@ -21,6 +22,8 @@ public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 	private static final String GET_ARTICLE_RETRAIT = "SELECT no_article FROM ARTICLES_VENDUS WHERE nom_article = ? AND description = ? AND date_debut_encheres = convert(datetime, ?,103) AND date_fin_encheres = convert(datetime, ?,103) AND prix_initial = ? AND no_utilisateur = ? AND no_categorie = ?";
 	private static final String ADD_ARTICLE = "INSERT INTO ARTICLES_VENDUS VALUES (?, ?, convert(datetime, ?,103), convert(datetime, ?,103), ?, null, ?, ?, ?)";
 	private static final String GET_ID_VENDEUR = "SELECT no_utilisateur FROM ARTICLES_VENDUS WHERE no_article = ?";
+	private static final String SET_RETRAIT_EFFECTUE = "UPDATE ARTICLES_VENDUS SET etat_vente = ? WHERE no_article = ?";
+	
 	@Override
 	public List<Articles_vendus> getArticlesVendus() throws SQLException {
 		Connection conn = null;
@@ -179,6 +182,7 @@ public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 		
 	}
 	@Override
+
 	public Integer addArticleVendu(String nomArticle, String description, String dateDebut, String dateFin, int prixInitial, String etatVente, int noUtilisateur, int noCategorie) throws SQLException {
 		Connection conn = null;
 		Integer retour = null;
@@ -291,5 +295,82 @@ public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 		
 		return noUtilisateur;
 	} 
+
+	public Articles_vendus getArticleVenduByID(int ID) throws SQLException {
+		
+		Connection conn = null;
+		Articles_vendus article = null;
+		try {
+			conn = ConnectionProvider.getConnection();
+
+			PreparedStatement stmt = conn.prepareStatement(GET_ARTICLE_BY_ID);
+			stmt.setInt(1, ID);
+			ResultSet rs = stmt.executeQuery();
+			
+			if(rs.next()) {
+				article = new Articles_vendus();
+				article.setNoArticle(rs.getInt("no_article"));
+				article.setNomArticle(rs.getString("nom_article"));
+				article.setDescription(rs.getString("description"));
+				article.setDateDebut(rs.getDate("date_debut_encheres"));
+				article.setDateFin(rs.getDate("date_fin_encheres"));
+				article.setPrixInitial(rs.getInt("prix_initial"));
+				article.setPrixVente(rs.getInt("prix_vente"));
+				article.setEtatVente(rs.getString("etat_vente"));
+				article.setNoUtilisateur(rs.getInt("no_utilisateur"));
+				article.setNoCategorie(rs.getInt("no_categorie"));
+			}
+			
+		} catch (SQLException e) {
+
+			conn.rollback();
+			e.printStackTrace();
+			throw e;
+
+		} finally {
+			// Fermer la connexion
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return article;
+	}
+	@Override
+	public boolean setRetraitEffectue(int idArticle) throws SQLException {
+		boolean res = false;
+
+		Connection conn = null;
+		try {
+			conn = ConnectionProvider.getConnection();
+			PreparedStatement stmt = conn.prepareStatement(SET_RETRAIT_EFFECTUE);
+			stmt.setString(1, "Retrait effectué");
+			stmt.setInt(2, idArticle);
+			int row = stmt.executeUpdate();
+			if(row > 0) {
+				res = true;
+			}
+		} catch (SQLException e) {
+//			conn.rollback();
+			e.printStackTrace();
+			throw e;
+
+		} finally {
+			// Fermer la connexion
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return res;
+	}
 
 }

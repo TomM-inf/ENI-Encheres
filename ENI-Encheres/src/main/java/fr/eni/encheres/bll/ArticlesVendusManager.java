@@ -55,4 +55,16 @@ public class ArticlesVendusManager {
 		}
 		return maListe;
 	}
+	
+	public Articles_vendus getArticleVenduByID(int ID) throws BLLException {
+		Articles_vendus article = null;
+		
+		try {
+			article = articleVendusDAO.getArticleVenduByID(ID);
+		} catch (SQLException e) {
+			throw new BLLException();
+		}
+		
+		return article;
+	}
 }

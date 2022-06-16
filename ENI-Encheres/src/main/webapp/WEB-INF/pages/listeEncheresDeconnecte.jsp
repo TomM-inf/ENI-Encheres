@@ -37,5 +37,8 @@ table, th, td {
 			<div hidden>${val = val+1}</div>
 		</c:forEach>
 	</c:if>
+	<c:if test="${empty listArticles}">
+		Aucune vente trouvé
+	</c:if>
 </body>
 </html>

@@ -77,29 +77,69 @@ public class accueilServlet extends HttpServlet{
 	
 	private List<Articles_vendus> filtreArticle(List<Articles_vendus> maListe, HttpServletRequest req){
 		List<Articles_vendus> listArticles = maListe;
-		System.out.println("avant");
-		for (Articles_vendus articles_vendus : listArticles) {
-			System.out.println(articles_vendus.getNomArticle());
-		}
-		//Si il s'agit des achats on retire les ventes qui correspondent à mes articles
-		if(req.getParameter("enchereOuvertes").equals("enchereOuvertes")) {
-			for (Articles_vendus articles_vendus : listArticles) {
-				if(articles_vendus.getNoUtilisateur() == ((Utilisateur) req.getSession().getAttribute("utilisateur")).getNoUtilisateur()) {
-					listArticles.remove(articles_vendus);
+		List<Articles_vendus> listSuppr = new ArrayList<Articles_vendus>();
+		boolean suppr = false;
+		try {
+			//Si il s'agit des achats on retire les ventes qui correspondent à mes articles
+			if (req.getParameter("enchereOuvertes") != null) {
+				if(req.getParameter("enchereOuvertes").equals("enchereOuvertes")) {
+					suppr = true;
+					for (Articles_vendus articles_vendus : listArticles) {
+						if(articles_vendus.getNoUtilisateur() == ((Utilisateur) req.getSession().getAttribute("utilisateur")).getNoUtilisateur()) {
+							listSuppr.add(articles_vendus);
+						}
+					}
 				}
 			}
-		}
-		//
-		if(req.getParameter("mesEncheres").equals("mesEncheres")) {
-			for (Articles_vendus articles_vendus : listArticles) {
-				if(articles_vendus.getNoUtilisateur() == ((Utilisateur) req.getSession().getAttribute("utilisateur")).getNoUtilisateur()) {
-					listArticles.remove(articles_vendus);
+			/*
+			if(req.getParameter("mesEncheres").equals("mesEncheres")) {
+				for (Articles_vendus articles_vendus : listArticles) {
+					if(articles_vendus.getNoUtilisateur() == ((Utilisateur) req.getSession().getAttribute("utilisateur")).getNoUtilisateur()) {
+						listArticles.remove(articles_vendus);
+					}
 				}
 			}
-		}
-		System.out.println("après");
-		for (Articles_vendus articles_vendus : listArticles) {
-			System.out.println(articles_vendus.getNomArticle());
+			*/
+			//Liste de mes ventes - no_utilisateur est le mien et status = 'En cours'
+			if (req.getParameter("encheresOuvertesVentes") != null) {
+				if (req.getParameter("encheresOuvertesVentes").equals("encheresOuvertesVentes")) {
+					suppr = true;
+					for (Articles_vendus articles_vendus : listArticles) {
+						if (articles_vendus.getNoUtilisateur() != ((Utilisateur) req.getSession().getAttribute("utilisateur")).getNoUtilisateur() || articles_vendus.getEtatVente().equals("En cours")) {
+							listSuppr.add(articles_vendus);
+						}
+					}
+				}
+			}
+			
+			//Liste de mes ventes non débutés - no_utilisateur est le mien et status = 'Créée'
+			if (req.getParameter("mesEncheresVentes") != null) {
+				if (req.getParameter("mesEncheresVentes").equals("mesEncheresVentes")) {
+					suppr = true;
+					for (Articles_vendus articles_vendus : listArticles) {
+						if (articles_vendus.getNoUtilisateur() != ((Utilisateur) req.getSession().getAttribute("utilisateur")).getNoUtilisateur() || articles_vendus.getEtatVente().equals("Créée")) {
+							listSuppr.add(articles_vendus);
+						}
+					}
+				}
+			}
+			
+			//Liste de mes ventes terminéés - no_utilisateur est le mien et status = 'Terminée' ou 'Retrait effectué'
+			if (req.getParameter("venteTerminees") != null) {
+				if (req.getParameter("venteTerminees").equals("venteTerminees")) {
+					suppr = true;
+					for (Articles_vendus articles_vendus : listArticles) {
+						if (articles_vendus.getNoUtilisateur() != ((Utilisateur) req.getSession().getAttribute("utilisateur")).getNoUtilisateur() || (articles_vendus.getEtatVente().equals("Terminée") || (articles_vendus.getEtatVente().equals("Retrait effectué")))) {
+							listSuppr.add(articles_vendus);
+						}
+					}
+				}
+			}
+			if (suppr) {
+				listArticles.removeAll(listSuppr);
+			}
+		} catch (Exception e) {
+			System.out.println(e.toString());
 		}
 		return listArticles;
 	}

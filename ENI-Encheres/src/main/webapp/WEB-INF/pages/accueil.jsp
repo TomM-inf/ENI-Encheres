@@ -132,13 +132,13 @@ table {
 							<div class="form-check">
 								<input class="form-check-input" type="checkbox" value="encheresOuvertesVentes" name="encheresOuvertesVentes"
 									id="flexCheckDefault"> <label class="form-check-label"
-									for="flexCheckDefault"> Enchères ouvertes </label>
+									for="flexCheckDefault"> Mes ventes en cours </label>
 							</div>
 							<div class="form-check">
 								<input class="form-check-input" type="checkbox" value="mesEncheresVentes" name="mesEncheresVentes"
 									id="flexCheckChecked"> <label
 									class="form-check-label" for="flexCheckChecked">
-									Mes enchères </label>
+									ventes non débutées </label>
 							</div>
 							<div class="form-check">
 								<input class="form-check-input" type="checkbox" value="venteTerminees" name="venteTerminees"

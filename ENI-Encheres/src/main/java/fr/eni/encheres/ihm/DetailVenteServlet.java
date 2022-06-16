@@ -63,12 +63,15 @@ public class DetailVenteServlet extends HttpServlet {
 			 
 			 // get nom dernier enchérisseur et montant
 			 enchere = enchereMger.getBestOfferByIDArticleVendu(article.getNoArticle());
-			 nomEncherisseur = utilisateurManager.getUtilisateurParId(enchere.getNoUtilisateur()).getNom();
+			 if(enchere != null) {
+				 nomEncherisseur = utilisateurManager.getUtilisateurParId(enchere.getNoUtilisateur()).getNom();
+			 }
+			 
 		} catch (BLLException e) {
 			e.printStackTrace();
 		}
 		
-		System.out.println(article.getNoArticle());
+//		System.out.println(article.getNoArticle());
 		
 		req.setAttribute("enchere", enchere);
 		req.setAttribute("nomEncherisseur", nomEncherisseur);

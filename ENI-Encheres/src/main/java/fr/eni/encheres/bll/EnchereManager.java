@@ -3,6 +3,7 @@ package fr.eni.encheres.bll;
 import java.sql.SQLException;
 
 import fr.eni.encheres.bo.Enchere;
+import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.EnchereDAO;
 
@@ -50,4 +51,15 @@ public class EnchereManager {
 		return enchere;
 	}
 	
+	public boolean removeAuctioneerCredit(Utilisateur user, int offer, int noArticle) {
+		boolean vretour = false;
+		
+		try {
+			vretour = enchereDAO.removeAuctioneerCredit(user, offer, noArticle);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return vretour;
+	}
 }

@@ -62,4 +62,12 @@ public class Enchere {
 		this.date = date;
 	}
 
+	@Override
+	public String toString() {
+		return "Enchere [noEnchere=" + noEnchere + ", montant=" + montant + ", noArticle=" + noArticle
+				+ ", noUtilisateur=" + noUtilisateur + ", date=" + date + "]";
+	}
+	
+	
+
 }

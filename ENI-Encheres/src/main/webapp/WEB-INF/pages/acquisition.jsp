@@ -10,13 +10,13 @@
 	<h1>Vous avez remporté la vente</h1>
 	<%-- 	<div class="${monProfil ? 'afficher-profil' : 'cacher-profil'}"> --%>
 	<div class="lignes-acquisition">
-		<label>Description :</label><label>"${articles_vendus.description}"</label>
+		<label>Description :</label><label>"${article.description}"</label>
 	</div>
 	<div class="lignes-acquisition">
-		<label>Meilleure offre :</label><label>"${articles_vendus.prixVente}"</label>
+		<label>Meilleure offre :</label><label>"${article.prixVente}"</label>
 	</div>
 	<div class="lignes-acquisition">
-		<label>Mise à prix :</label><label>"${articles_vendus.prixInitial}"</label>
+		<label>Mise à prix :</label><label>"${article.prixInitial}"</label>
 	</div>
 	<div class="lignes-acquisition">
 		<label>Retrait :</label><label>"${vendeur.rue}"</label>

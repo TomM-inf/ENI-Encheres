@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.encheres.bo.Articles_vendus;
+import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.Articles_vendusDAO;
 import fr.eni.encheres.dal.ConnectionProvider;
 
@@ -19,7 +20,7 @@ public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 	private static final String GETMOTCLECATE = "SELECT * FROM ARTICLES_VENDUS a, CATEGORIES c WHERE a.no_categorie = c.no_categorie AND c.libelle = ? AND nom_article LIKE ? ORDER BY date_debut_encheres DESC";
 	private static final String GET_ARTICLE_RETRAIT = "SELECT no_article FROM ARTICLES_VENDUS WHERE nom_article = ? AND description = ? AND date_debut_encheres = convert(datetime, ?,103) AND date_fin_encheres = convert(datetime, ?,103) AND prix_initial = ? AND no_utilisateur = ? AND no_categorie = ?";
 	private static final String ADD_ARTICLE = "INSERT INTO ARTICLES_VENDUS VALUES (?, ?, convert(datetime, ?,103), convert(datetime, ?,103), ?, null, ?, ?, ?)";
-	
+	private static final String GET_ID_VENDEUR = "SELECT no_utilisateur FROM ARTICLES_VENDUS WHERE no_article = ?";
 	@Override
 	public List<Articles_vendus> getArticlesVendus() throws SQLException {
 		Connection conn = null;
@@ -253,6 +254,42 @@ public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 		}
 		*/
 		return retour;
+	}
+	@Override
+	public Integer getNoVendeur(int idArticle) throws SQLException {
+		Connection conn = null;
+		int noUtilisateur = 0;
+		try {
+			conn = ConnectionProvider.getConnection();
+			conn.setAutoCommit(false);
+
+			PreparedStatement stmt = conn.prepareStatement(GET_ID_VENDEUR);
+			stmt.setInt(1, idArticle);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				noUtilisateur = rs.getInt("no_utilisateur");
+			} else {
+				noUtilisateur = 0;
+			}
+		} catch (SQLException e) {
+
+			conn.rollback();
+			e.printStackTrace();
+			throw e;
+
+		} finally {
+			// Fermer la connexion
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return noUtilisateur;
 	} 
 
 }

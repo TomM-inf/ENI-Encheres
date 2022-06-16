@@ -28,7 +28,6 @@ public class EnchereManager {
 		return id;
 	}
 
-  test
 	public boolean getEnchereUtilisateurConnecte(int noArticle, int noUtilisateur) {
 		boolean retour = false;
 		try {

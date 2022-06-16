@@ -109,7 +109,7 @@ public class accueilServlet extends HttpServlet{
 				if(req.getParameter("encheresRemportes").equals("encheresRemportes")) {
 					suppr = true;
 					for (Articles_vendus articles_vendus : listArticles) {
-						if(articles_vendus.getNoUtilisateur() == ((Utilisateur) req.getSession().getAttribute("utilisateur")).getNoUtilisateur()) {
+						if(enchereManager.getEnchereUtilisateurConnecte(articles_vendus.getNoArticle(), ((Utilisateur) req.getSession().getAttribute("utilisateur")).getNoUtilisateur()) && (articles_vendus.getEtatVente().equals("Terminée") || (articles_vendus.getEtatVente().equals("Retrait effectué")))) {
 							listSuppr.add(articles_vendus);
 						}
 					}

@@ -1,6 +1,7 @@
 @charset "ISO-8859-1";
 
 body {
+	
 }
 
 h2 {
@@ -23,24 +24,27 @@ h2 {
 	padding-bottom: 2em;
 }
 
-div.formNouvelArticle{
+div.formNouvelArticle {
 	flex-direction: row;
 }
-#venteArticleRetrait{
+
+#venteArticleRetrait {
 	margin: 2em;
 	border: 1px solid black;
 	align-content: center;
 }
-#titre{
+
+#titre {
 	font-size: xx-large;
 	font-weight: bold;
 	font-family: sans-serif;
 }
-#insc{
+
+#insc {
 	float: right;
 }
 
-#rightF{
+#rightF {
 	float: right;
 }
 
@@ -82,7 +86,7 @@ table {
 	padding: 20px;
 	display: flex;
 	flex-direction: row;
-	margin-bottom:10px;
+	margin-bottom: 10px;
 }
 
 .connexion-gauche {
@@ -158,3 +162,7 @@ div.article-information > * {
 	margin-bottom: 10px;
 }
 
+#logo {
+	width: 50px;
+	height: 50px;
+}

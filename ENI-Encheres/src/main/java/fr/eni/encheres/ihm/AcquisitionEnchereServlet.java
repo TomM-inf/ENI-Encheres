@@ -61,7 +61,7 @@ public class AcquisitionEnchereServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		int idArticle = Integer.parseInt(req.getParameter("id"));
 		boolean requeteEffectue = false;
 		try {
@@ -72,7 +72,7 @@ public class AcquisitionEnchereServlet extends HttpServlet {
 		}
 		// gestion d'erreur
 //		if(requeteEffectue)
-
+		req.getRequestDispatcher("/WEB-INF/pages/detailMaVente.jsp").forward(req, res);
 	}
 
 }

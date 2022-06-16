@@ -116,7 +116,10 @@ public class ModifierProfilServlet extends HttpServlet {
 			// encheres en cours passées en terminée > on recredite l'encherisseur
 			// = on select la liste des encheres du mec,
 			// ======> select * from articles_vendus where no_utilisateur = ? and etat_vente= ?(en cours)
+<<<<<<< HEAD
+=======
 
+>>>>>>> branch 'feature/1004_supprimer_compte' of https://github.com/TomM-inf/ENI-Encheres
 			// on stocke ça dans une liste d'articles vendus
 			// ---- debut liste articles-----
 			// on parcours cette liste et pour chaque on select le montant de l'enchere
@@ -131,8 +134,7 @@ public class ModifierProfilServlet extends HttpServlet {
 			// l'utilisateur
 			// ======> update utilisateurs set credits = ?(la somme) where no_utilisateur =?(toujours celui stocké dans l'objet)
 			// on historise l'article vendu ( l'enchere )
-			// ======> update articles_vendus set etat = historisé/terminé where no_article
-			// = ?(celui stocké dans l'objet que l'on parcoure dans la liste)
+			// ======> update articles_vendus set etat = historisé/terminé where no_article= ?(celui stocké dans l'objet que l'on parcoure dans la liste)
 			// ---- fin liste articles-----
 			// if bid en cours de sa part, on remet celle juste avant lui
 			// ======> select * from encheres where no_utilisateur = ?(numéro du compte a

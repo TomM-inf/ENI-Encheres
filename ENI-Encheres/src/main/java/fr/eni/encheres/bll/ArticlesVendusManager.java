@@ -104,4 +104,15 @@ public class ArticlesVendusManager {
 		return categorie;
 	}
 	
+
+	public boolean setRetraitEffectue(int idArticle) throws BLLException {
+		boolean res = false;
+
+		try {
+			res = articleVendusDAO.setRetraitEffectue(idArticle);
+		} catch (SQLException e) {
+			throw new BLLException();
+		}
+		return res;
+	}
 }

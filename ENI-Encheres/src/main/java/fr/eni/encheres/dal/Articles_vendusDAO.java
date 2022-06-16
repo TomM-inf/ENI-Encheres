@@ -23,5 +23,7 @@ public interface Articles_vendusDAO {
 	public Articles_vendus getArticleVenduByID(int ID) throws SQLException;
 	
 	public Categorie getCategorieByID(int ID) throws SQLException;
-	
+
+	public boolean setRetraitEffectue(int idArticle) throws SQLException;
+
 }

@@ -3,32 +3,36 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="./css/main.css">
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Vous avez remporté la vente</h1>
-	<%-- 	<div class="${monProfil ? 'afficher-profil' : 'cacher-profil'}"> --%>
+<jsp:include page="./headerConnecte.jsp"></jsp:include>
+	<h1>Vous avez remportÃ© la vente</h1>
 	<div class="lignes-acquisition">
-		<label>Description :</label><label>"${article.description}"</label>
+		<label>${article.nomArticle}</label>
 	</div>
 	<div class="lignes-acquisition">
-		<label>Meilleure offre :</label><label>"${article.prixVente}"</label>
+		<label>Description :</label><label>${article.description}</label>
 	</div>
 	<div class="lignes-acquisition">
-		<label>Mise à prix :</label><label>"${article.prixInitial}"</label>
+		<label>Meilleure offre :</label><label>${article.prixVente}</label>
 	</div>
 	<div class="lignes-acquisition">
-		<label>Retrait :</label><label>"${vendeur.rue}"</label>
+		<label>Mise Ã  prix :</label><label>${article.prixInitial}</label>
 	</div>
 	<div class="lignes-acquisition">
-		<label></label><label>"${vendeur.cp}"</label><label>"${vendeur.ville}"</label>
+		<label>Retrait :</label><label>${retrait.rue}</label>
 	</div>
 	<div class="lignes-acquisition">
-		<label>Vendeur :</label><label>"${vendeur.pseudo}"</label>
+		<label></label><label>${retrait.codePostal}</label><label>${retrait.ville}</label>
 	</div>
 	<div class="lignes-acquisition">
-		<label>Tel :</label><label>"${vendeur.telephone}"</label>
+		<label>Vendeur :</label><label>${vendeur.pseudo}</label>
+	</div>
+	<div class="lignes-acquisition">
+		<label>Tel :</label><label>${vendeur.telephone}</label>
 	</div>
 	<a href="${pageContext.request.contextPath }/">
 		<button>Retour</button>

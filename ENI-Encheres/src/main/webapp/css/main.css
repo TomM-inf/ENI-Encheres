@@ -110,6 +110,7 @@ table {
 	flex-direction: row;
 }
 
+
 .detail-body {
 	display: flex;
 	flex-direction: row;
@@ -149,3 +150,11 @@ div.article-information > * {
 .article-label-value .label {
 	width: 130px;
 }
+
+.lignes-acquisition {
+	display: flex;
+	width: 280px;
+	justify-content: space-between;
+	margin-bottom: 10px;
+}
+

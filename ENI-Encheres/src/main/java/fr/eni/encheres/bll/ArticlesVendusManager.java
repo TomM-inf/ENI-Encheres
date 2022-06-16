@@ -74,5 +74,17 @@ public class ArticlesVendusManager {
 			throw new BLLException();
 		}
 		return idVendeur;
+
+	public Articles_vendus getArticleVenduByID(int ID) throws BLLException {
+		Articles_vendus article = null;
+		
+		try {
+			article = articleVendusDAO.getArticleVenduByID(ID);
+		} catch (SQLException e) {
+			throw new BLLException();
+		}
+		
+		return article;
+
 	}
 }

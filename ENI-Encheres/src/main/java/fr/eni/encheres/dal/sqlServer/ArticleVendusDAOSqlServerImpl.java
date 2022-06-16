@@ -14,6 +14,7 @@ import fr.eni.encheres.dal.ConnectionProvider;
 
 public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 
+	private static final String GET_ARTICLE_BY_ID = "SELECT * FROM ARTICLES_VENDUS WHERE no_article=?";
 	private static final String GETALL = "SELECT * FROM ARTICLES_VENDUS ORDER BY date_debut_encheres DESC";
 	private static final String GETMOTCLE = "SELECT * FROM ARTICLES_VENDUS WHERE nom_article LIKE ? ORDER BY date_debut_encheres DESC";
 	private static final String GETCATE = "SELECT * FROM ARTICLES_VENDUS a, CATEGORIES c WHERE a.no_categorie = c.no_categorie AND c.libelle = ? ORDER BY date_debut_encheres DESC"; 
@@ -179,6 +180,7 @@ public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 		
 	}
 	@Override
+
 	public Integer addArticleVendu(String nomArticle, String description, String dateDebut, String dateFin, int prixInitial, String etatVente, int noUtilisateur, int noCategorie) throws SQLException {
 		Connection conn = null;
 		Integer retour = null;
@@ -291,5 +293,51 @@ public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 		
 		return noUtilisateur;
 	} 
+
+	public Articles_vendus getArticleVenduByID(int ID) throws SQLException {
+		
+		Connection conn = null;
+		Articles_vendus article = null;
+		try {
+			conn = ConnectionProvider.getConnection();
+
+			PreparedStatement stmt = conn.prepareStatement(GET_ARTICLE_BY_ID);
+			stmt.setInt(1, ID);
+			ResultSet rs = stmt.executeQuery();
+			
+			if(rs.next()) {
+				article = new Articles_vendus();
+				article.setNoArticle(rs.getInt("no_article"));
+				article.setNomArticle(rs.getString("nom_article"));
+				article.setDescription(rs.getString("description"));
+				article.setDateDebut(rs.getDate("date_debut_encheres"));
+				article.setDateFin(rs.getDate("date_fin_encheres"));
+				article.setPrixInitial(rs.getInt("prix_initial"));
+				article.setPrixVente(rs.getInt("prix_vente"));
+				article.setEtatVente(rs.getString("etat_vente"));
+				article.setNoUtilisateur(rs.getInt("no_utilisateur"));
+				article.setNoCategorie(rs.getInt("no_categorie"));
+			}
+			
+		} catch (SQLException e) {
+
+			conn.rollback();
+			e.printStackTrace();
+			throw e;
+
+		} finally {
+			// Fermer la connexion
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return article;
+	}
 
 }

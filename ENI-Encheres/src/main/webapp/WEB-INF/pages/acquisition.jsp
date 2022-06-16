@@ -3,12 +3,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="./css/main.css">
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
 <body>
+<jsp:include page="./headerConnecte.jsp"></jsp:include>
 	<h1>Vous avez remporté la vente</h1>
-	<%-- 	<div class="${monProfil ? 'afficher-profil' : 'cacher-profil'}"> --%>
+	<div class="lignes-acquisition">
+		<label>"${article.nomArticle}"</label>
+	</div>
 	<div class="lignes-acquisition">
 		<label>Description :</label><label>"${article.description}"</label>
 	</div>

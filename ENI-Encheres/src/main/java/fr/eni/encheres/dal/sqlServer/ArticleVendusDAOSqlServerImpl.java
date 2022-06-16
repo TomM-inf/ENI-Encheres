@@ -22,6 +22,8 @@ public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 	private static final String GET_ARTICLE_RETRAIT = "SELECT no_article FROM ARTICLES_VENDUS WHERE nom_article = ? AND description = ? AND date_debut_encheres = convert(datetime, ?,103) AND date_fin_encheres = convert(datetime, ?,103) AND prix_initial = ? AND no_utilisateur = ? AND no_categorie = ?";
 	private static final String ADD_ARTICLE = "INSERT INTO ARTICLES_VENDUS VALUES (?, ?, convert(datetime, ?,103), convert(datetime, ?,103), ?, null, ?, ?, ?)";
 	private static final String GET_ID_VENDEUR = "SELECT no_utilisateur FROM ARTICLES_VENDUS WHERE no_article = ?";
+	private static final String SET_RETRAIT_EFFECTUE = "UPDATE ARTICLES_VENDUS SET etat_vente = ? WHERE no_article = ?";
+	
 	@Override
 	public List<Articles_vendus> getArticlesVendus() throws SQLException {
 		Connection conn = null;
@@ -338,6 +340,37 @@ public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 		}
 
 		return article;
+	}
+	@Override
+	public boolean setRetraitEffectue(int idArticle) throws SQLException {
+		boolean res = false;
+
+		Connection conn = null;
+		try {
+			conn = ConnectionProvider.getConnection();
+			PreparedStatement stmt = conn.prepareStatement(SET_RETRAIT_EFFECTUE);
+			stmt.setString(1, "Retrait effectué");
+			stmt.setInt(2, idArticle);
+			int row = stmt.executeUpdate();
+			if(row > 0) {
+				res = true;
+			}
+		} catch (SQLException e) {
+//			conn.rollback();
+			e.printStackTrace();
+			throw e;
+
+		} finally {
+			// Fermer la connexion
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return res;
 	}
 
 }

@@ -27,7 +27,18 @@ public class EnchereManager {
 		}
 		return id;
 	}
-	
+
+  test
+	public boolean getEnchereUtilisateurConnecte(int noArticle, int noUtilisateur) {
+		boolean retour = false;
+		try {
+			retour = enchereDAO.getEnchereUtilisateurConnecte(noArticle, noUtilisateur);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return retour;
+	}
+
 	public Enchere getBestOfferByIDArticleVendu(int ID) {
 		Enchere enchere = null;
 		

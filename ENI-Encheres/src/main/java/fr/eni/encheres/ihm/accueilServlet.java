@@ -99,7 +99,7 @@ public class accueilServlet extends HttpServlet{
 				if(req.getParameter("mesEncheres").equals("mesEncheres")) {
 					suppr = true;
 					for (Articles_vendus articles_vendus : listArticles) {
-						if(enchereManager.getEnchereUtilisateurConnecte(articles_vendus.getNoArticle(), ((Utilisateur) req.getSession().getAttribute("utilisateur")).getNoUtilisateur())) {
+						if(!enchereManager.getEnchereUtilisateurConnecte(articles_vendus.getNoArticle(), ((Utilisateur) req.getSession().getAttribute("utilisateur")).getNoUtilisateur())) {
 							listSuppr.add(articles_vendus);
 						}
 					}
@@ -109,7 +109,7 @@ public class accueilServlet extends HttpServlet{
 				if(req.getParameter("encheresRemportes").equals("encheresRemportes")) {
 					suppr = true;
 					for (Articles_vendus articles_vendus : listArticles) {
-						if(enchereManager.getEnchereUtilisateurConnecte(articles_vendus.getNoArticle(), ((Utilisateur) req.getSession().getAttribute("utilisateur")).getNoUtilisateur()) && (articles_vendus.getEtatVente().equals("Terminée") || (articles_vendus.getEtatVente().equals("Retrait effectué")))) {
+						if(!enchereManager.getEnchereUtilisateurConnecte(articles_vendus.getNoArticle(), ((Utilisateur) req.getSession().getAttribute("utilisateur")).getNoUtilisateur()) && (articles_vendus.getEtatVente().equals("Terminée") || (articles_vendus.getEtatVente().equals("Retrait effectué")))) {
 							listSuppr.add(articles_vendus);
 						}
 					}

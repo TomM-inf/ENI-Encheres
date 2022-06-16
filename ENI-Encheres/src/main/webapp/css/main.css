@@ -146,6 +146,14 @@ div.article-information > * {
     margin-bottom: 20px; 
 } 
 
+.article-label-value {
+	display: flex;
+}
+
 .article-label-value .label {
 	width: 130px;
+}
+
+.article-label-value input#proposition {
+	margin-right: 4px;
 }

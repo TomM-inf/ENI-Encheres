@@ -344,7 +344,6 @@ public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 	@Override
 	public boolean setRetraitEffectue(int idArticle) throws SQLException {
 		boolean res = false;
-
 		Connection conn = null;
 		try {
 			conn = ConnectionProvider.getConnection();

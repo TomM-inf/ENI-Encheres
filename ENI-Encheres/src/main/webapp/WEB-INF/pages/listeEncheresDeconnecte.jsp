@@ -14,7 +14,7 @@ table, th, td {
 </head>
 <body>
 	<c:if test="${not empty listArticles}">
-	<div hidden>${val = 0}</div>
+		<div hidden>${val = 0}</div>
 		<c:forEach items="${listArticles}" var="value">
 			<table>
 				<tbody>
@@ -22,15 +22,25 @@ table, th, td {
 						<td rowspan="5">IMAGE</td>
 					</tr>
 					<tr>
-						<td><a href="${pageContext.request.contextPath }/details?id=${value.noArticle }"><c:out value="${value.nomArticle}" /></a></td>
+						<td><a
+							href="${pageContext.request.contextPath }/details?id=${value.noArticle }"><c:out
+									value="${value.nomArticle}" /></a></td>
 					</tr>
 					<tr>
-						<td>Prix : <c:out value="${value.prixInitial}" /> points</td>
+						<td>Prix : <c:out value="${value.prixInitial}" /> points
+						</td>
 					</tr>
 					<tr>
-					<td>Fin de l'enchere : <c:out value="${value.dateFin}" /></td>
+						<td>Fin de l'enchere : <c:out value="${value.dateFin}" /></td>
 					</tr>
-					<tr><td>Vendeur : <c:out value="${listPseudo[val]}" /></td>
+					<tr>
+						<td>Vendeur : <c:if test="${empty sessionScope.utilisateur}">
+								<c:out value="${listPseudo[val]}" />
+							</c:if> <c:if test="${not empty sessionScope.utilisateur}">
+								<a
+									href="${pageContext.request.contextPath}/afficherProfil?pseudo=${listPseudo[val]}&etat=${value.etatVente}&id=${value.noArticle}"><c:out
+										value="${listPseudo[val]}" /></a>
+							</c:if></td>
 					</tr>
 
 				</tbody>

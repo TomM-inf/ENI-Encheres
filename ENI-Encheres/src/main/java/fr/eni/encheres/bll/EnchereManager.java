@@ -2,6 +2,7 @@ package fr.eni.encheres.bll;
 
 import java.sql.SQLException;
 
+import fr.eni.encheres.bo.Enchere;
 import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.EnchereDAO;
 
@@ -26,7 +27,8 @@ public class EnchereManager {
 		}
 		return id;
 	}
-	
+
+  test
 	public boolean getEnchereUtilisateurConnecte(int noArticle, int noUtilisateur) {
 		boolean retour = false;
 		try {
@@ -36,4 +38,17 @@ public class EnchereManager {
 		}
 		return retour;
 	}
+
+	public Enchere getBestOfferByIDArticleVendu(int ID) {
+		Enchere enchere = null;
+		
+		try {
+			enchere = enchereDAO.getBestOfferByIDArticleVendu(ID);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		
+		return enchere;
+	}
+	
 }

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
@@ -87,7 +87,7 @@ table {
 						id="rechercher" class="btn btn-primary"></td>
 				</tr>
 				<tr>
-					<td><label>Catégorie : </label></td>
+					<td><label>CatÃ©gorie : </label></td>
 					<td><select name="categorie"
 						class="form-select form-select-sm"
 						aria-label=".form-select-sm example">
@@ -109,19 +109,19 @@ table {
 							<div class="form-check">
 								<input class="form-check-input" type="checkbox" value="enchereOuvertes" name="enchereOuvertes"
 									id="flexCheckDefault"> <label class="form-check-label"
-									for="flexCheckDefault"> Enchères ouvertes </label>
+									for="flexCheckDefault"> EnchÃ¨res ouvertes </label>
 							</div>
 							<div class="form-check">
 								<input class="form-check-input" type="checkbox" value="mesEncheres" name="mesEncheres"
 									id="flexCheckChecked"> <label
 									class="form-check-label" for="flexCheckChecked">
-									Mes enchères </label>
+									Mes enchÃ¨res </label>
 							</div>
 							<div class="form-check">
 								<input class="form-check-input" type="checkbox" value="encheresRemportes" name="encheresRemportes"
 									id="flexCheckChecked"> <label
 									class="form-check-label" for="flexCheckChecked">
-									Mes enchères remportées </label>
+									Mes enchÃ¨res remportÃ©es </label>
 							</div></td>
 						<td><div class="form-check">
 								<input class="form-check-input ventes" type="radio"
@@ -138,13 +138,13 @@ table {
 								<input class="form-check-input" type="checkbox" value="mesEncheresVentes" name="mesEncheresVentes"
 									id="flexCheckChecked"> <label
 									class="form-check-label" for="flexCheckChecked">
-									ventes non débutées </label>
+									ventes non dÃ©butÃ©es </label>
 							</div>
 							<div class="form-check">
 								<input class="form-check-input" type="checkbox" value="venteTerminees" name="venteTerminees"
 									id="flexCheckChecked"> <label
 									class="form-check-label" for="flexCheckChecked">
-									Ventes terminées </label>
+									Ventes terminÃ©es </label>
 							</div></td>
 					</tr>
 				</c:if>

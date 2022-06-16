@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
+import fr.eni.encheres.bo.Enchere;
 import fr.eni.encheres.dal.ConnectionProvider;
 import fr.eni.encheres.dal.EnchereDAO;
 
@@ -12,6 +14,7 @@ public class EnchereDAOSqlServerImpl implements EnchereDAO {
 
 	private static final String RECUPERER_DERNIER_ENCHERISSEUR = "SELECT top 1 no_utilisateur from ENCHERES WHERE no_article = ? group by date_enchere,no_utilisateur order BY CAST(date_enchere AS DATE) desc";
 	private static final String GET_ENCHERE_UTILISATEUR = "SELECT * FROM ENCHERES e WHERE no_article = ? AND no_utilisateur = ?";
+	private static final String GET_BEST_OFFER = "SELECT top 1 * from ENCHERES WHERE no_article = ? order BY CAST(date_enchere AS DATE) desc;";
 
 
 	@Override
@@ -48,8 +51,51 @@ public class EnchereDAOSqlServerImpl implements EnchereDAO {
 		return res;
 	}
 
-
 	@Override
+	public Enchere getBestOfferByIDArticleVendu(int idArticleVendu) throws SQLException {
+		
+		Connection conn = null;
+		Enchere enchere = null;
+		
+		try {
+			conn = ConnectionProvider.getConnection();
+			conn.setAutoCommit(false);
+
+			PreparedStatement stmt = conn.prepareStatement(GET_BEST_OFFER);
+			stmt.setInt(1, idArticleVendu);
+			ResultSet rs = stmt.executeQuery();
+			
+			if(rs.next()) {
+				enchere = new Enchere();
+				enchere.setNoArticle(rs.getInt("no_enchere"));
+				enchere.setMontant(rs.getInt("montant_enchere"));
+				enchere.setNoArticle(idArticleVendu);
+				enchere.setNoUtilisateur(rs.getInt("no_utilisateur"));
+				enchere.setDate(rs.getDate("date_enchere").toLocalDate());
+			}
+			
+		} catch (SQLException e) {
+
+			conn.rollback();
+			e.printStackTrace();
+			throw e;
+
+		} finally {
+			// Fermer la connexion
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return enchere;
+	}
+  
+  @Override
 	public boolean getEnchereUtilisateurConnecte(int noArticle, int noUtilisateur) throws SQLException {
 		Connection conn = null;
 		boolean retour = false;

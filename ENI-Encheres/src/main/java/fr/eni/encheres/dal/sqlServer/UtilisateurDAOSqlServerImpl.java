@@ -6,7 +6,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import fr.eni.encheres.bo.Articles_vendus;
+import fr.eni.encheres.bo.Enchere;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.ConnectionProvider;
 import fr.eni.encheres.dal.UtilisateurDAO;
@@ -24,7 +28,13 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 	private static final String MAJ_UTILISATEUR = "UPDATE UTILISATEURS "
 			+ "SET pseudo = ?, nom = ?,prenom= ?,email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?"
 			+ " WHERE no_utilisateur = ?;";
-
+	// requetes liées à la suppression d'un utilisateur
+	private static final String SUPPRESSION_ENCHERES_NON_COMMENCEES = "DELETE * FROM ARTICLES_VENDUS WHERE no_utilisateur = ? AND etat_vente = ?";
+	private static final String RECUPERER_ENCHERES_ENCOURS = "select * from articles_vendus where no_utilisateur = ? and etat_vente= ?";
+	private static final String RECUPERER_DERNIER_ENCHERE = "select top 1 * from encheres where no_article = ?  order by montant_enchere desc;";
+	private static final String REMBOURSER_CREDIT = "update utilisateurs set credit = credit + ? where no_utilisateur =?";
+	private static final String HISTORISATION = "update articles_vendus set etat = ? where no_article= ?";
+	
 	@Override
 	public Utilisateur verifierConnexion(String login, String pw) throws SQLException {
 		Connection conn = null;
@@ -46,6 +56,7 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				utilisateur = new Utilisateur();
+				utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
 				utilisateur.setPseudo(rs.getString("pseudo"));
 				utilisateur.setNom(rs.getString("nom"));
 				utilisateur.setPrenom(rs.getString("prenom"));
@@ -72,6 +83,7 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 				ResultSet res = statement.executeQuery();
 				if (res.next()) {
 					utilisateur = new Utilisateur();
+					utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
 					utilisateur.setPseudo(res.getString("pseudo"));
 					utilisateur.setNom(res.getString("nom"));
 					utilisateur.setPrenom(res.getString("prenom"));
@@ -118,6 +130,7 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				utilisateur = new Utilisateur();
+				utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
 				utilisateur.setPseudo(rs.getString("pseudo"));
 				utilisateur.setNom(rs.getString("nom"));
 				utilisateur.setPrenom(rs.getString("prenom"));
@@ -163,6 +176,7 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				utilisateur = new Utilisateur();
+				utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
 				utilisateur.setPseudo(rs.getString("pseudo"));
 				utilisateur.setNom(rs.getString("nom"));
 				utilisateur.setPrenom(rs.getString("prenom"));
@@ -207,6 +221,7 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				utilisateur = new Utilisateur();
+				utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
 				utilisateur.setPseudo(rs.getString("pseudo"));
 				utilisateur.setNom(rs.getString("nom"));
 				utilisateur.setPrenom(rs.getString("prenom"));
@@ -364,5 +379,81 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 	@Override
 	public boolean isAlphaNumeric(String s) {
 		return s != null && s.matches("^[a-zA-Z0-9]*$");
+	}
+
+	@Override
+	public boolean supprimerUtilisateur(int noUtilisateur) throws SQLException {
+		boolean res = false;
+		// TODO
+		Connection conn = null;
+		conn = ConnectionProvider.getConnection();
+		supprimerEncheresNonCommencees(noUtilisateur, conn);
+		List<Articles_vendus> lstArticles = getListeArticlesVendusEnCours(noUtilisateur, conn);
+		for (Articles_vendus article : lstArticles) {
+			Enchere enchere = getEnchereByIdArticle(article.getNoArticle(), conn);
+			rembourserCredit(enchere,conn);
+			historisation(article.getNoArticle(),conn);
+		}
+
+		return res;
+	}
+
+	private void supprimerEncheresNonCommencees(int idUtilisateur, Connection conn) throws SQLException {
+		System.out.println("debut supprimerEncheresNonCommencees()");
+		PreparedStatement stmt = conn.prepareStatement(SUPPRESSION_ENCHERES_NON_COMMENCEES);
+		stmt.setInt(1, idUtilisateur);
+		stmt.setString(2, "Créée");
+		int row = stmt.executeUpdate();
+	}
+
+	private List<Articles_vendus> getListeArticlesVendusEnCours(int idUtilisateur, Connection conn)
+			throws SQLException {
+		List<Articles_vendus> lstRes = new ArrayList<Articles_vendus>();
+		PreparedStatement stmt = conn.prepareStatement(RECUPERER_ENCHERES_ENCOURS);
+		stmt.setInt(1, idUtilisateur);
+		stmt.setString(2, "En cours");
+		ResultSet rs = stmt.executeQuery();
+		List<Articles_vendus> listArticles = new ArrayList<Articles_vendus>();
+		while (rs.next()) {
+			Articles_vendus article = new Articles_vendus();
+			article.setNoArticle(rs.getInt("no_article"));
+			article.setNomArticle(rs.getString("nom_article"));
+			article.setDescription(rs.getString("description"));
+			article.setDateDebut(rs.getDate("date_debut_encheres"));
+			article.setDateFin(rs.getDate("date_fin_encheres"));
+			article.setPrixInitial(rs.getInt("prix_initial"));
+			article.setPrixVente(rs.getInt("prix_vente"));
+			article.setEtatVente(rs.getString("etat_vente"));
+			article.setNoUtilisateur(rs.getInt("no_utilisateur"));
+			article.setNoCategorie(rs.getInt("no_categorie"));
+			listArticles.add(article);
+		}
+		return lstRes;
+	}
+
+	private Enchere getEnchereByIdArticle(int idArticle, Connection conn) throws SQLException {
+		Enchere enchere = new Enchere();
+		PreparedStatement stmt = conn.prepareStatement(RECUPERER_DERNIER_ENCHERE);
+		stmt.setInt(1, idArticle);
+		ResultSet rs = stmt.executeQuery();
+		if (rs.next()) {
+			enchere.setNoUtilisateur(rs.getInt("no_utilisateur"));
+			enchere.setMontant(rs.getInt("montant_enchere"));
+		}
+		return enchere;
+	}
+
+	private void rembourserCredit(Enchere enchere, Connection conn) throws SQLException {
+		PreparedStatement stmt = conn.prepareStatement(REMBOURSER_CREDIT);
+		stmt.setInt(1, enchere.getMontant());
+		stmt.setInt(2, enchere.getNoUtilisateur());
+		int row = stmt.executeUpdate();
+	}
+	
+	private void historisation(int idArticle,Connection conn) throws SQLException{
+		PreparedStatement stmt = conn.prepareStatement(HISTORISATION);
+		stmt.setString(1, "Enchères terminées");
+		stmt.setInt(2, idArticle);
+		int row = stmt.executeUpdate();
 	}
 }

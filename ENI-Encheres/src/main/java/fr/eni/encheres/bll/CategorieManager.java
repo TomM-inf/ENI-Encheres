@@ -24,4 +24,14 @@ public class CategorieManager {
 		}
 		return maListe;
 	}
+	
+	public Categorie getCategorieParNom(String libelle) throws BLLException {
+		Categorie categorie = null;
+		try {
+			categorie = categorieDAO.getCategorieParNom(libelle);
+		} catch (SQLException e) {
+			throw new BLLException();
+		}
+		return categorie;
+	}
 }

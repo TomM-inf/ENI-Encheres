@@ -7,4 +7,6 @@ import fr.eni.encheres.bo.Categorie;
 
 public interface CategorieDAO {
 	public List<Categorie> getAllCategorie() throws SQLException;
+	
+	public Categorie getCategorieParNom(String libelle) throws SQLException;
 }

@@ -112,12 +112,11 @@ public class ModifierProfilServlet extends HttpServlet {
 			}
 		} else if (req.getParameter("submit").equals("Supprimer")) {
 			// encheres pas commencées qui ont le no_utilisateur du mec - > delete
-			// ======> DELETE * FROM ARTICLES_VENDUS WHERE no_utilisateur = ? AND etat_vente
-			// = ?(pas commencée)
+			// ======> DELETE * FROM ARTICLES_VENDUS WHERE no_utilisateur = ? AND etat_vente= ?(pas commencée)
 			// encheres en cours passées en terminée > on recredite l'encherisseur
 			// = on select la liste des encheres du mec,
-			// ======> select * from articles_vendus where no_utilisateur = ? and etat_vente
-			// = ?(en cours)
+			// ======> select * from articles_vendus where no_utilisateur = ? and etat_vente= ?(en cours)
+
 			// on stocke ça dans une liste d'articles vendus
 			// ---- debut liste articles-----
 			// on parcours cette liste et pour chaque on select le montant de l'enchere
@@ -130,8 +129,7 @@ public class ModifierProfilServlet extends HttpServlet {
 			// objet enchere)
 			// les credits récupérés + le montant actuel de l'enchere sont ajoutés à
 			// l'utilisateur
-			// ======> update utilisateurs set credits = ?(la somme) where no_utilisateur =
-			// ?(toujours celui stocké dans l'objet)
+			// ======> update utilisateurs set credits = ?(la somme) where no_utilisateur =?(toujours celui stocké dans l'objet)
 			// on historise l'article vendu ( l'enchere )
 			// ======> update articles_vendus set etat = historisé/terminé where no_article
 			// = ?(celui stocké dans l'objet que l'on parcoure dans la liste)

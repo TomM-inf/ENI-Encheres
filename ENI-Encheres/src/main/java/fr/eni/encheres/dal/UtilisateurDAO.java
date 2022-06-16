@@ -14,5 +14,6 @@ public interface UtilisateurDAO {
 	public String getMD5EncryptedValue(String password);
 	public boolean modificationUtilisateur(Utilisateur utilisateur) throws SQLException;
 	public boolean isAlphaNumeric(String s);
+	public boolean supprimerUtilisateur(int noUtilisateur) throws SQLException;
 
 }

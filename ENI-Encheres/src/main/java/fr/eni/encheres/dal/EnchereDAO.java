@@ -10,8 +10,5 @@ public interface EnchereDAO {
 	public int getDernierEncherisseurByIDArticleVendu(int idArticleVendu) throws SQLException;
 	public Enchere getBestOfferByIDArticleVendu(int idArticleVendu) throws SQLException;
 	public boolean removeAuctioneerCredit(Utilisateur user, int offer, int noArticle) throws SQLException;
-	
 	public boolean getEnchereUtilisateurConnecte(int noArticle, int noUtilisateur) throws SQLException;
-
-	public Enchere getBestOfferByIDArticleVendu(int idArticleVendu) throws SQLException;
 }

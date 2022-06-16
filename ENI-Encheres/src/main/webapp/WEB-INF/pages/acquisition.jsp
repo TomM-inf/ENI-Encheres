@@ -23,10 +23,10 @@
 		<label>Mise à prix :</label><label>${article.prixInitial}</label>
 	</div>
 	<div class="lignes-acquisition">
-		<label>Retrait :</label><label>${vendeur.rue}</label>
+		<label>Retrait :</label><label>${retrait.rue}</label>
 	</div>
 	<div class="lignes-acquisition">
-		<label></label><label>${vendeur.codePostal}</label><label>${vendeur.ville}</label>
+		<label></label><label>${retrait.codePostal}</label><label>${retrait.ville}</label>
 	</div>
 	<div class="lignes-acquisition">
 		<label>Vendeur :</label><label>${vendeur.pseudo}</label>

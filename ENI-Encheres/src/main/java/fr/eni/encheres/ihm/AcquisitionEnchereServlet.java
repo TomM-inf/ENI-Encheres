@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.encheres.bll.ArticlesVendusManager;
 import fr.eni.encheres.bll.BLLException;
 import fr.eni.encheres.bll.EnchereManager;
+import fr.eni.encheres.bll.RetraitManager;
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Articles_vendus;
+import fr.eni.encheres.bo.Retrait;
 import fr.eni.encheres.bo.Utilisateur;
 
 @WebServlet("/acquisitionEnchere")
@@ -21,11 +23,13 @@ public class AcquisitionEnchereServlet extends HttpServlet {
 	private UtilisateurManager utilisateurMger;
 	private EnchereManager enchereMger;
 	private ArticlesVendusManager articleMger;
+	private RetraitManager retraitMger;
 
 	public AcquisitionEnchereServlet() {
 		utilisateurMger = new UtilisateurManager();
 		enchereMger = new EnchereManager();
 		articleMger = new ArticlesVendusManager();
+		retraitMger = new RetraitManager();
 	}
 
 	@Override
@@ -37,22 +41,25 @@ public class AcquisitionEnchereServlet extends HttpServlet {
 			int idGagnantEnchere = enchereMger.getIdDernierEncherisseur(idArticle);
 			Articles_vendus articleVendu = articleMger.getArticleVenduByID(idArticle);
 			Utilisateur vendeur = utilisateurMger.getUtilisateurParId(idVendeur);
+			Retrait retrait = retraitMger.getRetraitByIdArticle(idArticle);
 			if (idGagnantEnchere == utilisateurSession.getNoUtilisateur()) {
 				req.setAttribute("vendeur", vendeur);
 				req.setAttribute("article", articleVendu);
+				req.setAttribute("retrait", retrait);
 				req.getRequestDispatcher("/WEB-INF/pages/acquisition.jsp").forward(req, res);
-			}else if(idVendeur == utilisateurSession.getNoUtilisateur()) {
+			} else if (idVendeur == utilisateurSession.getNoUtilisateur()) {
 				Utilisateur gagnant = utilisateurMger.getUtilisateurParId(idGagnantEnchere);
 				req.setAttribute("pseudoGagnant", gagnant.getPseudo());
 				req.setAttribute("article", articleVendu);
 				req.setAttribute("vendeur", vendeur);
+				req.setAttribute("retrait", retrait);
 				req.getRequestDispatcher("/WEB-INF/pages/detailMaVente.jsp").forward(req, res);
 			}
 		} catch (BLLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int idArticle = Integer.parseInt(req.getParameter("id"));
@@ -65,7 +72,7 @@ public class AcquisitionEnchereServlet extends HttpServlet {
 		}
 		// gestion d'erreur
 //		if(requeteEffectue)
-		
+
 	}
 
 }

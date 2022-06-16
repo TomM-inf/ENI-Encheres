@@ -65,4 +65,14 @@ public class ArticlesVendusManager {
 		}
 		return retour;
 	}
+	
+	public Integer getIdVendeur(int idArticle) throws BLLException {
+		int idVendeur = 0;
+		try {
+			idVendeur = articleVendusDAO.getNoVendeur(idArticle);
+		} catch (SQLException e) {
+			throw new BLLException();
+		}
+		return idVendeur;
+	}
 }

@@ -114,6 +114,47 @@ table {
 	flex-direction: row;
 }
 
+
+.detail-body {
+	display: flex;
+	flex-direction: row;
+}
+
+.article-image {
+	width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    margin-right: 40px;
+}
+
+.detail-title {
+	display: flex;
+	justify-content: center;
+}
+
+.article-information {
+	display: flex;
+	flex-direction: column;
+}
+
+.article-inline {
+	display: flex;
+	flex-direction: row;
+}
+
+.article-inline label {
+	margin-left: 50px;
+}
+
+div.article-information > * {
+    display: flex;
+    margin-bottom: 20px; 
+} 
+
+.article-label-value .label {
+	width: 130px;
+}
+
 .lignes-acquisition {
 	display: flex;
 	width: 280px;

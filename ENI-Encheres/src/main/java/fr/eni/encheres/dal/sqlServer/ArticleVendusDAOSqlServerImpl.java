@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.encheres.bo.Articles_vendus;
+import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.Articles_vendusDAO;
 import fr.eni.encheres.dal.ConnectionProvider;
@@ -15,6 +16,7 @@ import fr.eni.encheres.dal.ConnectionProvider;
 public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 
 	private static final String GET_ARTICLE_BY_ID = "SELECT * FROM ARTICLES_VENDUS WHERE no_article=?";
+	private static final String GET_CATEGORIE_BY_ID = "SELECT * FROM CATEGORIES WHERE no_categorie=?";
 	private static final String GETALL = "SELECT * FROM ARTICLES_VENDUS ORDER BY date_debut_encheres DESC";
 	private static final String GETMOTCLE = "SELECT * FROM ARTICLES_VENDUS WHERE nom_article LIKE ? ORDER BY date_debut_encheres DESC";
 	private static final String GETCATE = "SELECT * FROM ARTICLES_VENDUS a, CATEGORIES c WHERE a.no_categorie = c.no_categorie AND c.libelle = ? ORDER BY date_debut_encheres DESC"; 
@@ -341,7 +343,45 @@ public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 
 		return article;
 	}
+
 	@Override
+	public Categorie getCategorieByID(int ID) throws SQLException {
+		
+		Connection conn = null;
+		Categorie categorie = null;
+		try {
+			conn = ConnectionProvider.getConnection();
+
+			PreparedStatement stmt = conn.prepareStatement(GET_CATEGORIE_BY_ID);
+			stmt.setInt(1, ID);
+			ResultSet rs = stmt.executeQuery();
+			
+			if(rs.next()) {
+				categorie = new Categorie();
+				categorie.setNumCategorie(ID);
+				categorie.setLibelle(rs.getString("libelle"));
+			}
+			
+		} catch (SQLException e) {
+
+			conn.rollback();
+			e.printStackTrace();
+			throw e;
+
+		} finally {
+			// Fermer la connexion
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return categorie;
+	}
+
 	public boolean setRetraitEffectue(int idArticle) throws SQLException {
 		boolean res = false;
 		Connection conn = null;
@@ -369,6 +409,7 @@ public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 				}
 			}
 		}
+
 		return res;
 	}
 

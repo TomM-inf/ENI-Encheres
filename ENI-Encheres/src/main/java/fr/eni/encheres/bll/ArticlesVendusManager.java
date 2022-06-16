@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.encheres.bo.Articles_vendus;
+import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.dal.Articles_vendusDAO;
 import fr.eni.encheres.dal.DAOFactory;
 
@@ -90,6 +91,19 @@ public class ArticlesVendusManager {
 		return article;
 
 	}
+	
+	public Categorie getCategorieByID(int ID) throws BLLException {
+		Categorie categorie = null;
+		
+		try {
+			categorie = articleVendusDAO.getCategorieByID(ID);
+		} catch (SQLException e) {
+			throw new BLLException();
+		}
+		
+		return categorie;
+	}
+	
 
 	public boolean setRetraitEffectue(int idArticle) throws BLLException {
 		boolean res = false;

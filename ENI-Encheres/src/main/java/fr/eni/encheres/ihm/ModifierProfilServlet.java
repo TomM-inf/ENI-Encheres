@@ -116,6 +116,10 @@ public class ModifierProfilServlet extends HttpServlet {
 			// encheres en cours passées en terminée > on recredite l'encherisseur
 			// = on select la liste des encheres du mec,
 			// ======> select * from articles_vendus where no_utilisateur = ? and etat_vente= ?(en cours)
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'feature/1004_supprimer_compte' of https://github.com/TomM-inf/ENI-Encheres
 			// on stocke ça dans une liste d'articles vendus
 			// ---- debut liste articles-----
 			// on parcours cette liste et pour chaque on select le montant de l'enchere

@@ -130,7 +130,7 @@ public class ModifierProfilServlet extends HttpServlet {
 			// l'utilisateur
 			// ======> update utilisateurs set credits = ?(la somme) where no_utilisateur =?(toujours celui stocké dans l'objet)
 			// on historise l'article vendu ( l'enchere )
-			// ======> update articles_vendus set etat = historisé/terminé where no_article = ?(celui stocké dans l'objet que l'on parcoure dans la liste)
+			// ======> update articles_vendus set etat = historisé/terminé where no_article= ?(celui stocké dans l'objet que l'on parcoure dans la liste)
 			// ---- fin liste articles-----
 			// if bid en cours de sa part, on remet celle juste avant lui
 			// ======> select * from encheres where no_utilisateur = ?(numéro du compte a

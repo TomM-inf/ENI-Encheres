@@ -31,9 +31,10 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 	// requetes liées à la suppression d'un utilisateur
 	private static final String SUPPRESSION_ENCHERES_NON_COMMENCEES = "DELETE * FROM ARTICLES_VENDUS WHERE no_utilisateur = ? AND etat_vente = ?";
 	private static final String RECUPERER_ENCHERES_ENCOURS = "select * from articles_vendus where no_utilisateur = ? and etat_vente= ?";
-	private static final String RECUPERER_MONTANT_ENCHERE = "select top 1 montant_enchere from encheres where no_article = ? group by montant_enchere order by montant_enchere desc;";
+	private static final String RECUPERER_DERNIER_ENCHERE = "select top 1 * from encheres where no_article = ?  order by montant_enchere desc;";
+	private static final String REMBOURSER_CREDIT = "update utilisateurs set credit = credit + ? where no_utilisateur =?";
+	private static final String HISTORISATION = "update articles_vendus set etat = ? where no_article= ?";
 	
-
 	@Override
 	public Utilisateur verifierConnexion(String login, String pw) throws SQLException {
 		Connection conn = null;
@@ -383,119 +384,76 @@ public class UtilisateurDAOSqlServerImpl implements UtilisateurDAO {
 	@Override
 	public boolean supprimerUtilisateur(int noUtilisateur) throws SQLException {
 		boolean res = false;
-		//TODO 
-		supprimerEncheresNonCommencees(noUtilisateur);
+		// TODO
 		Connection conn = null;
-		List<Articles_vendus> lstArticles = getListeArticlesVendusEnCours(noUtilisateur);
+		conn = ConnectionProvider.getConnection();
+		supprimerEncheresNonCommencees(noUtilisateur, conn);
+		List<Articles_vendus> lstArticles = getListeArticlesVendusEnCours(noUtilisateur, conn);
 		for (Articles_vendus article : lstArticles) {
-			int montant = getMontantByIdArticle(article.getNoArticle());
-			Enchere enchere = new Enchere();
-			enchere.setMontant(montant);
-			enchere.setNoUtilisateur(noUtilisateur);;
+			Enchere enchere = getEnchereByIdArticle(article.getNoArticle(), conn);
+			rembourserCredit(enchere,conn);
+			historisation(article.getNoArticle(),conn);
 		}
-		
-		
-		
+
 		return res;
 	}
-	
-	private void supprimerEncheresNonCommencees(int idUtilisateur) throws SQLException {
+
+	private void supprimerEncheresNonCommencees(int idUtilisateur, Connection conn) throws SQLException {
 		System.out.println("debut supprimerEncheresNonCommencees()");
-		Connection conn = null;
-		try {
-			conn = ConnectionProvider.getConnection();
-			PreparedStatement stmt = conn.prepareStatement(SUPPRESSION_ENCHERES_NON_COMMENCEES);
-			stmt.setInt(1, idUtilisateur);
-			stmt.setString(2, "Créée");
-			int row = stmt.executeUpdate();
-		} catch (SQLException e) {
-//			conn.rollback();
-			e.printStackTrace();
-			throw e;
-
-		} finally {
-			// Fermer la connexion
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
+		PreparedStatement stmt = conn.prepareStatement(SUPPRESSION_ENCHERES_NON_COMMENCEES);
+		stmt.setInt(1, idUtilisateur);
+		stmt.setString(2, "Créée");
+		int row = stmt.executeUpdate();
 	}
-	
-	private List<Articles_vendus> getListeArticlesVendusEnCours(int idUtilisateur) throws SQLException{
-		Connection conn = null;
-		List<Articles_vendus> lstRes = new ArrayList<Articles_vendus>();
-		try {
-			conn = ConnectionProvider.getConnection();
-			conn.setAutoCommit(false);
-			PreparedStatement stmt = conn.prepareStatement(RECUPERER_ENCHERES_ENCOURS);
-			stmt.setInt(1, idUtilisateur);
-			stmt.setString(2, "En cours");
-			ResultSet rs = stmt.executeQuery();
-			List<Articles_vendus> listArticles = new ArrayList<Articles_vendus>();
-			while(rs.next()) {
-				Articles_vendus article = new Articles_vendus();
-				article.setNoArticle(rs.getInt("no_article"));
-				article.setNomArticle(rs.getString("nom_article"));
-				article.setDescription(rs.getString("description"));
-				article.setDateDebut(rs.getDate("date_debut_encheres"));
-				article.setDateFin(rs.getDate("date_fin_encheres"));
-				article.setPrixInitial(rs.getInt("prix_initial"));
-				article.setPrixVente(rs.getInt("prix_vente"));
-				article.setEtatVente(rs.getString("etat_vente"));
-				article.setNoUtilisateur(rs.getInt("no_utilisateur"));
-				article.setNoCategorie(rs.getInt("no_categorie"));
-				listArticles.add(article);
-			}
-		} catch (SQLException e) {
-			conn.rollback();
-			e.printStackTrace();
-			throw e;
 
-		} finally {
-			// Fermer la connexion
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+	private List<Articles_vendus> getListeArticlesVendusEnCours(int idUtilisateur, Connection conn)
+			throws SQLException {
+		List<Articles_vendus> lstRes = new ArrayList<Articles_vendus>();
+		PreparedStatement stmt = conn.prepareStatement(RECUPERER_ENCHERES_ENCOURS);
+		stmt.setInt(1, idUtilisateur);
+		stmt.setString(2, "En cours");
+		ResultSet rs = stmt.executeQuery();
+		List<Articles_vendus> listArticles = new ArrayList<Articles_vendus>();
+		while (rs.next()) {
+			Articles_vendus article = new Articles_vendus();
+			article.setNoArticle(rs.getInt("no_article"));
+			article.setNomArticle(rs.getString("nom_article"));
+			article.setDescription(rs.getString("description"));
+			article.setDateDebut(rs.getDate("date_debut_encheres"));
+			article.setDateFin(rs.getDate("date_fin_encheres"));
+			article.setPrixInitial(rs.getInt("prix_initial"));
+			article.setPrixVente(rs.getInt("prix_vente"));
+			article.setEtatVente(rs.getString("etat_vente"));
+			article.setNoUtilisateur(rs.getInt("no_utilisateur"));
+			article.setNoCategorie(rs.getInt("no_categorie"));
+			listArticles.add(article);
 		}
 		return lstRes;
 	}
-	
-	private int getMontantByIdArticle(int idArticle) throws SQLException {
-		Connection conn = null;
-		int montant = 0;
-		try {
-			conn = ConnectionProvider.getConnection();
-			conn.setAutoCommit(false);
-			PreparedStatement stmt = conn.prepareStatement(RECUPERER_MONTANT_ENCHERE);
-			stmt.setInt(1, idArticle);
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				montant = rs.getInt("montant_enchere");
-			} 
-		} catch (SQLException e) {
-			conn.rollback();
-			e.printStackTrace();
-			throw e;
 
-		} finally {
-			// Fermer la connexion
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+	private Enchere getEnchereByIdArticle(int idArticle, Connection conn) throws SQLException {
+		Enchere enchere = new Enchere();
+		PreparedStatement stmt = conn.prepareStatement(RECUPERER_DERNIER_ENCHERE);
+		stmt.setInt(1, idArticle);
+		ResultSet rs = stmt.executeQuery();
+		if (rs.next()) {
+			enchere.setNoUtilisateur(rs.getInt("no_utilisateur"));
+			enchere.setMontant(rs.getInt("montant_enchere"));
 		}
-		return montant;
-		
+		return enchere;
+	}
+
+	private void rembourserCredit(Enchere enchere, Connection conn) throws SQLException {
+		PreparedStatement stmt = conn.prepareStatement(REMBOURSER_CREDIT);
+		stmt.setInt(1, enchere.getMontant());
+		stmt.setInt(2, enchere.getNoUtilisateur());
+		int row = stmt.executeUpdate();
+	}
+	
+	private void historisation(int idArticle,Connection conn) throws SQLException{
+		PreparedStatement stmt = conn.prepareStatement(HISTORISATION);
+		stmt.setString(1, "Enchères terminées");
+		stmt.setInt(2, idArticle);
+		int row = stmt.executeUpdate();
 	}
 }

@@ -22,7 +22,8 @@ table, th, td {
 						<td rowspan="5">IMAGE</td>
 					</tr>
 					<tr>
-						<td><c:out value="${value.nomArticle}" /></td>
+						<td><a
+							href="${pageContext.request.contextPath }/details?id=${value.noArticle }"><c:out value="${value.nomArticle}" /></a></td>
 					</tr>
 					<tr>
 						<td>Prix : <c:out value="${value.prixInitial}" /> points</td>

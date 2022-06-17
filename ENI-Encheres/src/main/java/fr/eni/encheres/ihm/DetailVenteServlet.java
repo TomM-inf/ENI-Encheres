@@ -1,8 +1,8 @@
 package fr.eni.encheres.ihm;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,6 +18,7 @@ import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Articles_vendus;
 import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.bo.Enchere;
+import fr.eni.encheres.bo.Utilisateur;
 
 /**
  * Servlet implementation class DetailVenteServlet
@@ -42,6 +43,12 @@ public class DetailVenteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		
+		Utilisateur user = (Utilisateur) req.getSession().getAttribute("utilisateur");
+		if(user == null) {
+			res.sendRedirect(req.getContextPath() + "/");
+			return;
+		}
+		
 		Articles_vendus article = null;
 		
 		// get article id in request params
@@ -53,10 +60,21 @@ public class DetailVenteServlet extends HttpServlet {
 		String nomVendeur = "";
 		String nomEncherisseur = "";
 		Enchere enchere = null;
+		LocalDate articleDateFin = null;
 		
 		// get article by id
 		try {
 			 article = articlesVendusMng.getArticleVenduByID(articleID);
+			 
+			 articleDateFin = article.getDateFin().toLocalDate();
+			 
+			 LocalDateTime now = LocalDateTime.now();
+			 
+			 if(article.getDateFin().isBefore(now)) {
+					res.sendRedirect(req.getContextPath() + "/acquisitionEnchere?id=" + articleID);
+					return;
+			 }
+			 
 			 idCategorie = article.getNoCategorie();
 			 categorie = articlesVendusMng.getCategorieByID(idCategorie);
 			 nomVendeur = utilisateurManager.getUtilisateurParId(article.getNoUtilisateur()).getNom();
@@ -78,6 +96,7 @@ public class DetailVenteServlet extends HttpServlet {
 		req.setAttribute("nomVendeur", nomVendeur);
 		req.setAttribute("categorie", categorie);
 		req.setAttribute("article", article);
+		req.setAttribute("articleDateFin", articleDateFin);
 		
 		req.getRequestDispatcher("/WEB-INF/pages/DetailVente.jsp").forward(req, res);
 

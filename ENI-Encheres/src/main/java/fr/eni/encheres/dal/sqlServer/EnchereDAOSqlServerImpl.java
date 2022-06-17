@@ -5,7 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 
 import fr.eni.encheres.bo.Enchere;
 import fr.eni.encheres.bo.Utilisateur;
@@ -16,7 +19,7 @@ public class EnchereDAOSqlServerImpl implements EnchereDAO {
 
 	private static final String RECUPERER_DERNIER_ENCHERISSEUR = "SELECT top 1 no_utilisateur from ENCHERES WHERE no_article = ? group by date_enchere,no_utilisateur order BY CAST(date_enchere AS DATE) desc";
 	private static final String GET_ENCHERE_UTILISATEUR = "SELECT * FROM ENCHERES e WHERE no_article = ? AND no_utilisateur = ?";
-	private static final String GET_BEST_OFFER = "SELECT top 1 * from ENCHERES WHERE no_article = ? order BY CAST(date_enchere AS DATE) desc;";
+	private static final String GET_BEST_OFFER = "SELECT top 1 * from ENCHERES WHERE no_article = ? order BY date_enchere desc;";
 	private static final String REMOVE_AUCTIONEER_CREDIT = "UPDATE UTILISATEURS SET CREDIT = CREDIT - ? WHERE no_utilisateur=?;";
 	private static final String SAVE_ENCHERE = "INSERT INTO ENCHERES (date_enchere, montant_enchere, no_article, no_utilisateur)"
 			+ "VALUES (?, ?, ?, ?)";
@@ -59,6 +62,16 @@ public class EnchereDAOSqlServerImpl implements EnchereDAO {
 	@Override
 	public Enchere getBestOfferByIDArticleVendu(int idArticleVendu) throws SQLException {
 		
+//        //  LocalDateTime to Timestamp
+//        LocalDateTime now = LocalDateTime.now();
+//        Timestamp timestamp = Timestamp.valueOf(now);
+//
+//		stmt.setTimestamp(1, java.sql.Timestamp.valueOf(String.valueOf(timestamp)));
+		
+		
+		////
+		
+		
 		Connection conn = null;
 		Enchere enchere = null;
 		
@@ -71,12 +84,19 @@ public class EnchereDAOSqlServerImpl implements EnchereDAO {
 			ResultSet rs = stmt.executeQuery();
 			
 			if(rs.next()) {
+				
+				LocalDate ld = rs.getDate("date_enchere").toLocalDate();
+				LocalTime lt = rs.getTime("date_enchere").toLocalTime();
+				LocalDateTime ldt = LocalDateTime.of(ld, lt);
+				
 				enchere = new Enchere();
-				enchere.setNoArticle(rs.getInt("no_enchere"));
+				enchere.setNoEnchere(rs.getInt("no_enchere"));
+				enchere.setDate(ldt);
 				enchere.setMontant(rs.getInt("montant_enchere"));
 				enchere.setNoArticle(idArticleVendu);
 				enchere.setNoUtilisateur(rs.getInt("no_utilisateur"));
-				enchere.setDate(rs.getDate("date_enchere").toLocalDate());
+				
+				System.out.println(enchere);
 			}
 			
 		} catch (SQLException e) {

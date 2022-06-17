@@ -51,7 +51,7 @@
 			</div>
 			<div class="article-label-value">
 				<label class="label">Fin de l'enchère :</label>
-				<label>${article.dateFin }</label>
+				<label>${articleDateFin }</label>
 			</div>
 			<div class="article-label-value">
 				<label class="label">Retrait :</label>

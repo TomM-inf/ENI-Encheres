@@ -48,6 +48,19 @@ public class ModifierProfilServlet extends HttpServlet {
 
 			Utilisateur utilisateurSession = (Utilisateur) req.getSession().getAttribute("utilisateur");
 
+			if(req.getSession().getAttribute("pwError") != null) {
+				req.getSession().setAttribute("infoMsg", "Le mot de passe doit faire minimum 12 charact�res et contenir au minium : 1 minuscule, 1 majuscule, 1 chiffre et 1 caract�re sp�cial.");
+				res.sendRedirect(req.getContextPath() + "/modifierProfil");
+				return;
+			}
+
+			if(!UtilisateurMger.isAlphaNumeric(pseudo)) {
+				req.getSession().setAttribute("infoMsg", "Veuillez entrer un pseudonyme de type alphanum�rique.");
+				res.sendRedirect(req.getContextPath() + "/modifierProfil");
+				return;
+			}
+			
+			
 			if (!newPW.isEmpty() && !confirmPW.isEmpty()) {
 				if (!UtilisateurMger.getMD5EncryptedValue(pw).equals(utilisateurSession.getMotDePasse())) {
 					req.getSession().setAttribute("infoMsg", "Le mot de passe actuel n'est pas le bon");
@@ -64,6 +77,13 @@ public class ModifierProfilServlet extends HttpServlet {
 			if (pseudo.length() == 0 || prenom.length() == 0 || cp.length() == 0 || nom.length() == 0
 					|| email.length() == 0 || rue.length() == 0 || ville.length() == 0) {
 				req.getSession().setAttribute("infoMsg", "Veuillez renseigner tous les champs obligatoires.");
+				res.sendRedirect(req.getContextPath() + "/modifierProfil");
+				return;
+			}
+			
+			if(pseudo.length() > 30 || prenom.length() > 30 || cp.length() > 10 || pw.length() > 256
+					|| nom.length() > 30 || email.length() > 50 || rue.length() > 30 || ville.length() > 50 || confirmPW.length() > 256) {
+				req.getSession().setAttribute("infoMsg", "Tu peux pas test mon gars arr�te �a");
 				res.sendRedirect(req.getContextPath() + "/modifierProfil");
 				return;
 			}

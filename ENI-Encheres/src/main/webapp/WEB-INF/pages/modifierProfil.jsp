@@ -51,7 +51,7 @@
 				<div class="label-input-group">
 					<!--  PW -->
 					<label for="new-pw">Nouveau mot de passe:</label> <input type="password"
-						name="new-pw" value="">
+						class="register-input-pw" name="new-pw" value="">
 				</div>
 				<div class="label-input-group">
 					<!--  Crédits -->
@@ -87,7 +87,7 @@
 				</div>
 			</div>
 		</div>
-		<input type="submit" name="submit" value="Enregistrer"  >
+		<input id="js-register" type="submit" name="submit" value="Enregistrer"  >
 		<input type="submit" name="submit" value="Supprimer"  onclick="return confirm('Voulez vous vraiment supprimer votre compte ?')">
 	</form>
 	<a href="${pageContext.request.contextPath }/">

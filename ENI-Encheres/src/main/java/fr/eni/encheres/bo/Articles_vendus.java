@@ -1,6 +1,7 @@
 package fr.eni.encheres.bo;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 /*
  * Class Articles vendus
@@ -11,7 +12,7 @@ public class Articles_vendus {
 	private String nomArticle;
 	private String description;
 	private Date dateDebut;
-	private Date dateFin;
+	private LocalDateTime dateFin;
 	private int prixInitial;
 	private int prixVente;
 	private String etatVente;
@@ -19,7 +20,7 @@ public class Articles_vendus {
 	private int noCategorie;
 	
 	//Constructeur complet avec les 10 params
-	public Articles_vendus(int noArticle, String nomArticle, String description, Date dateDebut, Date dateFin,
+	public Articles_vendus(int noArticle, String nomArticle, String description, Date dateDebut, LocalDateTime dateFin,
 			int prixInitial, int prixVente, String etatVente, int noUtilisateur, int noCategorie) {
 		super();
 		this.noArticle = noArticle;
@@ -35,7 +36,7 @@ public class Articles_vendus {
 	}
 
 	//Constructeur avec 9 params si prixVente est null
-	public Articles_vendus(int noArticle, String nomArticle, String description, Date dateDebut, Date dateFin,
+	public Articles_vendus(int noArticle, String nomArticle, String description, Date dateDebut, LocalDateTime dateFin,
 			int prixInitial, String etatVente, int noUtilisateur, int noCategorie) {
 		super();
 		this.noArticle = noArticle;
@@ -78,11 +79,11 @@ public class Articles_vendus {
 		this.dateDebut = dateDebut;
 	}
 
-	public Date getDateFin() {
+	public LocalDateTime getDateFin() {
 		return dateFin;
 	}
 
-	public void setDateFin(Date dateFin) {
+	public void setDateFin(LocalDateTime dateFin) {
 		this.dateFin = dateFin;
 	}
 

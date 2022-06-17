@@ -4,12 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.encheres.bo.Articles_vendus;
 import fr.eni.encheres.bo.Categorie;
-import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.Articles_vendusDAO;
 import fr.eni.encheres.dal.ConnectionProvider;
 
@@ -167,12 +170,17 @@ public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 	private List<Articles_vendus> createListArticle(ResultSet rs) throws SQLException{
 		List<Articles_vendus> listArticles = new ArrayList<Articles_vendus>();
 		while(rs.next()) {
+	        //  LocalDateTime to Timestamp
+			LocalDate ld = rs.getDate("date_fin_encheres").toLocalDate();
+			LocalTime lt = rs.getTime("date_fin_encheres").toLocalTime();
+			LocalDateTime ldt = LocalDateTime.of(ld, lt);
+			
 			Articles_vendus article = new Articles_vendus();
 			article.setNoArticle(rs.getInt("no_article"));
 			article.setNomArticle(rs.getString("nom_article"));
 			article.setDescription(rs.getString("description"));
 			article.setDateDebut(rs.getDate("date_debut_encheres"));
-			article.setDateFin(rs.getDate("date_fin_encheres"));
+			article.setDateFin(ldt);
 			article.setPrixInitial(rs.getInt("prix_initial"));
 			article.setPrixVente(rs.getInt("prix_vente"));
 			article.setEtatVente(rs.getString("etat_vente"));
@@ -310,12 +318,17 @@ public class ArticleVendusDAOSqlServerImpl implements Articles_vendusDAO {
 			ResultSet rs = stmt.executeQuery();
 			
 			if(rs.next()) {
+		        //  LocalDateTime to Timestamp
+				LocalDate ld = rs.getDate("date_fin_encheres").toLocalDate();
+				LocalTime lt = rs.getTime("date_fin_encheres").toLocalTime();
+				LocalDateTime ldt = LocalDateTime.of(ld, lt);
+				
 				article = new Articles_vendus();
 				article.setNoArticle(rs.getInt("no_article"));
 				article.setNomArticle(rs.getString("nom_article"));
 				article.setDescription(rs.getString("description"));
 				article.setDateDebut(rs.getDate("date_debut_encheres"));
-				article.setDateFin(rs.getDate("date_fin_encheres"));
+				article.setDateFin(ldt);
 				article.setPrixInitial(rs.getInt("prix_initial"));
 				article.setPrixVente(rs.getInt("prix_vente"));
 				article.setEtatVente(rs.getString("etat_vente"));

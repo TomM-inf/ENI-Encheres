@@ -81,7 +81,7 @@ public class ModifierProfilServlet extends HttpServlet {
 				return;
 			}
 			
-			if(pseudo.length() > 30 || prenom.length() > 30 || cp.length() > 10 || pw.length() > 256
+			if(pseudo.length() > 30 || prenom.length() > 30 || cp.length() > 10 || newPW.length() > 256
 					|| nom.length() > 30 || email.length() > 50 || rue.length() > 30 || ville.length() > 50 || confirmPW.length() > 256) {
 				req.getSession().setAttribute("infoMsg", "Tu peux pas test mon gars arr�te �a");
 				res.sendRedirect(req.getContextPath() + "/modifierProfil");
